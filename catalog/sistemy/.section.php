@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Системы";
+$arDirProperties = Array(
+
+);
+?>

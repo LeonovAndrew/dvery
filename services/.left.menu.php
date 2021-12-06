@@ -1,0 +1,32 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Монтаж", 
+		"/services/montage/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Гарантии", 
+		"/services/guarantee/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Замер", 
+		"/services/froze/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Сервисное обслуживание (ремонт)", 
+		"/services/repair/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

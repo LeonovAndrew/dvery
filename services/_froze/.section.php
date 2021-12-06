@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Замер";
+$arDirProperties = Array(
+
+);
+?>

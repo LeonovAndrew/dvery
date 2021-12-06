@@ -1,0 +1,11 @@
+{
+	"config": {
+        "preferred-install": "dist",
+        "disable-tls": true,
+        "secure-http": false,
+		"platform-check": false
+	},
+	"require": {
+		"amocrm/amocrm-api-library": "^0.6.1"
+	}
+}

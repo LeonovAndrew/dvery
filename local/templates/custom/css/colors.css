@@ -1,0 +1,9 @@
+:root {
+    --text-white: #fff;
+    --text-black: #000;
+    --text-grey: #00000060;
+
+    --bg-white: #fff;
+    --bg-light-grey: #fcfcfc;
+    --bg-grey: #292929;
+}

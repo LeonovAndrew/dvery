@@ -1,0 +1,10 @@
+.catalog__item-help5 {
+    width: 16%;
+    padding: 30px 20px;
+}
+
+.catalog__item-help .catalog__img{
+	background-repeat: no-repeat;
+}
+
+.catalog__item-help5 .catalog__title {text-align:center}

@@ -1,0 +1,27 @@
+.designer {width:100%; border-bottom: 1px solid #000; margin-bottom: 30px;}
+.designer .des_info {display:flex;}
+.designer .des_info .photo{width:10%}
+.designer .des_info .photo img{width:100%}
+.designer .des_info .info{width:70%; padding: 0 40px;}
+.designer .des_info .social{width:20%;text-align: right;}
+
+.designer .des_info .info .name{font-size:20px; font-weight:500; padding:0 0 0px 0;}
+
+
+.designer .des_info .info .call_order {margin-bottom: 15px; margin-top: 15px; width: 280px;padding: 10px;border: 1px solid #000000;background: #000;color: #fff;font-style: normal;font-weight: 500;font-size: 18px;line-height: 150%;display: block;transition: .3s;text-align: center;cursor:pointer;}
+
+.designer .work .title {text-align: right;font-size: 18px;padding-bottom: 20px;}
+.designer .work .work_gallery {height:100%; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: flex-start; margin-left: -20px; margin-right: -20px;margin-bottom: 20px;}
+.designer .work .work_gallery .slick-prev::before, .designer .work .work_gallery .slick-next::before {color:black}
+
+.designer .work .work_gallery .image{padding:0 20px;}
+.designer .work .work_gallery img{width:100%; height:100%;}
+
+@media (max-width: 500px) {
+.designer .des_info {flex-direction:column;}
+.designer .des_info .info {width: 100%; padding: 0 40px;}
+.designer .des_info .photo {width: 100%;padding: 0 25%;}
+.designer .des_info .social {text-align: center; width:100%;}
+.designer .work .title {text-align: center;}
+.designer .work .work_gallery img{height:100%}
+}
