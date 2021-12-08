@@ -249,5 +249,16 @@ if($APPLICATION->GetCurDir() == '/')
 			});
 		})(jQuery);
 	</script>
+
+	<script type="text/javascript" src="/local/templates/custom/js/jquery.lazy.min.js"></script>
+
+	<!-- jsDeliver -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+
+    <!-- cdnjs -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+
 </body>
 </html>

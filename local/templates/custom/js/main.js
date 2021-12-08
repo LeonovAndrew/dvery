@@ -1,5 +1,9 @@
 $( document ).ready(function() {
 
+	$('.sect-list__img, .catalog__img__slider, .banner-type-1, .block3__item-bg, .news__img, .js-loupe2, .js-loupe').Lazy({});
+	$('.main-slider__item-bg, .js-material-image, .js-design-image').Lazy({});
+	
+
 	$(document).on('click', function(e) {
 		$('*').removeClass("tlc-active");
 		$('*').removeClass("search-active");

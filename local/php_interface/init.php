@@ -61,3 +61,5 @@ function setCanonical()
         }
     }
 }
+
+\Bitrix\Main\Loader::includeModule('shestpa.lastmodified');

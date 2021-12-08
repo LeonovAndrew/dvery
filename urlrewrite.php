@@ -128,4 +128,10 @@ $arUrlRewrite=array (
     'PATH' => '/lp/index.php',
     'SORT' => 100,
   ),
+  26 => (
+    array(
+      "CONDITION" => "#^/sitemap.xml#",
+      "PATH" => "/sitemap.php",
+  )
+  ),
 );
