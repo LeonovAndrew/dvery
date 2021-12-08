@@ -91,3 +91,9 @@ bower_components
 
 # и логи xhprof напоследок
 /xhprof/logs
+
+mysql/*
+nginx/*
+php/*
+docker-compose.yml
+Dockerfile

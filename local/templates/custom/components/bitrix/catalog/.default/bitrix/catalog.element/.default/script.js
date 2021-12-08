@@ -7,6 +7,12 @@ $(function() {
     	var materialId = $('.material-item.card__material-p-active').data('id');
     	var designId = $(this).data('id');
 
+		$('.js-loupe')
+		.attr('src', design[materialId][designId].PICTURE)
+		.attr('data-result-id', design[materialId][designId].ID);
+
+		$('.magnifier img:last-child').attr('src', design[materialId][designId].PICTURE);
+
     	$('.js-design-image')
 		.css('background-image', 'url(' + design[materialId][designId].PICTURE + ')')
 		.attr('data-result-id', design[materialId][designId].ID);
@@ -31,6 +37,13 @@ $(function() {
     		var modelId = $(this).data('id');
     		$(this).find('.js-material-image').css('background-image', 'url(' + offers[materialId][modelId].PICTURE + ')');
     	});
+
+    	$('.js-loupe2')
+		.attr('src', offers[materialId][actualModelId].PICTURE)
+		.attr('data-result-id', offers[materialId][actualModelId].ID);
+
+		$('.magnifier .loupe2').attr('src', offers[materialId][actualModelId].PICTURE);
+		
 
     	$('.js-material-image-left')
 		.css('background-image', 'url(' + offers[materialId][actualModelId].PICTURE + ')')

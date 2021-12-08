@@ -254,7 +254,8 @@ global $MAIN_FILTER_COLORS;
 );
 					?>
 <? if (isset($MAIN_BANNERS[0])) :?>
-	<div class="banner-type-1" style="background-image: url(<?=CFile::GetPath($MAIN_BANNERS[0]['DETAIL_PICTURE'])?>);">
+	<!-- <div class="banner-type-1" style="background-image: url(<?=CFile::GetPath($MAIN_BANNERS[0]['DETAIL_PICTURE'])?>);"> -->
+	<div class="banner-type-1" data-src="<?=CFile::GetPath($MAIN_BANNERS[0]['DETAIL_PICTURE'])?>)">
 		<div class="banner__bg">
 			<div class="banner__title">
 				<?=$MAIN_BANNERS[0]['NAME']?>
@@ -305,7 +306,8 @@ global $MAIN_FILTER_COLORS;
 );?>
 
 <? if (isset($MAIN_BANNERS[1])) :?>
-	<div class="banner-type-1" style="background-image: url(<?=CFile::GetPath($MAIN_BANNERS[1]['DETAIL_PICTURE'])?>);">
+	<!-- <div class="banner-type-1" style="background-image: url(<?=CFile::GetPath($MAIN_BANNERS[1]['DETAIL_PICTURE'])?>);"> -->
+	<div class="banner-type-1" data-src="<?=CFile::GetPath($MAIN_BANNERS[1]['DETAIL_PICTURE'])?>">
 		<div class="banner__bg">
 			<div class="banner__title">
 				<?=$MAIN_BANNERS[1]['NAME']?>
@@ -417,7 +419,7 @@ global $MAIN_FILTER_COLORS;
 </div>
 
 <? if (isset($MAIN_BANNERS[2])) :?>
-	<div class="banner-type-1" style="background-image: url(<?=CFile::GetPath($MAIN_BANNERS[2]['DETAIL_PICTURE'])?>);">
+	<div class="banner-type-1" data-src="<?=CFile::GetPath($MAIN_BANNERS[2]['DETAIL_PICTURE'])?>">
 		<div class="banner__bg">
 			<div class="banner__title">
 				<?=$MAIN_BANNERS[2]['NAME']?>

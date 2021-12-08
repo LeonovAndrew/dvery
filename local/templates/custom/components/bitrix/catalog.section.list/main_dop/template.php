@@ -9,7 +9,8 @@ if (empty($arResult['SECTIONS'])) return;
         <div class="block3__cont">
 			<? foreach($arResult['SECTIONS'] as $arSection) :?>
 			    <div class="block3__item-help">
-			        <div class="block3__item-bg" style="background-image: url(<?=$arSection['PICTURE']['SRC']?>);">
+			        <!-- <div class="block3__item-bg" style="background-image: url(<?=$arSection['PICTURE']['SRC']?>);"> -->
+			        <div class="block3__item-bg" data-src="<?=$arSection['PICTURE']['SRC']?>">
 			            <a href="<?=$arSection['SECTION_PAGE_URL']?>" class="block3__item">
 			            	<div class="block3__circle"></div>
 		                    <div class="block3__block">

@@ -1,5 +1,9 @@
 $( document ).ready(function() {
 
+	$('.sect-list__img, .catalog__img__slider, .banner-type-1, .block3__item-bg, .news__img, .js-loupe2, .js-loupe').Lazy({});
+	$('.main-slider__item-bg, .js-material-image, .js-design-image').Lazy({});
+	
+
 	$(document).on('click', function(e) {
 		$('*').removeClass("tlc-active");
 		$('*').removeClass("search-active");
@@ -71,7 +75,8 @@ $( document ).ready(function() {
 		e.stopPropagation();
 	});
 
-	$('[data-popup-selector]').on('click', function() {
+	$('[data-popup-selector]').on('click', function(e) {
+		e.preventDefault();
 		var popupName = $(this).attr('data-popup-selector');
 		var popup = $('[data-popup='+popupName+']');
 		if(popup.length > 0) {
@@ -553,7 +558,7 @@ $( document ).ready(function() {
 		// link15.height(width15);
 	});
 	
-	$(".tel").mask("+7-(999)-999-99-99");
+	$(".tel").mask("+7 999 999-99-99");
 
 	var timer;
 
@@ -563,11 +568,14 @@ $( document ).ready(function() {
 		var _this = this;
 		var error = false;
 		var formMessage = $(_this).find('.form__message');
-
+		var button = $(_this).find('button');
+		
 		if (formMessage.length == 0) {
 			formMessage = $(_this).parent().find('.form__message');
 		}
 
+		button.prop("disabled",true);
+		
 		clearTimeout(timer);
 
 		formMessage.removeClass('success', 'error');
@@ -607,6 +615,7 @@ $( document ).ready(function() {
 						}, 5000);
 					} else {
 						formMessage.addClass('error');
+						button.prop("disabled",false);
 					}
 
 					formMessage.html(result.message);
