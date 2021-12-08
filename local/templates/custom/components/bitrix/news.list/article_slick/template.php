@@ -6,7 +6,8 @@
     <div class="cont">
     	<div class="block1__head">Полезно знать о дверях</div>
         <div class="news__cont article__slide">
-        	<? foreach($arResult['ITEMS'] as $arItem) :?>
+        	<? foreach($arResult['ITEMS'] as $arItem) :
+        		$date = empty($arItem['ACTIVE_FROM']) ? $arItem['DATE_CREATE'] : $arItem['ACTIVE_FROM'];?>
 	            <div class="news__item-help">
 	                <div class="news__item">
 	                    <div class="news__img" style="background-image: url(<?=$arItem['PREVIEW_PICTURE']['SRC']?>);"></div>
@@ -18,7 +19,7 @@
 	                    </div>
 	                    <div class="news__bottom">
 	                        <div class="news__date">
-	                            <?=FormatDate('d F Y г.', strtotime($arItem['DATE_CREATE']))?>
+	                            <?=FormatDate('d F Y г.', strtotime($date))?>
 	                        </div>
 	                        <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="news__link">
 	                            <div class="news__link-text">

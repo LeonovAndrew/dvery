@@ -41,7 +41,7 @@ use \Bitrix\Main\Localization\Loc;
 	
 	<div class="thumb">
 		<a href="<?=$item['DETAIL_PAGE_URL']?>" class="img">
-			<img src="<?=$item['PREVIEW_PICTURE']['SRC']?>" alt="">
+			<img src="<?=$item['PREVIEW_PICTURE']['SRC']?>" alt="<?=$productTitle."-".$item['ID']?> ">
 		</a>
 	</div>
 	

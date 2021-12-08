@@ -78,7 +78,7 @@ if($APPLICATION->GetCurDir() == '/')
 	    <script src="https://repometr.com/jsi18n/"></script>
 	    <script src="https://en.repometr.com/jsi18n/"></script>
 	    <script src="https://alfatest.repometr.com/jsi18n/"></script>
-	    <script src="/jsi18n/"></script>
+	    <!-- <script src="/jsi18n/"></script> -->
 	    <script src="https://repometr.com/static/scripts/reviews-widget-frame.js"></script>
 	</div>
 <?}
@@ -113,7 +113,7 @@ if($APPLICATION->GetCurDir() == '/')
         <div class="footer__cont">
             <div class="footer__top">
                 <a href="#" class="footer__logo">
-                    <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="">
+                    <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="page-logo-white">
                     <!-- <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-black.png" alt=""> -->
                 </a>
                 <?$APPLICATION->IncludeComponent(

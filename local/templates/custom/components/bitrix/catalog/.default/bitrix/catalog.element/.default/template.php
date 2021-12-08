@@ -46,11 +46,11 @@ $this->setFrameMode(true);
 			
 				<div class="card__result-pic">
 					<div class="card__result-pic-int">
-						<img class="js-loupe2" src="<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>" alt="" data-result-id="<?=$arResult['CURRENT_OFFER']['ID']?>" data-large='<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>'>
+						<img class="js-loupe2" src="<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>" alt="<?=$arResult['NAME']?>" data-result-id="<?=$arResult['CURRENT_OFFER']['ID']?>" data-large='<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>'>
 					</div>
 
 					<div class="card__result-pic-ext">
-						<img class="js-loupe" src="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>" alt="" data-result-id="<?=$arResult['CURRENT_DESIGN']['ID']?>" data-large="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>">
+						<img class="js-loupe" src="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>" alt="<?=$arResult['NAME']?>	" data-result-id="<?=$arResult['CURRENT_DESIGN']['ID']?>" data-large="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>">
 					</div>
 				</div>
 				
@@ -61,6 +61,7 @@ $this->setFrameMode(true);
 					</div>
 					<? if (!empty($arResult['OFFERS'])) :?>
 						<div class="card__text">
+							Модель:
 							<?=$arResult['CURRENT_OFFER']['DETAIL_TEXT']?>
 						</div>
 					<? endif; ?>

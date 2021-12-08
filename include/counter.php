@@ -32,7 +32,7 @@
 })(window, document, 'script', 'cloud.roistat.com', '3cfe629a5a2a7ef4a913d01aae5cc002');
 </script>
 
-<script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("VK-RTRG-1017521-gxAPJ"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-1017521-gxAPJ" style="position:fixed; left:-999px;" alt=""/></noscript>
+<script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("VK-RTRG-1017521-gxAPJ"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-1017521-gxAPJ" style="position:fixed; left:-999px;" alt="vk-img"/></noscript>
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)

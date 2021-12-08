@@ -33,7 +33,11 @@ $APPLICATION->ShowProperty('FooterJS');
 	}
 </script>
 <?endif;?>
-
+<?
+if($APPLICATION->GetCurDir() != '/bitrix/admin/')
+{
+?>
+	
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list", 
 	"article_slick", 
@@ -277,5 +281,6 @@ if($APPLICATION->GetCurDir() == '/')
 			});
 		})(jQuery);
 	</script>
+	<?}?>
 </body>
 </html>
