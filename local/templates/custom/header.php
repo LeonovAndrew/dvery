@@ -176,9 +176,9 @@ global $CONTACTS;
                     <div class="header__left">
                         <a href="/" class="header__logo">
                             <?if($APPLICATION->GetCurDir() != '/' && !preg_match("/\/news\/([-_a-zA-Z0-9]+)/", $APPLICATION->GetCurDir()) && !preg_match("/\/articles\/([-_a-zA-Z0-9]+)/", $APPLICATION->GetCurDir()) && !preg_match("/\/catalog\/([-_a-zA-Z0-9]+)\/([-_a-zA-Z0-9]+)/", $APPLICATION->GetCurDir()) ||  preg_match("/\/catalog\/sistemy\/([a-zA-Z0-9]+)/", $APPLICATION->GetCurDir())):?>
-                                <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-black.png" alt="">
+                                <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-black.png" alt="page-logo-black">
                             <? else :?>
-                                <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="">
+                                <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="page-logo-white">
                             <? endif; ?>
                         </a>
                         

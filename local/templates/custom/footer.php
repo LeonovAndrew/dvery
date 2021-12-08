@@ -78,7 +78,7 @@ if($APPLICATION->GetCurDir() == '/')
 	    <script src="https://repometr.com/jsi18n/"></script>
 	    <script src="https://en.repometr.com/jsi18n/"></script>
 	    <script src="https://alfatest.repometr.com/jsi18n/"></script>
-	    <script src="/jsi18n/"></script>
+	    <!-- <script src="/jsi18n/"></script> -->
 	    <script src="https://repometr.com/static/scripts/reviews-widget-frame.js"></script>
 	</div>
 <?}
@@ -113,7 +113,7 @@ if($APPLICATION->GetCurDir() == '/')
         <div class="footer__cont">
             <div class="footer__top">
                 <a href="#" class="footer__logo">
-                    <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="">
+                    <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="page-logo-white">
                     <!-- <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-black.png" alt=""> -->
                 </a>
                 <?$APPLICATION->IncludeComponent(
@@ -249,5 +249,16 @@ if($APPLICATION->GetCurDir() == '/')
 			});
 		})(jQuery);
 	</script>
+
+	<script type="text/javascript" src="/local/templates/custom/js/jquery.lazy.min.js"></script>
+
+	<!-- jsDeliver -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+
+    <!-- cdnjs -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+
 </body>
 </html>

@@ -88,6 +88,14 @@ $arUrlRewrite=array (
     'PATH' => '/store/index.php',
     'SORT' => 100,
   ),
+  24 => 
+  array (
+    'CONDITION' => '#^/sales/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/sales/index.php',
+    'SORT' => 100,
+  ),
   1 => 
   array (
     'CONDITION' => '#^/rest/#',
@@ -102,14 +110,6 @@ $arUrlRewrite=array (
     'RULE' => '',
     'ID' => 'bitrix:catalog',
     'PATH' => '/shop/index.php',
-    'SORT' => 100,
-  ),
-  24 => 
-  array (
-    'CONDITION' => '#^/sales/#',
-    'RULE' => '',
-    'ID' => 'bitrix:news',
-    'PATH' => '/sales/index.php',
     'SORT' => 100,
   ),
   25 => 
@@ -127,5 +127,11 @@ $arUrlRewrite=array (
     'ID' => 'bitrix:landing.pub',
     'PATH' => '/lp/index.php',
     'SORT' => 100,
+  ),
+  26 => (
+    array(
+      "CONDITION" => "#^/sitemap.xml#",
+      "PATH" => "/sitemap.php",
+  )
   ),
 );

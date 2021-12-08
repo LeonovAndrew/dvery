@@ -924,7 +924,7 @@ header {
 footer {
     width: 100%;
     padding-top: 60px;
-    background: linear-gradient(0deg, rgba(39, 39, 39, 0.36), rgba(39, 39, 39, 0.36)), url(../img/footer__bg.png);
+    background: linear-gradient(0deg, rgba(39, 39, 39, 0.36), rgba(39, 39, 39, 0.36)), url(../img/footer__bg.webp);
     background-size: cover;
     background-position: center;
 }
