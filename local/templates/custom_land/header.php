@@ -70,14 +70,13 @@ if (!\Bitrix\Main\Loader::includeModule('landing'))
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	
-	<?$request = \Bitrix\Main\Context::getCurrent()->getRequest();
-	if(!$request->isAdminSection())
-	{?>
-		<div id="panel"><?$APPLICATION->ShowPanel();?></div>
-	<?}?>
 	<?$APPLICATION->ShowProperty('Noscript');?>
 	<?$APPLICATION->ShowProperty('AfterBodyOpen');?>
 
+<?
+if($APPLICATION->GetCurDir() != '/bitrix/admin/')
+{
+?>
 	<?$APPLICATION->IncludeFile('/include/counter.php')?>
 	
     <div class="menu">
@@ -308,4 +307,5 @@ if (!\Bitrix\Main\Loader::includeModule('landing'))
             </div>
         </div>
     </header>
+    <?}?>
 	<main class="w-100 <?$APPLICATION->ShowProperty('MainClass');?>" <?$APPLICATION->ShowProperty('MainTag');?>>

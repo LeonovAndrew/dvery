@@ -36,7 +36,7 @@ $APPLICATION->SetTitle("Для дизайнеров и архитекторов 
 					<div class="projects-list"><a class="projects-list__item" href="<?=SITE_TEMPLATE_PATH?>/assets/img/project1.jpg" data-fancybox="projects"><span class="projects-list__img" style="background-image: url(assets/img/project1.jpg)"></span></a><a class="projects-list__item" href="<?=SITE_TEMPLATE_PATH?>/assets/img/project2.jpg" data-fancybox="projects"><span class="projects-list__img" style="background-image: url(assets/img/project2.jpg)"></span></a><a class="projects-list__item" href="<?=SITE_TEMPLATE_PATH?>/assets/img/project3.jpg" data-fancybox="projects"><span class="projects-list__img" style="background-image: url(assets/img/project3.jpg)"></span></a>
 					</div>
 					<div class="btn-arr btn-arr_white">
-						<div class="btn-arr__content"><a class="btn btn_border btn_white" href="#" data-popup-selector="callback" data-popup-wfid="1">Обсудить ваш проект</a>
+						<div class="btn-arr__content"><a class="btn btn_border btn_white" href="#" data-popup-selector="callback" data-popup-wfid="4">Обсудить ваш проект</a>
 							<div class="btn-arr__arr"></div>
 						</div>
 					</div>
@@ -124,7 +124,7 @@ $APPLICATION->SetTitle("Для дизайнеров и архитекторов 
 							</div>
 						</div>
 						<div class="btn-arr">
-							<div class="btn-arr__content"><a class="btn btn_border" href="#" data-popup-selector="callback" data-popup-wfid="1">условия сотрудничества</a>
+							<div class="btn-arr__content"><a class="btn btn_border" href="#" data-popup-selector="callback" data-popup-wfid="4">условия сотрудничества</a>
 								<div class="btn-arr__arr"></div>
 							</div>
 							<div class="btn-arr__label">По настоящему персональный менеджер</div>
@@ -156,7 +156,7 @@ $APPLICATION->SetTitle("Для дизайнеров и архитекторов 
 							<p>Так появляются красивые и интересные двери.</p>
 						</div>
 						<div class="btn-arr">
-							<div class="btn-arr__content"><a class="btn btn_border" href="#" data-popup-selector="callback" data-popup-wfid="1">Обсудить ваши идеи</a>
+							<div class="btn-arr__content"><a class="btn btn_border" href="#" data-popup-selector="callback" data-popup-wfid="4">Обсудить ваши идеи</a>
 								<div class="btn-arr__arr"></div>
 							</div>
 							<div class="btn-arr__label">Создайте свой неповторимый стиль помещения</div>
@@ -405,7 +405,7 @@ $APPLICATION->SetTitle("Для дизайнеров и архитекторов 
 							<div class="conditions__img"><img src="<?=SITE_TEMPLATE_PATH?>/assets/img/girl.png" alt=""></div>
 						</div>
 						<div class="btn-arr">
-							<div class="btn-arr__content"><a class="btn btn_border" href="#" data-popup-selector="callback" data-popup-wfid="1">Присоединиться к нам</a>
+							<div class="btn-arr__content"><a class="btn btn_border" href="#" data-popup-selector="callback" data-popup-wfid="4">Присоединиться к нам</a>
 								<div class="btn-arr__arr"></div>
 							</div>
 							<div class="btn-arr__label">Давайте работать и зарабатывать вместе</div>

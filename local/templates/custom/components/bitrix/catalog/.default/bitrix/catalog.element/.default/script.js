@@ -51,7 +51,7 @@ $(function() {
 		
 
     	$('.card__price span').html(prettify(offers[materialId][actualModelId].PRICE));
-    	$('.card__text').html(prettify(offers[materialId][actualModelId].TEXT));
+    	$('.card__text').html('Модель: '+prettify(offers[materialId][actualModelId].TEXT));
     });
 
     $('.model-item').on('click', function() {
@@ -70,7 +70,7 @@ $(function() {
 		
 
     	$('.card__price span').html(prettify(offers[materialId][modelId].PRICE));
-    	$('.card__text').html(prettify(offers[materialId][modelId].TEXT));
+    	$('.card__text').html('Модель: '+prettify(offers[materialId][modelId].TEXT));
     });    
 });
 

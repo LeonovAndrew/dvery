@@ -73,7 +73,7 @@ body.down header.clone {
 }
 
 
-header.clone .header__bottom {
+header.clone .header__bottom, header.clone .header__bottom__address {
 	display: none;
 }
 

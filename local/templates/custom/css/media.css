@@ -729,6 +729,9 @@
     .header__bottom {
         display: none;
     }
+    .header__bottom__address {
+        display: none;
+    }
     header {
         top: 22px;
     }
