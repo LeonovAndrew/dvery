@@ -46,11 +46,11 @@ $this->setFrameMode(true);
 			
 				<div class="card__result-pic">
 					<div class="card__result-pic-int">
-						<img class="js-loupe2" data-src="<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>" alt="<?=$arResult['NAME']?>" data-result-id="<?=$arResult['CURRENT_OFFER']['ID']?>" data-large='<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>'>
+						<img class="js-loupe2" src="<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>" alt="<?=$arResult['NAME']?>" data-result-id="<?=$arResult['CURRENT_OFFER']['ID']?>" data-large='<?=empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC']?>'>
 					</div>
 
 					<div class="card__result-pic-ext">
-						<img class="js-loupe" data-src="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>" alt="<?=$arResult['NAME']?>	" data-result-id="<?=$arResult['CURRENT_DESIGN']['ID']?>" data-large="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>">
+						<img class="js-loupe" src="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>" alt="<?=$arResult['NAME']?>	" data-result-id="<?=$arResult['CURRENT_DESIGN']['ID']?>" data-large="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>">
 					</div>
 				</div>
 				
@@ -61,7 +61,7 @@ $this->setFrameMode(true);
 					</div>
 					<? if (!empty($arResult['OFFERS'])) :?>
 						<div class="card__text">
-							<?=$arResult['CURRENT_OFFER']['DETAIL_TEXT']?>
+							Модель: <?=$arResult['CURRENT_OFFER']['DETAIL_TEXT']?>
 						</div>
 					<? endif; ?>
 					<div class="card__price">
@@ -90,8 +90,8 @@ $this->setFrameMode(true);
 	                            	<? foreach($arResult['OFFERS'] as $offer) :?>
 		                                <div class="card__model-help" <?=!$offer['ACTUAL'] ? 'style="display:none"' : ''?>>
 		                                    <div class="card__model-border model-item <?=$offer['ID'] == $arResult['CURRENT_OFFER']['ID'] ? 'card__model-active' : ''?>" data-id="<?=$offer['PROPERTIES']['MODEL']['VALUE']?>">
-		                                        <div class="card__model js-material-image" data-src="<?=$offer['DETAIL_PICTURE']['SRC']?>" ></div>
-		                                        <div class="card__model js-design-image" data-src="<?=$arResult['CURRENT_DESIGN']['PICTURE']?>"></div>
+		                                        <div class="card__model js-material-image" style="background-image: url(<?=$offer['DETAIL_PICTURE']['SRC']?>)"></div>
+		                                        <div class="card__model js-design-image" style="background-image: url(<?=$arResult['CURRENT_DESIGN']['PICTURE']?>)"></div>
 		                                    </div>
 		                                </div>
 	                                <? endforeach; ?>

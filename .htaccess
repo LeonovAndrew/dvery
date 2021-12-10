@@ -17,6 +17,9 @@ ErrorDocument 404 /404.php
 	php_value pcre.recursion_limit 100000
 
 <IfModule mod_rewrite.c>
+
+
+
 	Options +FollowSymLinks
 	RewriteEngine On
 ###
@@ -27,6 +30,8 @@ ErrorDocument 404 /404.php
 	RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
 	RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
 	RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
+	
+
 </IfModule>
 
 <IfModule mod_dir.c>
@@ -40,7 +45,6 @@ ErrorDocument 404 /404.php
 </IfModule>
 
 
-Redirect 301	 http://www.dveri-provance.ru/ 	https://dveri-provance.ru/ 
 Redirect 301	/katalog/dveri-po-materialam/emal/	/articles/Dveri_v_emali/
 Redirect 301	/katalog/vysokie-dveri-cena-ot-10400-rub/	/articles/visokie-dveri/
 Redirect 301	/katalog/po-modifikacii/gluhie/	/articles/gluhie-dveri/

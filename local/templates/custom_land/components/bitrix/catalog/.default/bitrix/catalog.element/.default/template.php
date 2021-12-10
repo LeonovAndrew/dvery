@@ -49,7 +49,7 @@ $this->setFrameMode(true);
 					</div>
 					<? if (!empty($arResult['OFFERS'])) :?>
 						<div class="card__text">
-							<?=$arResult['CURRENT_OFFER']['DETAIL_TEXT']?>
+							Модель: <?=$arResult['CURRENT_OFFER']['DETAIL_TEXT']?>
 						</div>
 					<? endif; ?>
 					<div class="card__price">
