@@ -7,8 +7,8 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 @ini_set('pcre.backtrack_limit', 1024*1024);
 
 define('IP_LIMIT_DEFAULT', '#IP'.'_LIMIT_PLACEHOLDER#');
-define('IP_LIMIT', '172.30.0.1');
-define('INIT_TIMESTAMP', '1638878515');
+define('IP_LIMIT', '192.168.176.1');
+define('INIT_TIMESTAMP', '1639058397');
 
 if (getenv('BITRIX_VA_VER'))
 	define('VMBITRIX', 'defined');
@@ -3921,4 +3921,4 @@ function version_compare_bx($a, $b)
 
 	return -1;
 }
-                  
+               

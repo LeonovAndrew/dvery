@@ -13,7 +13,7 @@
             		$date = empty($item['ACTIVE_FROM']) ? $item['DATE_CREATE'] : $item['ACTIVE_FROM'];?>
 	                <div class="news__item-help">
 	                    <div class="news__item">
-	                        <div class="news__img" style="background-image: url(<?=$item['PREVIEW_PICTURE']['SRC']?>);">
+	                        <div class="news__img" data-src="<?=$item['PREVIEW_PICTURE']['SRC']?>">
 
 	                        </div>
 	                        <a href="<?=$item['DETAIL_PAGE_URL']?>" class="news__title">
