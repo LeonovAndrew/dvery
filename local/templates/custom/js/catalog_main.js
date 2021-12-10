@@ -334,6 +334,7 @@ $( document ).ready(function() {
         })
 
         $('.same__body').slick({
+                lazyLoad: 'ondemand',
               dots: false,
               autoplay: true,
               autoplaySpeed: 3000,

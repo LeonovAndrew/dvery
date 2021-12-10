@@ -255,7 +255,7 @@ global $MAIN_FILTER_COLORS;
 					?>
 <? if (isset($MAIN_BANNERS[0])) :?>
 	<!-- <div class="banner-type-1" style="background-image: url(<?=CFile::GetPath($MAIN_BANNERS[0]['DETAIL_PICTURE'])?>);"> -->
-	<div class="banner-type-1" data-src="<?=CFile::GetPath($MAIN_BANNERS[0]['DETAIL_PICTURE'])?>)">
+	<div class="banner-type-1" data-src="<?=CFile::GetPath($MAIN_BANNERS[0]['DETAIL_PICTURE'])?>">
 		<div class="banner__bg">
 			<div class="banner__title">
 				<?=$MAIN_BANNERS[0]['NAME']?>
@@ -400,7 +400,7 @@ global $MAIN_FILTER_COLORS;
 										<input id="colors<?=$key?>" name="color" type="radio" class="sorting-select-option-input js-filter-input js-filter-color" value="<?=$color['ID']?>">
 										<label for="colors<?=$key?>" class="sorting-select-option-text text-type-1">
 											<span class="sort-img">
-												<img src="<?=CFile::GetPath($color['DETAIL_PICTURE'])?>" alt="img<?=$key?>">
+												<img class="sort-img__item" data-src="<?=CFile::GetPath($color['DETAIL_PICTURE'])?>" alt="img<?=$key?>">
 											</span>
 											<span><?=$color['NAME']?></span>
 										</label>
