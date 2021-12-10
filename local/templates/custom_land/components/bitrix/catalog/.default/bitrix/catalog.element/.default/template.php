@@ -3,7 +3,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
 ?>
 
-<div class="main-banner" style="background-image: url(<?=$arResult['DETAIL_PICTURE']['SRC']?>);">
+<div class="main-banner" data-src="<?=$arResult['DETAIL_PICTURE']['SRC']?>">
     <div class="main-banner__bg">
         <div class="cont">
             <div class="main-banner__cont">

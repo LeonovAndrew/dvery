@@ -4,7 +4,7 @@
 
 <div class="main-slider">
 	<? foreach($arResult['ITEMS'] as $item) :?>
-	    <div class="main-slider__item" style="background-image: url(<?=$item['DETAIL_PICTURE']['SRC']?>);">
+	    <div class="main-slider__item" data-src="<?=$item['DETAIL_PICTURE']['SRC']?>">
 	        <div class="main-slider__item-bg">
 	            <div class="cont">
 	                <div class="main-slider__cont">

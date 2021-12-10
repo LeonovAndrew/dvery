@@ -24,7 +24,7 @@ if (empty($arResult['ITEMS'])) return;
         	<? foreach($arResult['ITEMS'] as $arItem) :?>
 	            <div class="news__item-help">
 	                <div class="news__item">
-	                    <div class="news__img" style="background-image: url(<?=$arItem['PREVIEW_PICTURE']['SRC']?>);"></div>
+	                    <div class="news__img" data-src="<?=$arItem['PREVIEW_PICTURE']['SRC']?>"></div>
 	                    <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="news__title">
 	                        <?=$arItem['NAME']?>
 	                    </a>

@@ -27,7 +27,7 @@
                 <div class="certificate__body">
                     <? foreach($arResult['ITEMS'] as $item) :?>
                         <div class="certificate__item-help">
-                            <a href="<?=$item['DETAIL_PICTURE']['SRC']?>" class="certificate__item" style="background-image: url(<?=$item['DETAIL_PICTURE']['SRC']?>);"></a>
+                            <a href="<?=$item['DETAIL_PICTURE']['SRC']?>" class="certificate__item" data-src="<?=$item['DETAIL_PICTURE']['SRC']?>"></a>
                         </div>
                     <? endforeach; ?>
                 </div>

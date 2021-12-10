@@ -33,7 +33,7 @@ if (empty($arResult['SECTIONS'])) return;
 	<?/* Костыльный костыль чтобы дизайн вел куда-то на лэндинг... я этого не хотел :( */?>
 	<div class="sect-list__item">
 		<a href="/lp/nestandart/" class="sect-list__img-wrap">
-			<div class="sect-list__img" style="background-image: url('/upload/iblock/678/cy6vxhjwqfs2glzb80fjpb7812ne16s6.jpg');"></div>
+			<div class="sect-list__img" data-src ="/upload/iblock/678/cy6vxhjwqfs2glzb80fjpb7812ne16s6.jpg"></div>
 		</a>
 
 		<div class="sect-list__content">

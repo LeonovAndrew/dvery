@@ -6,7 +6,7 @@
 	<? foreach($arResult['ITEMS'] as $item) :?>
         <div class="adventages__list-item">
             <div class="adventages__item">
-                <div class="adventages__img" style="background-image: url(<?=$item['DETAIL_PICTURE']['SRC']?>);">
+                <div class="adventages__img" data-src="<?=$item['DETAIL_PICTURE']['SRC']?>">
                     <div class="adventages__bg">
 
                     </div>
