@@ -342,6 +342,7 @@ $( document ).ready(function() {
 		let sliderCatalogImg = $('.catalog__img__slider').Lazy({}),
 			sliderAdventagesImg = $('.adventages__img').Lazy({}),
 		 	newsImg = $('.news__img').Lazy({}),
+		 	usefulKnow= $('.useful-know').Lazy({}),
 		 	sertificateItem = $('.certificate__item').Lazy({});
 
 		// jQuery Lazy & slick slider
@@ -349,7 +350,7 @@ $( document ).ready(function() {
 		sameBodySlider.on('afterChange', sliderCatalogImg.revalidate);
 		adventagesBody.on('afterChange', sliderAdventagesImg.revalidate);
 		newsSlider.on('afterChange', newsImg.revalidate);
-		articleSlide.on('afterChange', newsImg.revalidate);
+		articleSlide.on('afterChange', usefulKnow.revalidate);
 		certificateSlider.on('afterChange', sertificateItem.revalidate);
 	
 
