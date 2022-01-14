@@ -1,7 +1,7 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 use \Bitrix\Iblock, Sotbit\Seometa\SeometaUrlTable;
 CModule::IncludeModule('iblock');
-$iblock_ids = array(2, 7, 27, 21, 23, 26, 5, 22); //Добавляем id инфоблоков
+$iblock_ids = array(2, 27, 21, 23, 26, 5, 22); //Добавляем id инфоблоков
 $exception_section_id = array(); //исключаем разделы инфоблока, берём только элементы
 // $iblock_id_other = array('news'=>1, 'articles'=>17);
 $sectionArr = [];
