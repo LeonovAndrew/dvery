@@ -17,6 +17,12 @@ use Rover\AmoCRM\Directory\Entity\Connection;
 use Rover\AmoCRM\Directory\Entity\Profile;
 use \Rover\AmoCRM\Options;
 
+if (Main\Loader::includeSharewareModule('rover.amocrm') == Main\Loader::MODULE_DEMO_EXPIRED)
+{
+    ShowMessage(Loc::getMessage('rover-ac__demo-expired'));
+    return;
+}
+
 if (!Main\Loader::includeModule('rover.amocrm'))
 {
     ShowMessage('rover.amocrm module not found');
@@ -75,7 +81,7 @@ class RoverAmoCrmConnectionElement extends ElementBase
      * @throws Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-    protected function getData()
+    protected function getData(): array
     {
         if ($this->arParams['ID']) {
             $data = $this->getConnection()->getCollection()->getCollection();
@@ -90,7 +96,7 @@ class RoverAmoCrmConnectionElement extends ElementBase
      * @return array
      * @author Pavel Shulaev (https://rover-it.me)
      */
-    protected function getPostData()
+    protected function getPostData(): array
     {
         return [
             Connection::UF_NAME             => $_POST[Connection::UF_NAME] ?:Loc::getMessage('rover-acce__name-default'),
@@ -232,7 +238,7 @@ class RoverAmoCrmConnectionElement extends ElementBase
                 Connection::UF_NAME             => $_POST[Connection::UF_NAME],
                 Connection::UF_CLIENT_SECRET    => $_POST[Connection::UF_CLIENT_SECRET],
                 Connection::UF_CLIENT_UUID      => $_POST[Connection::UF_CLIENT_UUID],
-                Connection::UF_ACTIVE           => $_POST[Connection::UF_ACTIVE] != 'N' ? true : false,
+                Connection::UF_ACTIVE           => $_POST[Connection::UF_ACTIVE] != 'N',
                 Connection::UF_SORT             => $_POST[Connection::UF_SORT] ? : 500,
             ];
 
@@ -262,9 +268,15 @@ class RoverAmoCrmConnectionElement extends ElementBase
         }
     }
 
-	/**
-	 * @author Pavel Shulaev (https://rover-it.me)
-	 */
+    /**
+     * @return void
+     * @throws Main\ArgumentException
+     * @throws Main\ArgumentNullException
+     * @throws Main\ArgumentOutOfRangeException
+     * @throws Main\ObjectPropertyException
+     * @throws Main\SystemException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function executeComponent()
 	{
 		try {
@@ -277,7 +289,7 @@ class RoverAmoCrmConnectionElement extends ElementBase
 		    $this->setTitle();
 
 		} catch (Exception $e) {
-		    RoverAmoCRMEvents::handleException($e, true);
+		    RoverAmoCRM::handleException($e, true);
 		}
 	}
 }

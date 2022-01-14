@@ -32,7 +32,7 @@ hr {
     border-top: 1px solid #000;
     opacity: .5;
 }
-li {
+li{
     width: 100%;
     list-style: none;
     font-style: normal;
@@ -3113,6 +3113,12 @@ h5 {
 }
 .map iframe {
     width: 100% !important;
+}
+.contact-amo-form iframe{
+    margin: 0px 0px 26px !important;
+}
+.amo-brand.amo-brand__dark{
+    display: none;
 }
 .same__body {
     width: calc(100% + 40px);

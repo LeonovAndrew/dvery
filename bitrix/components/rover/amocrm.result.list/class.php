@@ -10,18 +10,34 @@
  */
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-use \Bitrix\Main;
-use \Bitrix\Main\Localization\Loc;
+use AmoCRM\Exceptions\AmoCRMApiException;
+use AmoCRM\Exceptions\AmoCRMoAuthApiException;
+use AmoCRM\Helpers\EntityTypesInterface;
+use Bitrix\Main;
+use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UI\PageNavigation;
 use Rover\AmoCRM\Component\ListBase;
+use Rover\AmoCRM\Directory\Entity\Link;
 use Rover\AmoCRM\Directory\Entity\Profile;
-use \Rover\AmoCRM\Model\Source;
-use \Rover\AmoCRM\Options;
+use Rover\AmoCRM\Model\Source;
+use Rover\AmoCRM\Options;
 use Bitrix\Main\Web\Uri;
-use \Rover\AmoCRM\Directory\Entity\Event;
-
+use Rover\AmoCRM\Directory\Entity\Event;
 use Rover\AmoCRM\Service\Dependence;
+use Rover\AmoCRM\Service\HitCache;
 use Rover\AmoCRM\Service\Message;
+
+if (Main\Loader::includeSharewareModule('rover.amocrm') == Main\Loader::MODULE_DEMO_EXPIRED)
+{
+    ShowMessage(Loc::getMessage('rover-ac__demo-expired'));
+    return;
+}
+
+if (!Main\Loader::includeModule('rover.amocrm'))
+{
+    ShowMessage('rover.amocrm module not found');
+    return;
+}
 
 /**
  * Class RoverAmoCrmImport
@@ -43,7 +59,7 @@ class RoverAmoCrmResultList extends ListBase
 	 */
 	public function onPrepareComponentParams($arParams)
 	{
-	    $arParams['ID'] = intval($arParams['ID']);
+	    $arParams['PROFILE_ID'] = intval($arParams['PROFILE_ID']);
 
 		return $arParams;
 	}
@@ -58,9 +74,22 @@ class RoverAmoCrmResultList extends ListBase
 	{
 	    parent::checkParams();
 
-	    if (empty($this->arParams['ID']))
-	        throw new Main\ArgumentNullException('ID');
+	    if (empty($this->arParams['PROFILE_ID']))
+	        throw new Main\ArgumentNullException('PROFILE_ID');
 	}
+
+    /**
+     * @return Profile|mixed
+     * @throws Main\ArgumentNullException
+     * @throws Main\ArgumentOutOfRangeException
+     * @throws Main\LoaderException
+     * @throws Main\SystemException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getProfile(): Profile
+    {
+        return Profile::load($this->arParams['PROFILE_ID']);
+    }
 
     /**
      * @param Source $mainSource
@@ -87,14 +116,14 @@ class RoverAmoCrmResultList extends ListBase
             $presetsList[] = array(
                 'ICONCLASS' => 'view',
                 'TEXT'      => $profile->getName() . ' [' . $source->getTypeLabel() . '] (' . $source->getResultsCount() . ')',
-                'ONCLICK'   => "jsUtils.Redirect(arguments, '/bitrix/admin/rover-acrm__result-list.php?preset_id=" . $profile->getId()  . "&lang=" . LANGUAGE_ID . "')"
+                'ONCLICK'   => "jsUtils.Redirect(arguments, '/bitrix/admin/rover-acrm__result-list.php?profile_id=" . $profile->getId()  . "&lang=" . LANGUAGE_ID . "')"
             );
 
             if ($source === $mainSource)
                 $settingsList[] = [
                     'ICONCLASS' => 'edit',
                     'TEXT'      => $profile->getName() . ' [' . implode(', ', $profile->getAllowedSitesIds()) . ']',
-                    'ONCLICK'   => "jsUtils.Redirect(arguments, '/bitrix/admin/rover-acrm__profile-element.php?preset_id=" . $profile->getId()  . "&lang=" . LANGUAGE_ID . "')"
+                    'ONCLICK'   => "jsUtils.Redirect(arguments, '/bitrix/admin/rover-acrm__profile-element.php?profile_id=" . $profile->getId()  . "&lang=" . LANGUAGE_ID . "')"
                 ];
         }
 
@@ -108,7 +137,7 @@ class RoverAmoCrmResultList extends ListBase
             array(
                 'TEXT'  => Loc::getMessage('rover-ape__action-settings'),
                 'TITLE' => Loc::getMessage('rover-ape__action-settings_title'),
-                //'LINK'  => '/bitrix/admin/rover-acrm__profile-element.php?preset_id=' . $this->arParams['ID']  . "&lang=" . LANGUAGE_ID,
+                //'LINK'  => '/bitrix/admin/rover-acrm__profile-element.php?profile_id=' . $this->arParams['ID']  . "&lang=" . LANGUAGE_ID,
                 'ICON'  => 'btn-settings',
                 'MENU'  => $settingsList
             ),
@@ -187,10 +216,8 @@ class RoverAmoCrmResultList extends ListBase
 
         if (!Options::isEnabled())
         {
-            $this->arResult['MESSAGES'][] = array(
-                'MESSAGE'   => Loc::getMessage(Loc::getMessage("rover-ape__action-export-disabled")),
-                'TYPE'      => 'ERROR'
-            );
+            Message::addError(Loc::getMessage(Loc::getMessage("rover-ape__action-export-disabled")));
+            return;
         }
 
         if (!is_array($elementsIds))
@@ -200,16 +227,14 @@ class RoverAmoCrmResultList extends ListBase
             try{
                 $event = Event::createBySourceEntityId($source, $elementId);
 
-                RoverAmoCRMEvents::handleEvent($event);
+                RoverAmoCRM::addEvent($event);
 
             } catch (\Exception $e){
-                $this->arResult['MESSAGES'][] = array(
-                    'MESSAGE'   => $e->getMessage(),
-                    'TYPE'      => 'ERROR'
-                );
+                Message::addException($e);
             }
 
-        if (empty($this->arResult['MESSAGES'])) {
+        if (empty(Message::getErrors()))
+        {
             $uri = new Uri($this->request->getRequestUri());
 
             $uri->deleteParams(array("ID", $this->getActionButton()));
@@ -222,7 +247,8 @@ class RoverAmoCrmResultList extends ListBase
     }
 
     /**
-     * @return Profile
+     * @throws AmoCRMApiException
+     * @throws AmoCRMoAuthApiException
      * @throws Main\ArgumentException
      * @throws Main\ArgumentNullException
      * @throws Main\ArgumentOutOfRangeException
@@ -231,10 +257,9 @@ class RoverAmoCrmResultList extends ListBase
      * @throws Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-	public function getResult(): Profile
+	public function getResult()
     {
-        $profile    = Profile::load($this->arParams['ID']);
-        $source     = $profile->getSource();
+        $source = $this->getProfile()->getSource();
 
         $this->requestActions($source);
         $this->setTitle($source);
@@ -244,14 +269,19 @@ class RoverAmoCrmResultList extends ListBase
         $this->arResult['ACTION_PANEL'] = $this->getActionPanel($source);
         $this->arResult['GRID_ID']      = $this->getGridId();
         $this->arResult['SORT']         = $this->getGridSort();
-
-        return $profile;
     }
 
     /**
      * @param Source $source
      * @return array
-     * @throws Main\ArgumentOutOfRangeException|Main\ArgumentNullException
+     * @throws AmoCRMApiException
+     * @throws AmoCRMoAuthApiException
+     * @throws Main\ArgumentException
+     * @throws Main\ArgumentNullException
+     * @throws Main\ArgumentOutOfRangeException
+     * @throws Main\LoaderException
+     * @throws Main\ObjectPropertyException
+     * @throws Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
     protected function getRows(Source $source): array
@@ -261,22 +291,43 @@ class RoverAmoCrmResultList extends ListBase
         $curPage    = $APPLICATION->GetCurPage(true);
         $elements   = $this->getElements($source);
         $rows       = array();
+        $links      = $this->getLinks();
+        $baseDomain = $this->getProfile()->getConnection()->getBaseDomain('');
 
         foreach ($elements as $elementId => $element)
         {
+            $linkedLeadId       = $links[$elementId][EntityTypesInterface::LEADS] ?? null;
+            $linkedContactId    = $links[$elementId][EntityTypesInterface::CONTACTS] ?? null;
+            $linkedCompanyId    = $links[$elementId][EntityTypesInterface::COMPANIES] ?? null;
+            $linkedTaskId       = $links[$elementId][EntityTypesInterface::TASKS] ?? null;
+
             $element = [
                 'ID'            => $elementId,
-                'DATE_CREATE'   => $source->getResultDateCreate($elementId)
+                'DATE_CREATE'   => $source->getResultDateCreate($elementId),
+                'LINK_' . EntityTypesInterface::LEADS => $linkedLeadId,
+                'LINK_' . EntityTypesInterface::CONTACTS => $linkedContactId,
+                'LINK_' . EntityTypesInterface::COMPANIES => $linkedCompanyId,
+                'LINK_' . EntityTypesInterface::TASKS => $linkedTaskId,
             ] + $element;
 
             $rows[] = array(
                 'id'        => $elementId,
                 'data'      => $element,
+                'columns'   => [
+                    'LINK_' . EntityTypesInterface::LEADS => $linkedLeadId
+                        ? '<a target="_blank" href="https://' . $baseDomain .  '/leads/detail/' . $linkedLeadId . '">' . $linkedLeadId . '</a>' : '',
+                    'LINK_' . EntityTypesInterface::CONTACTS => $linkedContactId
+                        ? '<a target="_blank" href="https://' . $baseDomain .  '/contacts/detail/' . $linkedContactId . '">' . $linkedContactId . '</a>' : '',
+                    'LINK_' . EntityTypesInterface::COMPANIES => $linkedCompanyId
+                        ? '<a target="_blank" href="https://' . $baseDomain .  '/companies/detail/' . $linkedCompanyId . '">' . $linkedCompanyId . '</a>' : '',
+                   // 'LINK_' . EntityTypesInterface::TASKS => $linkedTaskId
+                  //      ? '<a href="https://' . $baseDomain .  '/tasks/detail/' . $linkedTaskId . '">' . $linkedTaskId . '</a>' : '',
+                ],
                 'actions'   => array(
                     array(
                         'TEXT'      => Loc::getMessage('rover-ape__action-export'),
                         'ONCLICK'   => "jsUtils.Redirect(arguments, '" . $curPage
-                            . "?preset_id=" . $this->arParams['ID']
+                            . "?profile_id=" . $this->arParams['PROFILE_ID']
                             . "&ID=" . $elementId
                             . "&lang=" . LANGUAGE_ID
                             . "&" . $this->getActionButton() ."=" . self::ACTION__EXPORT . "')",
@@ -294,21 +345,28 @@ class RoverAmoCrmResultList extends ListBase
     /**
      * @param Source $source
      * @return mixed
+     * @throws Main\ArgumentNullException
      * @author Pavel Shulaev (https://rover-it.me)
      */
     protected function getElements(Source $source)
     {
-        $nav = new PageNavigation("nav-preset-elements");
-        $nav->allowAllRecords(true)
-            ->setPageSize($this->getGridPageSize())
-            ->initFromUri();
+        $cacheId = HitCache::genId(__METHOD__, [$source->getId()]);
+        if (!HitCache::exists($cacheId))
+        {
+            $nav = new PageNavigation("nav-preset-elements");
+            $nav->allowAllRecords(true)
+                ->setPageSize($this->getGridPageSize())
+                ->initFromUri();
 
-        $sort     = $this->getGridSort();
-        $elements = $source->getResultsData(array('order' => $sort['sort']), $nav);
+            $sort     = $this->getGridSort();
+            $elements = $source->getResultsData(array('order' => $sort['sort']), $nav);
 
-        $this->arResult['NAV']  = $nav;
+            $this->arResult['NAV']  = $nav;
 
-        return $elements;
+            HitCache::set($cacheId, $elements);
+        }
+
+        return HitCache::get($cacheId);
     }
 
     /**
@@ -343,6 +401,34 @@ class RoverAmoCrmResultList extends ListBase
             //'type'      => 'date'
         ];
 
+        $result[] = [
+            'id'        => 'LINK_' . EntityTypesInterface::LEADS,
+            'name'      => Loc::getMessage('rover-ape__header-' . EntityTypesInterface::LEADS),
+            'default'   => true,
+            //'type'      => 'date'
+        ];
+
+        $result[] = [
+            'id'        => 'LINK_' . EntityTypesInterface::CONTACTS,
+            'name'      => Loc::getMessage('rover-ape__header-' . EntityTypesInterface::CONTACTS),
+            'default'   => true,
+            //'type'      => 'date'
+        ];
+
+        $result[] = [
+            'id'        => 'LINK_' . EntityTypesInterface::COMPANIES,
+            'name'      => Loc::getMessage('rover-ape__header-' . EntityTypesInterface::COMPANIES),
+            'default'   => true,
+            //'type'      => 'date'
+        ];
+
+        $result[] = [
+            'id'        => 'LINK_' . EntityTypesInterface::TASKS,
+            'name'      => Loc::getMessage('rover-ape__header-' . EntityTypesInterface::TASKS),
+            'default'   => true,
+            //'type'      => 'date'
+        ];
+
         return $result;
     }
 
@@ -358,6 +444,39 @@ class RoverAmoCrmResultList extends ListBase
             '#name#' => $source->getName(),
             '#type#' => $source->getTypeLabel(),
         )));
+    }
+
+    /**
+     * @return array
+     * @throws Main\ArgumentException
+     * @throws Main\ArgumentNullException
+     * @throws Main\ArgumentOutOfRangeException
+     * @throws Main\LoaderException
+     * @throws Main\ObjectPropertyException
+     * @throws Main\SystemException
+     * @throws AmoCRMApiException
+     * @throws AmoCRMoAuthApiException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getLinks(): array
+    {
+        $profile = $this->getProfile();
+
+        $query = [
+            'filter' => [
+                '=' . Link::UF_BX_ENTITY_ID     => array_keys($this->getElements($profile->getSource())),
+                '=' . Link::UF_BX_ENTITY_TYPE   => $profile->getSourceType(),
+                '=' . Link::UF_ACCOUNT_ID       => $profile->getConnection()->getAccountId(),
+            ],
+            'select' => [Link::UF_BX_ENTITY_ID, Link::UF_AMO_ENTITY_TYPE, Link::UF_AMO_ENTITY_ID]
+        ];
+
+        $links      = [];
+        $dbLinks    = Link::getList($query);
+        while ($link = $dbLinks->fetch())
+            $links[$link[Link::UF_BX_ENTITY_ID]][$link[Link::UF_AMO_ENTITY_TYPE]] = $link[Link::UF_AMO_ENTITY_ID];
+
+        return $links;
     }
 
     /**
@@ -377,13 +496,13 @@ class RoverAmoCrmResultList extends ListBase
 
             if (Dependence::getCheckStatus())
             {
-                $profile = $this->getResult();
-                $this->checkRights($profile);
+                $this->getResult();
+                $this->checkRights();
             }
 
 			$this->includeComponentTemplate();
 		} catch (Exception $e) {
-            RoverAmoCRMEvents::handleException($e, true);
+            RoverAmoCRM::handleException($e, true);
 		}
 	}
 }

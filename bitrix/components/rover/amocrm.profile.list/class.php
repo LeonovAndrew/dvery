@@ -10,8 +10,7 @@
  */
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-use AmoCRM\Exceptions\AmoCRMApiException;
-use AmoCRM\Exceptions\AmoCRMoAuthApiException;
+use AmoCRM\Helpers\EntityTypesInterface;
 use Bitrix\Main;
 use Bitrix\Main\Localization\Loc;
 use Rover\AmoCRM\Component\ListBase;
@@ -21,6 +20,18 @@ use Rover\AmoCRM\Model\Source;
 use Rover\AmoCRM\Service\Dependence;
 use Rover\AmoCRM\Service\Message;
 use Rover\AmoCRM\Service\Params;
+
+if (Main\Loader::includeSharewareModule('rover.amocrm') == Main\Loader::MODULE_DEMO_EXPIRED)
+{
+    ShowMessage(Loc::getMessage('rover-ac__demo-expired'));
+    return;
+}
+
+if (!Main\Loader::includeModule('rover.amocrm'))
+{
+    ShowMessage('rover.amocrm module not found');
+    return;
+}
 
 /**
  * Class RoverAmoCrmImport
@@ -84,8 +95,9 @@ class RoverAmoCrmProfileList extends ListBase
         /** @var Profile $profile */
         foreach ($profilesData as $profileData)
         {
-            $profile        = Profile::buildByData($profileData);
-            $profileId      = $profile->getId();
+            $profile    = Profile::buildByData($profileData);
+            $profileId  = $profile->getId();
+            $statuses   = Params::getGroupedLeadStatuses($profile->getConnection());
 
             try{
                 $connection     = $profile->getConnection();
@@ -93,9 +105,9 @@ class RoverAmoCrmProfileList extends ListBase
                 $source         = $profile->getSource();
                 $sites          = $profile->getAllowedSitesIds();
                 $resultsCnt     = $source->getResultsCount();
-                $presetName     = $profile->getName();
+                $profileName    = $profile->getName();
                 $responsibleList= $profile->getResponsibleList();
-                $leadCreate     = $profile->isLeadCreate();
+                $leadCreate     = $profile->isLeadsEnabled();
                 $incomingLead   = $leadCreate && $profile->isUnsorted();
 
                 if ($connection->isAvailable())
@@ -122,27 +134,52 @@ class RoverAmoCrmProfileList extends ListBase
                 foreach ($sites as $siteLid)
                     $sitesColumns[] = '<a href="/bitrix/admin/site_edit.php?lang=' . LANGUAGE_ID . '&LID=' . $siteLid . '">' . $siteLid . '</a>';
 
+                $hasErrors = count($profile->getServiceMessages());
+
+                /*$entities = [];
+                if ($profile->isLeadsEnabled())
+                {
+                    $leadName = Loc::getMessage('rover-apl__header-LEAD');
+
+                    if ($profile->getLeadPipelineId() && $profile->getLeadStatusId())
+                        $leadName .= ' (' . $statuses[$profile->getLeadPipelineId()]['name'] . ' > '
+                            . $statuses[$profile->getLeadPipelineId()]['options'][$profile->getLeadStatusId()] . ')';
+
+                    $entities[] = $leadName;
+                }
+
+                if ($profile->isContactsEnabled())
+                    $entities[] = Loc::getMessage('rover-apl__header-CONTACT');
+
+                if ($profile->isCompaniesEnabled())
+                    $entities[] = Loc::getMessage('rover-apl__header-COMPANY');
+
+                if ($profile->isTasksEnabled() && !$incomingLead)
+                    $entities[] = Loc::getMessage('rover-apl__header-TASK');*/
+
                 $row = array(
                     'id'    => $profileId,
                     'data'  => array(
                         'ID'                            => $profileId,
-                        Profile::UF_NAME                => $presetName,
-                        Profile::UF_SOURCE_ID         => $source->getTypeLabel(),
+                        Profile::UF_NAME                => $profileName,
+                        Profile::UF_SOURCE_ID           => $source->getTypeLabel(),
                         Profile::UF_SITES_IDS           => implode(', ', $sites),
                         Profile::UF_ACTIVE              => $profile->isActive() ? 'Y' : 'N',
                         Profile::UF_RESPONSIBLE_LIST    => $responsibleList,
-                        Profile::UF_LEAD_CREATE         => $leadCreate ? 'Y' : 'N',
-                        Profile::UF_CONTACT_CREATE      => $profile->isContactCreate() ? 'Y' : 'N',
-                        Profile::UF_COMPANY_CREATE      => $profile->isCompanyCreate() ? 'Y' : 'N',
-                        Profile::UF_TASK_CREATE         => !$incomingLead && $profile->isTaskCreate() ? 'Y' : 'N',
+                        //Profile::UF_AMO_ENTITIES        => $profile->getAmoEntities(),
+                        EntityTypesInterface::LEADS     => $leadCreate ? 'Y' : 'N',
+                        EntityTypesInterface::CONTACTS  => $profile->isContactsEnabled() ? 'Y' : 'N',
+                        EntityTypesInterface::COMPANIES => $profile->isCompaniesEnabled() ? 'Y' : 'N',
+                        EntityTypesInterface::TASKS     => !$incomingLead && $profile->isTasksEnabled() ? 'Y' : 'N',
                         'ELEMENTS_CNT'                  => $resultsCnt,
                         Profile::UF_CONNECTION_ID       => $connection->getId()
                     ),
                     'columns' => array(
-                        Profile::UF_NAME                => "<a title='" . Loc::getMessage('rover-apl__title-settings', array('#preset-name#' => $presetName))
-                            . "' href='{$curDir}rover-acrm__profile-element.php?preset_id=$profileId&lang=" . LANGUAGE_ID . "'>$presetName</a>",
-                        'ELEMENTS_CNT' => "<a title='" . Loc::getMessage('rover-apl__title-results', array('#preset-name#' => $presetName))
-                            . "' href='{$curDir}rover-acrm__result-list.php?preset_id=$profileId&lang=" . LANGUAGE_ID . "'>$resultsCnt</a>",
+                        Profile::UF_NAME                => "<a " . ($hasErrors ? 'style="color:red;"' : '') . " title='"
+                            . ($hasErrors ? Loc::getMessage('rover-acpl__profile-has-errors') . "\n" : '') . Loc::getMessage('rover-apl__title-settings', array('#preset-name#' => $profileName))
+                            . "' href='{$curDir}rover-acrm__profile-element.php?profile_id=$profileId&lang=" . LANGUAGE_ID . "'>$profileName</a>",
+                        'ELEMENTS_CNT' => "<a title='" . Loc::getMessage('rover-apl__title-results', array('#preset-name#' => $profileName))
+                            . "' href='{$curDir}rover-acrm__result-list.php?profile_id=$profileId&lang=" . LANGUAGE_ID . "'>$resultsCnt</a>",
                         Profile::UF_SOURCE_ID         => "<a title='{$source->getName()}' href='{$source->getEditUrl()}'>{$source->getName()}</a> ({$source->getTypeLabel()})",
                         Profile::UF_RESPONSIBLE_LIST    => $responsibleColumn,
                         Profile::UF_CONNECTION_ID       => '<div style="display: flex"><span>' . $connection->getStatusPict() . '</span>&nbsp;<span>'
@@ -150,11 +187,12 @@ class RoverAmoCrmProfileList extends ListBase
                             . $connection->getName() . '</a>' . ' (' . $connection->getBaseDomain('') . ')'
                             . ($connection->isAvailable() ? '' : ' [' . Loc::getMessage('rover-apl__disabled') . ']') . '</span></div>',
                         Profile::UF_SITES_IDS           => implode(', ', $sitesColumns),
+                        //Profile::UF_AMO_ENTITIES        => $this->getHtmlList($entities),
                     ),
                     'actions' => array(
                         array(
                             'TEXT'      => Loc::getMessage('rover-apl__action-update'),
-                            'ONCLICK'   => "jsUtils.Redirect(arguments, '" . $curDir ."rover-acrm__profile-element.php?preset_id=" . $profileId . "&lang=" . LANGUAGE_ID . "')",
+                            'ONCLICK'   => "jsUtils.Redirect(arguments, '" . $curDir ."rover-acrm__profile-element.php?profile_id=" . $profileId . "&lang=" . LANGUAGE_ID . "')",
                             "ICONCLASS" => "edit",
                             'DEFAULT'   => true,
                         ),
@@ -165,7 +203,7 @@ class RoverAmoCrmProfileList extends ListBase
                         ),
                         array(
                             'TEXT'      => Loc::getMessage('rover-apl__action-elements'),
-                            'ONCLICK'   => "jsUtils.Redirect(arguments, '" . $curDir ."rover-acrm__result-list.php?preset_id=" . $profileId . "&lang=" . LANGUAGE_ID . "')",
+                            'ONCLICK'   => "jsUtils.Redirect(arguments, '" . $curDir ."rover-acrm__result-list.php?profile_id=" . $profileId . "&lang=" . LANGUAGE_ID . "')",
                             "ICONCLASS" => "view"
                         ),
                         array(
@@ -181,16 +219,26 @@ class RoverAmoCrmProfileList extends ListBase
                     'source'    => $source
                 );
 
-                if ($incomingLead){
-                    $row['columns']['TASK'] = '<span style="color: #999" title="'
+                if ($incomingLead)
+                {
+                    $row['columns'][EntityTypesInterface::TASKS] = '<span style="color: #999" title="'
                         . Loc::getMessage('rover-apl__title-task-unavailable') .  '">'
                         . Loc::getMessage('rover-apl__unavailable') . '</span>';
-                    $row['data']['TASK'] = '<span>' . $row['data']['TASK'] . '</span>';
+                    $row['data'][EntityTypesInterface::TASKS] = '<span>' . $row['data']['TASK'] . '</span>';
+                }
 
-                    $row['columns']['LEAD'] = Loc::getMessage('rover-apl__yes')
-                        . '<br><span style="color: #999">'
-                        . Loc::getMessage('rover-apl__header-UNSORTED') . '</span>';
-                    $row['data']['LEAD'] = '<span>' . $row['data']['LEAD'] . '</span>';
+                if ($profile->isLeadsEnabled())
+                {
+                    if ($profile->getLeadPipelineId() && $profile->getLeadStatusId())
+                        $leadStatus = $statuses[$profile->getLeadPipelineId()]['name'] . ' > '
+                            . $statuses[$profile->getLeadPipelineId()]['options'][$profile->getLeadStatusId()];
+                    else
+                        $leadStatus = '';
+
+                    $row['columns'][EntityTypesInterface::LEADS] = Loc::getMessage('rover-apl__yes')
+                        . ($leadStatus ? '<br><span style="color: #999; font-size: .85em">'
+                        . $leadStatus . '</span>' : '');
+                    $row['data'][EntityTypesInterface::LEADS] = '<span>' . $row['data']['LEAD'] . '</span>';
                 }
 
                 foreach ($row['data'] as $name => $value)
@@ -202,14 +250,15 @@ class RoverAmoCrmProfileList extends ListBase
                     'data' =>array(
                         'ID'                            => $profileId,
                         Profile::UF_NAME                => '<span style="color: red">Error: ' . $e->getMessage() . '</span>',
-                        Profile::UF_SOURCE_ID         => '-',
+                        Profile::UF_SOURCE_ID           => '-',
                         Profile::UF_SITES_IDS           => '-',
                         Profile::UF_ACTIVE              => '-',
                         Profile::UF_RESPONSIBLE_LIST    => '-',
-                        Profile::UF_LEAD_CREATE         => '-',
-                        Profile::UF_CONTACT_CREATE      => '-',
-                        Profile::UF_COMPANY_CREATE      => '-',
-                        Profile::UF_TASK_CREATE         => '-',
+                       // Profile::UF_AMO_ENTITIES        => '-',
+                        EntityTypesInterface::LEADS     => '-',
+                        EntityTypesInterface::CONTACTS  => '-',
+                        EntityTypesInterface::COMPANIES => '-',
+                        EntityTypesInterface::TASKS     => '-',
                         'ELEMENTS_CNT'                  => 0,
                         Profile::UF_CONNECTION_ID       => '',
 
@@ -225,13 +274,25 @@ class RoverAmoCrmProfileList extends ListBase
                     'source'    => null
                 );
 
-                RoverAmoCRMEvents::handleException($e);
+                RoverAmoCRM::handleException($e);
             }
 
             $result[] = $row;
         }
 
         return $result;
+    }
+
+    /**
+     * @param $values
+     * @return string
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getHtmlList($values): string
+    {
+        return $values
+            ? '<ul style="padding-left: 0; /*list-style: inside*/"><li>' . implode('</li><li>', $values) . '</li></ul>'
+            : '<small style="color: #777">-</span>';
     }
 
     /**
@@ -312,18 +373,6 @@ class RoverAmoCrmProfileList extends ListBase
                 'editable'  => false,
             ),
             array(
-                'id'        => Profile::UF_SITES_IDS,
-                'name'      => Loc::getMessage('rover-apl__header-SITE'),
-                'default'   => true,
-               /* 'multiple'  => true,
-                'type'      => 'list',
-                // 'sort'      => 'TYPE'
-                'editable'  => [
-                    'items' => $sites
-                ]*/
-            ),
-
-            array(
                 'id'        => Profile::UF_RESPONSIBLE_LIST,
                 'name'      => Loc::getMessage('rover-apl__header-RESPONSIBLE'),
                 'default'   => true,
@@ -337,34 +386,53 @@ class RoverAmoCrmProfileList extends ListBase
                 ]*/
             ),
             array(
-                'id'        => Profile::UF_LEAD_CREATE,
+                'id'        => Profile::UF_SITES_IDS,
+                'name'      => Loc::getMessage('rover-apl__header-SITE'),
+                'default'   => true,
+                /* 'multiple'  => true,
+                 'type'      => 'list',
+                 // 'sort'      => 'TYPE'
+                 'editable'  => [
+                     'items' => $sites
+                 ]*/
+            ),
+            array(
+                'id'        => EntityTypesInterface::LEADS,
                 'name'      => Loc::getMessage('rover-apl__header-LEAD'),
                 'default'   => true,
-                'sort'      => Profile::UF_LEAD_CREATE,
+                //'sort'      => EntityTypesInterface::LEADS,
                 'editable'  => true,
                 "type"      => "checkbox"
             ),
+           /* array(
+                'id'        => Profile::UF_AMO_ENTITIES,
+                'name'      => Profile::getFieldL18n(Profile::UF_AMO_ENTITIES),
+                'default'   => true,
+                //'sort'      => EntityTypesInterface::LEADS,
+               // 'editable'  => true,
+                "type"      => "checkbox"
+            ),*/
             array(
-                'id'        => Profile::UF_CONTACT_CREATE,
+                'id'        => EntityTypesInterface::CONTACTS,
                 'name'      => Loc::getMessage('rover-apl__header-CONTACT'),
                 'default'   => true,
-                'sort'      => Profile::UF_CONTACT_CREATE,
+                //'sort'      => EntityTypesInterface::CONTACTS,
                 'editable'  => true,
                 "type"      => "checkbox"
             ),
             array(
-                'id'        => Profile::UF_COMPANY_CREATE,
+                'id'        => EntityTypesInterface::COMPANIES,
                 'name'      => Loc::getMessage('rover-apl__header-COMPANY'),
                 'default'   => true,
-                'sort'      => Profile::UF_COMPANY_CREATE,
+                //'sort'      => EntityTypesInterface::COMPANIES,
                 'editable'  => true,
                 "type"      => "checkbox"
             ),
             array(
-                'id'        => Profile::UF_TASK_CREATE,
+                'id'        => EntityTypesInterface::TASKS,
                 'name'      => Loc::getMessage('rover-apl__header-TASK'),
                 'default'   => true,
-                'sort'      => Profile::UF_TASK_CREATE,
+                //'sort'      => EntityTypesInterface::TASKS,
                 'editable'  => true,
                 "type"      => "checkbox"
             ),
@@ -372,7 +440,7 @@ class RoverAmoCrmProfileList extends ListBase
                 'id'        => 'ELEMENTS_CNT',
                 'name'      => Loc::getMessage('rover-apl__header-ELEMENTS_CNT'),
                 'default'   => true,
-                'sort'      => 'ELEMENTS_CNT'
+                //'sort'      => 'ELEMENTS_CNT'
             ),
         );
     }
@@ -434,8 +502,6 @@ class RoverAmoCrmProfileList extends ListBase
     }
 
     /**
-     * @throws AmoCRMApiException
-     * @throws AmoCRMoAuthApiException
      * @throws Main\ArgumentException
      * @throws Main\ArgumentNullException
      * @throws Main\ArgumentOutOfRangeException
@@ -486,7 +552,7 @@ class RoverAmoCrmProfileList extends ListBase
             $result = $profile->createDuplicate();
 
         if ((count($ids) == 1) && $result->isSuccess())
-            LocalRedirect($this->getCurDir() . "rover-acrm__profile-element.php?preset_id=" . $result->getId() . "&lang=" . LANGUAGE_ID );
+            LocalRedirect($this->getCurDir() . "rover-acrm__profile-element.php?profile_id=" . $result->getId() . "&lang=" . LANGUAGE_ID );
     }
 
     /**
@@ -530,24 +596,24 @@ class RoverAmoCrmProfileList extends ListBase
             foreach ($field as $fieldName => $fieldValue){
 
                 switch ($fieldName) {
-                    case 'NAME':
+                    case Profile::UF_NAME:
                         $profile->setName($fieldValue);
                         break;
-                    case 'ACTIVE':
+                    case Profile::UF_ACTIVE:
                         $profile->setActive($fieldValue == 'Y');
                         break;
-                    case 'LEAD':
-                        $profile->setLeadCreate($fieldValue == 'Y');
+                    case EntityTypesInterface::LEADS:
+                        $profile->setLeadsEnabled($fieldValue == 'Y');
                         break;
-                    case 'CONTACT':
-                        $profile->setContactCreate($fieldValue == 'Y');
+                    case EntityTypesInterface::CONTACTS:
+                        $profile->setContactsEnabled($fieldValue == 'Y');
                         break;
-                    case 'COMPANY':
-                        $profile->setCompanyCreate($fieldValue == 'Y');
+                    case EntityTypesInterface::COMPANIES:
+                        $profile->setCompaniesEnabled($fieldValue == 'Y');
                         break;
-                    case 'TASK':
+                    case EntityTypesInterface::TASKS:
                         if (!$profile->isUnsorted())
-                            $profile->setTaskCreate($fieldValue == 'Y');
+                            $profile->setTasksEnabled($fieldValue == 'Y');
                         break;
                    /* case 'RESPONSIBLE':
                         $profile->setValue(Tabs::INPUT__CURRENT_RESPONSIBLE_ID, $fieldValue);
@@ -593,7 +659,7 @@ class RoverAmoCrmProfileList extends ListBase
 
             Message::addOk(Loc::getMessage('rover-apl__action-remove_success'));
         } catch (Exception $e) {
-            RoverAmoCRMEvents::handleException($e);
+            RoverAmoCRM::handleException($e);
         }
     }
 
@@ -696,7 +762,7 @@ class RoverAmoCrmProfileList extends ListBase
 
             $this->includeComponentTemplate();
         } catch (Exception $e) {
-            RoverAmoCRMEvents::handleException($e, true);
+            RoverAmoCRM::handleException($e, true);
         }
     }
 }

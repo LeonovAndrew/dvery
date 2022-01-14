@@ -16,6 +16,7 @@ $APPLICATION->IncludeComponent(
 	)
 );
 CJSCore::Init(array("jquery"));
+
 use Bitrix\Main\Page\Asset;
 Asset::getInstance()->addJs(SITE_TEMPLATE_PATH."/js/metrika.js");
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php');

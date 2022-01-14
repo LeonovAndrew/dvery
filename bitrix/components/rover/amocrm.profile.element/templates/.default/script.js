@@ -1,3 +1,140 @@
+// mapping select boxes
+BX.ready(function ()
+{
+    initAddSelectBoxes();
+    initRemoveSelectBoxes();
+
+    /**
+     *
+     */
+    function initAddSelectBoxes()
+    {
+        var addSelectboxes = document.getElementsByClassName('asire__add-selectbox');
+
+        if (!addSelectboxes.length){
+            return;
+        }
+
+        for (var i in addSelectboxes)
+        {
+            if (typeof addSelectboxes[i] != 'object'){
+                continue;
+            }
+            initAddSelectBox(addSelectboxes[i]);
+        }
+    }
+
+    /**
+     *
+     */
+    function initRemoveSelectBoxes()
+    {
+        var removeSelectboxes = document.getElementsByClassName('asire__remove-selectbox');
+
+        if (!removeSelectboxes.length){
+            return;
+        }
+
+        for (var i in removeSelectboxes)
+        {
+            if (typeof removeSelectboxes[i] != 'object'){
+                continue;
+            }
+            initRemoveSelectBox(removeSelectboxes[i]);
+        }
+    }
+
+    function initRemoveSelectBox(removeSelectBox)
+    {
+        removeSelectBox.addEventListener('click', function (e)
+        {
+            removeSelectBox.parentNode.parentNode.removeChild(removeSelectBox.parentNode);
+        });
+    }
+
+    /**
+     *
+     * @param addSelectBox
+     */
+    function initAddSelectBox(addSelectBox)
+    {
+        addSelectBox.addEventListener('click', function (e)
+        {
+            var selectBoxContainer = this.parentNode,
+                newSelectBoxContainer = selectBoxContainer.cloneNode(true),
+                newRemoveSelectBox = document.createElement('span');
+
+            newRemoveSelectBox.title = BX.message('rover_acpe__field_remove_title');
+            newRemoveSelectBox.classList.add('asire__remove-selectbox');
+            newRemoveSelectBox.classList.add('asire__minus');
+            newRemoveSelectBox.innerHTML = '+';
+
+            selectBoxContainer.insertBefore(newRemoveSelectBox, addSelectBox);
+            selectBoxContainer.removeChild(addSelectBox);
+
+            newSelectBoxContainer.getElementsByTagName('select')[0].selectedIndex = 0;
+
+            selectBoxContainer.parentElement.appendChild(newSelectBoxContainer);
+
+            initAddSelectBox(newSelectBoxContainer.getElementsByClassName('asire__add-selectbox')[0]);
+            initRemoveSelectBox(selectBoxContainer.getElementsByClassName('asire__remove-selectbox')[0]);
+        });
+    }
+});
+
+// export buttons
+BX.ready(function ()
+{
+    var exportButtons = document.getElementsByClassName('rover-as__ajax-button');
+
+    function enableButtons()
+    {
+        for (let i = 0; i < exportButtons.length; i++)
+        {
+            exportButtons[i].removeAttribute('disabled');
+        }
+    }
+
+    for (let i = 0; i < exportButtons.length; i++)
+    {
+        BX.bind(exportButtons[i], 'click', function (e)
+        {
+            // disable buttons
+            for (let j = 0; j < exportButtons.length; j++)
+            {
+                exportButtons[j].setAttribute('disabled', 'disabled');
+            }
+
+            runRoverAmoCrmEventHandler(
+                this.dataset.type,
+                this.dataset.entities,
+                this.dataset.profile,
+                'progress-bar-container',
+                this.dataset.agents === 'Y',
+                this.dataset.name,
+                BX.message('rover_ac__event_init'),
+                this.dataset.success
+            );
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            BX.addCustomEvent('AmoCrmFinishAddEvents', function (data)
+            {
+                if (data.data.agents === 'Y')
+                {
+                    enableButtons();
+                }
+            });
+
+            BX.addCustomEvent('AmoCrmFinishHandleEvents', function (data)
+            {
+                enableButtons();
+            });
+        });
+    }
+});
+
 function RoverAmoCrmPlaceholder()
 {
     var popups = {},
@@ -5,8 +142,12 @@ function RoverAmoCrmPlaceholder()
 
     this.insertText = function (elementId, text) {
         //ищем элемент по id
-        var element = document.getElementById(elementId),
-            start = element.selectionStart,
+        let element = document.getElementById(elementId);
+        if (element.type == 'number'){
+            return;
+        }
+
+        let start = element.selectionStart,
             end = element.selectionEnd;
 
         if (element.focused === undefined) {

@@ -23,8 +23,6 @@ Loc::loadMessages(__FILE__);
 
 $this->setFrameMode(false);
 
-//CUtil::InitJSCore(array(/*'ajax' ,*/ 'popup'));
-
 /*$APPLICATION->IncludeComponent(
     "bitrix:main.interface.toolbar",
     "",

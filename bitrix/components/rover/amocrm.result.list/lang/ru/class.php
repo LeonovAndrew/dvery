@@ -1,9 +1,11 @@
 <?php
 
-$MESS['rover-ape__header-NAME']      = 'Название';
-$MESS['rover-ape__header-TYPE']      = 'Тип';
-$MESS['rover-ape__header-ACTIVE']    = 'Активность';
-$MESS['rover-ape__header-ELEMENTS_CNT']  = 'Количество элементов';
+use AmoCRM\Helpers\EntityTypesInterface;
+
+$MESS['rover-ape__header-' . EntityTypesInterface::LEADS]       = 'Сделка';
+$MESS['rover-ape__header-' . EntityTypesInterface::CONTACTS]    = 'Контакт';
+$MESS['rover-ape__header-' . EntityTypesInterface::COMPANIES]   = 'Компания';
+$MESS['rover-ape__header-' . EntityTypesInterface::TASKS]       = 'Задача';
 
 $MESS['rover-ape__export-success-1']  = 'Элементы успешно перенесены в amoCRM';
 $MESS['rover-ape__export-success-2']  = 'Элементы успешно добавлены в очередь на интеграцию';

@@ -10,13 +10,18 @@
  */
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-use AmoCRM\Exceptions\AmoCRMApiException;
-use AmoCRM\Exceptions\AmoCRMoAuthApiException;
 use AmoCRM\Exceptions\BadTypeException;
-use \Bitrix\Main;
-use \Bitrix\Main\Localization\Loc;
+use Bitrix\Main;
+use Bitrix\Main\Localization\Loc;
 use Rover\AmoCRM\Component\ListBase;
 use Rover\AmoCRM\Directory\Entity\Connection;
+use Rover\AmoCRM\Service\Message;
+
+if (Main\Loader::includeSharewareModule('rover.amocrm') == Main\Loader::MODULE_DEMO_EXPIRED)
+{
+    ShowMessage(Loc::getMessage('rover-ac__demo-expired'));
+    return;
+}
 
 if (!Main\Loader::includeModule('rover.amocrm'))
 {
@@ -41,7 +46,7 @@ class RoverAmoCrmConnectionList extends ListBase
      * @throws Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-    protected function getRows()
+    protected function getRows(): array
     {
         $nav        = $this->getNavObject();
         $sort       = $this->getGridSort()['sort'];
@@ -89,11 +94,11 @@ class RoverAmoCrmConnectionList extends ListBase
                         'default'   => true,
                         'onclick'   => 'document.location.href="' . $curDir . 'rover-acrm__connection-element.php?ID=' . $connectionData['ID'] . '&lang=' . LANGUAGE_ID . '"',
                     ),
-                   /* array(
+                    array(
                         'title'     => Loc::getMessage('rover-accl__action-remove'),
                         'text'      => Loc::getMessage('rover-accl__action-remove'),
                         'onclick'   => 'if (window.confirm("' . Loc::getMessage('rover-accl__action-delete_confirm') .  '")) {document.location.href="' . $curDir . 'rover-acrm__connection-list.php?ID=' . $connectionData['ID'] . '&lang=' . LANGUAGE_ID . '&' . $this->getActionButton() . '=delete&' . bitrix_sessid_get() . "&{$nav->getId()}=page-{$nav->getCurrentPage()}-size{$nav->getPageSize()}\"}",
-                    )*/
+                    )
                 ),
             );
 
@@ -161,18 +166,10 @@ class RoverAmoCrmConnectionList extends ListBase
     {
         $request = Main\Application::getInstance()->getContext()->getRequest();
         if ($request->get('OK_MESSAGE'))
-            $this->arResult['MESSAGES'][] = [
-                'MESSAGE' => $request->get('OK_MESSAGE'),
-                'TYPE'  => 'OK',
-                'HTML' => true
-            ];
+            Message::addOk($request->get('OK_MESSAGE'));
 
         if ($request->get('ERROR_MESSAGE'))
-            $this->arResult['MESSAGES'][] = [
-                'MESSAGE' => $request->get('ERROR_MESSAGE'),
-                'TYPE'  => 'ERROR',
-                'HTML' => true
-            ];
+            Message::addError($request->get('ERROR_MESSAGE'));
 
         switch ($this->getRequestAction()){
             case 'delete':
@@ -192,7 +189,6 @@ class RoverAmoCrmConnectionList extends ListBase
 
     /**
      * @param $active
-     * @throws Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
     protected function requestSetActive($active)
@@ -210,15 +206,8 @@ class RoverAmoCrmConnectionList extends ListBase
         }*/
     }
 
+
     /**
-     * @throws AmoCRMApiException
-     * @throws AmoCRMoAuthApiException
-     * @throws Main\ArgumentException
-     * @throws Main\ArgumentNullException
-     * @throws Main\ArgumentOutOfRangeException
-     * @throws Main\NotSupportedException
-     * @throws Main\ObjectPropertyException
-     * @throws Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
     protected function requestEdit()
@@ -290,7 +279,6 @@ class RoverAmoCrmConnectionList extends ListBase
 
         $uri = new Main\Web\Uri($this->request->getRequestUri());
         $uri->deleteParams(array("ID", $this->getActionButton(), 'sessid'));
-//@TODO: check for integration rules
 
         try{
             foreach ($ids as $id)
@@ -332,7 +320,7 @@ class RoverAmoCrmConnectionList extends ListBase
     }
 
     /**
-     * @return mixed|void|null
+     * @return void
      * @throws Main\ArgumentException
      * @throws Main\ArgumentNullException
      * @throws Main\ArgumentOutOfRangeException
@@ -351,7 +339,7 @@ class RoverAmoCrmConnectionList extends ListBase
             $this->includeComponentTemplate();
             $this->setTitle();
         } catch (Exception $e) {
-            RoverAmoCRMEvents::handleException($e, true);
+            RoverAmoCRM::handleException($e, true);
         }
     }
 }

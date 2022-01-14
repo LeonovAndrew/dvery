@@ -56,6 +56,10 @@ $APPLICATION->IncludeComponent(
     BX.message({
         rover_apu__placeholder_popup_header: '<?=GetMessageJS("rover-acpe__placeholder-popup-header")?>',
         rover_apu__placeholder_popup_close: '<?=GetMessageJS("rover-acpe__placeholder-popup-close")?>',
+        rover_acpe__field_remove_title: '<?=GetMessageJS("rover-acpe__field-remove-title")?>',
+        rover_acpe__field_add_title: '<?=GetMessageJS("rover-acpe__field-add-title")?>',
+
+        rover_ac__event_init: '<?=GetMessageJS("rover-ac__event-init")?>',
     });
 </script>
 <style>
