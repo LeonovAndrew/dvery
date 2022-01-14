@@ -558,4 +558,35 @@ global $MAIN_FILTER_COLORS;
 	)
 );?>
 <div style="height:40px"></div>
+	<div class="news">
+		<div class="cont">
+			<?$APPLICATION->IncludeComponent(
+	"a1expert:instagram.widget", 
+	"instagram", 
+	array(
+		"ACTION_CLICK_IMG" => "insta",
+		"CACHE_GROUPS" => "N",
+		"CACHE_TIME" => "86400",
+		"CACHE_TYPE" => "A",
+		"COLUMNS" => "4",
+		"COMPONENT_TEMPLATE" => "instagram",
+		"ELEMENTS_DISPLAY" => array(
+			0 => "user",
+			1 => "date",
+			2 => "share",
+			3 => "text",
+		),
+		"ITEMS_COUNT" => "12",
+		"LAYOUT" => "slider",
+		"MARGIN_POSTS" => "10",
+		"POST_TEMPLATE" => "classic",
+		"ROWS" => "1",
+		"TITLE" => "Мы в Instagram",
+		"TOKEN" => "IGQVJXQU91MFdiaXh2RVJSUkdrcjRXbENPd3kwSnlSRmJzT3Y1UXBfX2FwNGVyYWxNUndxYzZAhUHBRcEJEM0JWQnA3a1FtZAi1wZAkZA4amMxWkQzeWM1QTdSWnJaZAnJDMGFQeVZAJN19sX0wyQ19Jcy0tSgZDZD",
+		"WIDTH" => "auto"
+	),
+	false
+);?>
+		</div>
+	</div>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

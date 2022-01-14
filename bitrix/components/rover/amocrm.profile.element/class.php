@@ -14,8 +14,6 @@ use AmoCRM\Exceptions\AmoCRMApiException;
 use AmoCRM\Exceptions\AmoCRMMissedTokenException;
 use AmoCRM\Exceptions\AmoCRMoAuthApiException;
 use AmoCRM\Helpers\EntityTypesInterface;
-use AmoCRM\Models\CustomFields\CustomFieldModel;
-use AmoCRM\Models\CustomFields\WithEnumCustomFieldModel;
 use Bitrix\Main;
 use Bitrix\Main\ArgumentNullException;
 use Bitrix\Main\ArgumentOutOfRangeException;
@@ -24,26 +22,33 @@ use Bitrix\Main\SystemException;
 use Bitrix\Sale\Internals\StatusLangTable;
 use Rover\AmoCRM\Component\ElementBase;
 use Rover\AmoCRM\Config\Tabs;
-use Rover\AmoCRM\Controller\Duplicate;
+use Rover\AmoCRM\Snippet\Table as TableSnippet;
 use Rover\AmoCRM\Directory\Entity\Connection;
 use Rover\AmoCRM\Directory\Entity\Profile;
-use Rover\AmoCRM\Model\AdditionalParam\VisitorUid;
-use Rover\AmoCRM\Model\AdvMarks;
-use Rover\AmoCRM\Model\Rest;
-use Rover\AmoCRM\Model\Rest\Company;
-use Rover\AmoCRM\Model\Rest\Contact;
-use Rover\AmoCRM\Model\Rest\Lead;
-use Rover\AmoCRM\Model\Rest\Note;
-use Rover\AmoCRM\Model\Rest\Task;
+use Rover\AmoCRM\Mapping;
+use Rover\AmoCRM\Mapping\Companies;
+use Rover\AmoCRM\Mapping\Contacts;
+use Rover\AmoCRM\Mapping\Leads;
+use Rover\AmoCRM\Mapping\Tasks;
 use Rover\AmoCRM\Model\Source;
 use Bitrix\Main\Web\Uri;
-use Rover\AmoCRM\Service\CustomField;
+use Rover\AmoCRM\Service\Duplicate as DuplicateAlias;
 use Rover\AmoCRM\Service\Message;
 use Rover\AmoCRM\Service\Params;
 use Rover\AmoCRM\Service\Placeholder;
+use Rover\AmoCRM\Snippet\Mapping as MappingSnippet;
+
+if (Main\Loader::includeSharewareModule('rover.amocrm') == Main\Loader::MODULE_DEMO_EXPIRED)
+{
+    ShowMessage(Loc::getMessage('rover-ac__demo-expired'));
+    return;
+}
 
 if (!Main\Loader::includeModule('rover.amocrm'))
-    throw new Main\SystemException('rover.amocrm module not found');
+{
+    ShowMessage('rover.amocrm module not found');
+    return;
+}
 /**
  * Class RoverAmoCrmImport
  *
@@ -104,7 +109,7 @@ class RoverAmoCrmProfileElement extends ElementBase
         $uri = new Uri($this->request->getRequestUri());
 
         $uri->deleteParams(['source_type', 'source_id']);
-        $uri->addParams(["preset_id" => $result->getId()]);
+        $uri->addParams(["profile_id" => $result->getId()]);
 
         LocalRedirect($uri->getUri());
     }
@@ -130,7 +135,7 @@ class RoverAmoCrmProfileElement extends ElementBase
             array(
                 'TEXT'  => Loc::getMessage('rover-acpe__action-elements', array('#cnt#' => $this->getProfile()->getResultsCount())),
                 'TITLE' => Loc::getMessage('rover-acpe__action-elements_title'),
-                'LINK'  => '/bitrix/admin/rover-acrm__result-list.php?preset_id=' . $this->arParams['ID'] . '&lang=' . LANGUAGE_ID,
+                'LINK'  => '/bitrix/admin/rover-acrm__result-list.php?profile_id=' . $this->arParams['ID'] . '&lang=' . LANGUAGE_ID,
                 'ICON'  => 'btn-list'
             ),
             array(
@@ -177,219 +182,6 @@ class RoverAmoCrmProfileElement extends ElementBase
             throw new ArgumentNullException('text');
 
         return 'b">' . $text .  '<a a="b';
-    }
-
-    /**
-     * @param $restType
-     * @return array
-     * @throws AmoCRMApiException
-     * @throws AmoCRMoAuthApiException
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\ArgumentException
-     * @throws Main\LoaderException
-     * @throws Main\ObjectPropertyException
-     * @throws ReflectionException
-     * @throws SystemException
-     * @throws AmoCRMMissedTokenException
-     * @throws \AmoCRM\Exceptions\InvalidArgumentException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    public function getMappingSubTabControl($restType) : array
-    {
-        $initTabs = [];
-
-        $tabsTypes = $restType == Task::getType()
-            ? ['auto', 'adv', 'add']
-            : ['auto', 'custom', 'adv', 'add'];
-
-        foreach ($tabsTypes as $subTab)
-        {
-            $initTabs[] = [
-                "DIV"   => "opt_site_" . $subTab . '_' . $restType,
-                "TAB"   => Loc::getMessage('rover-acpe__header-fields-' . $subTab . '-' . $restType),
-                'TITLE' => Loc::getMessage('rover-acpe__header-fields-' . $subTab . '-' . $restType . '-help')
-            ];
-        }
-
-        $rest = Rest::buildByType($restType, $this->getProfile()->getConnection());
-        $entityType = $rest::getEntityType();
-
-        $mapping = $this->getProfile()->getMapping();
-        ob_start();
-
-        $subTabControl = new CAdminViewTabControl("subTabControl_mapping_fields_" . $restType, $initTabs);
-        $subTabControl->Begin();
-        // auto
-        $subTabControl->BeginNextTab();
-        $this->showMappingInput($mapping->getSubTabAutoLabels($restType), $mapping->getOptions($entityType, false),
-            [$this->getProfile()->getSource()->getOptionName($restType, '~files') => Loc::getMessage('rover-acrm__' . Source\PostEvent::FIELD__FILES . '-help')]);
-
-        if ($entityType != EntityTypesInterface::TASKS)
-        {
-            // custom
-            $subTabControl->BeginNextTab();
-            $this->showMappingInput(Params::getCustomSelectBoxes($this->getProfile()->getConnection(), $entityType));
-        }
-        // adv
-        $subTabControl->BeginNextTab();
-        $this->showMappingInput($mapping->getSubTabAdvLabels($restType), $mapping->getOptions($entityType), [
-            AdvMarks::getTemplate() . $restType => Loc::getMessage('rover-acrm__' . AdvMarks::getType() . '-all-help')
-        ]);
-        // add
-        $subTabControl->BeginNextTab();
-        $this->showMappingInput($mapping->getSubTabAddLabels($restType), $mapping->getOptions($entityType), [
-            VisitorUid::getTemplate() . $restType => Loc::getMessage('rover-acrm__' . VisitorUid::getType() . '-help')
-        ]);
-
-        $subTabControl->End();
-
-        return [
-            'id'        => Tabs::MAPPING_SUBTABCONROL . $entityType,
-            'name'      => Loc::getMessage('rover-acpe__field-' . Tabs::MAPPING_SUBTABCONROL . '_label'),
-            'required'  => false,
-            'type'      => 'custom',
-            'value'     => ob_get_clean()
-        ];
-    }
-
-    /**
-     * @param       $labels
-     * @param array $values
-     * @param array $helps
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\ArgumentException
-     * @throws SystemException
-     * @throws Main\LoaderException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    protected function showMappingInput($labels, array $values = [], array $helps = [])
-    {
-        //pr($labels);
-        ?><table class="adm-detail-content-table edit-table">
-            <tbody><?
-
-                foreach ($labels as $name => $label):
-
-                    if (empty($values) && ($label instanceof CustomFieldModel))
-                    {
-
-                        $name           = CustomField::getCodeById($label->getId());
-                        $multiple       = $label->getType() == CustomFieldModel::TYPE_MULTISELECT;
-                        $resultLabel    = $label->getName();
-                        $isCheckBox     = $label->getType() == CustomFieldModel::TYPE_CHECKBOX;
-
-                        if ($label instanceof WithEnumCustomFieldModel)
-                        {
-                            $resultValues  = [0 => Loc::getMessage('rover-ac__skip')];
-                            foreach ($label->getEnums() as $enum)
-                                $resultValues[$enum->getId()] = $enum->getValue();
-                        }
-
-                    } else {
-                        $multiple       = false;
-                        $resultValues   = $values;
-                        $resultLabel    = $label;
-                        $isCheckBox     = false;
-                    }
-
-                    $config = [
-                        'options' => $resultValues,
-                        'params' => [
-                            'id' => Profile::UF_MAPPING_DATA . ':' . $name,
-                            'name' => Profile::UF_MAPPING_DATA . '[' . $name . ']'
-                        ],
-                        'selected' => $this->getProfile()->getMappingData()[$name] ?? null
-                    ];
-
-                    if ($multiple)
-                    {
-                        $config['params']['multiple'] = 'multiple';
-                        $config['params']['size'] = min(count($resultValues), 4);
-                        $config['params']['name'] .= '[]';
-                    }
-
-                    if ($name):
-                        ?><tr>
-                            <td style="width:50%; vertical-align: top; padding-top: 7px;" class="adm-detail-content-cell-l">
-                                <label for="<?=$name?>"
-                                ><?=$resultLabel?></label>
-                            </td>
-                            <td style="width:50%" class="adm-detail-content-cell-r">
-                                <? if ($isCheckBox): ?>
-                                    <input type="hidden" name="<?=$config['params']['name']?>" value="N">
-                                    <input type="checkbox" name="<?=$config['params']['name']?>" value="Y" <?=$config['selected'] == 'Y' ? 'checked' : ''?>>
-                                <? else: ?>
-                                    <?=$this->getSelectInput($config);?>
-                                <?endif;?>
-                                <? if (isset($helps[$name])): ?>
-                                    <br><small style="color: #777"><?=$helps[$name]?></small>
-                                <?php endif; ?>
-                            </td>
-                        </tr><?
-                    endif;
-                endforeach;
-            ?></tbody>
-        </table><?php
-    }
-
-    /**
-     * @param       $name
-     * @param array $addParams
-     * @return string
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\ArgumentException
-     * @throws ReflectionException
-     * @throws SystemException|Main\LoaderException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    protected function getPlaceholder($name, array $addParams = []) : string
-    {
-        $name = trim($name);
-        if (!mb_strlen($name))
-            throw new ArgumentNullException('name');
-
-        return Loc::getMessage('rover-acpe__insert-placeholders', [
-            '#elementId#'   => $name,
-            '#content#'     => implode('<br>', Placeholder::getScriptedLegend($this->getProfile()->getSource(), $name, $addParams))
-        ]);
-    }
-
-    /**
-     * @param $entityType
-     * @return array
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\ArgumentException
-     * @throws Main\LoaderException
-     * @throws SystemException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    public function getDuplicateAction($entityType) : array
-    {
-        $help = $this->getProfile()->isUnsorted()
-            ? Loc::getMessage('rover-acrm__duplicate_action_unsorted_help')
-            : '';
-
-        $actions = array(
-            Duplicate::ACTION__ADD_NOTE => Loc::getMessage('rover-acpe__duplicate-action-' . Duplicate::ACTION__ADD_NOTE . '_label'),
-            Duplicate::ACTION__COMBINE  => Loc::getMessage('rover-acpe__duplicate-action-' . Duplicate::ACTION__COMBINE . '_label'),
-            Duplicate::ACTION__SKIP     => Loc::getMessage('rover-acpe__duplicate-action-' . Duplicate::ACTION__SKIP . '_label'),
-        );
-
-        return $this->getSelect(
-            Profile::UF_DUPLICATE_DATA . "[$entityType][" . Duplicate::ACTION . ']',
-            Loc::getMessage('rover-acpe__duplicate-action-label'),
-            $actions,
-            false,
-            $help,
-            false,
-            1,
-            (bool)strlen($help),
-            $this->getProfile()->getDuplicateData()[$entityType][Duplicate::ACTION] ?? null
-        );
     }
 
     /**
@@ -440,37 +232,94 @@ class RoverAmoCrmProfileElement extends ElementBase
         return $field;
     }
 
-
     /**
-     * @param $type
-     * @return array
+     * @param       $entityType
+     * @param array $params
+     * @return string
      * @throws ArgumentNullException
      * @throws ArgumentOutOfRangeException
      * @throws Main\LoaderException
      * @throws SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-    protected function getDuplicateControl($type) : array
+    protected function getDuplicateControlRow($entityType, array $params = []) : string
     {
-        $type = trim($type);
-        if (!mb_strlen($type))
+        $entityType = trim($entityType);
+        if (!mb_strlen($entityType))
             throw new ArgumentNullException('type');
 
-        return [
-            'id'        => Profile::UF_DUPLICATE_DATA . "[$type][" . Duplicate::ACTIVE . ']',
-            'name'      => Loc::getMessage('rover-acpe__duplicate-control-label'),
-            'required'  => false,
-            'type'      => 'checkbox',
-            'params'    => [
-                'a' => $this->getPostInput($this->getHelp(Loc::getMessage('rover-acpe__duplicate-control-' . $type .  '-help')))
-            ],
-            'value'     => $this->getProfile()->getDuplicateData()[$type][Duplicate::ACTIVE] ?? null
-        ];
+        return TableSnippet::getCheckBoxRow([
+            'name'      => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_ACTIVE . ']',
+            'checked'   => $this->getProfile()->isDuplicateControl($entityType),
+        ] + $params,
+            Loc::getMessage('rover-acpe__duplicate-control-label'),
+            Loc::getMessage('rover-acpe__duplicate-control-help')
+        );
     }
 
     /**
      * @param string $entityType
      * @param array  $options
+     * @param array  $params
+     * @return string
+     * @throws ArgumentNullException
+     * @throws ArgumentOutOfRangeException
+     * @throws Main\LoaderException
+     * @throws SystemException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getDuplicateFieldsRow(string $entityType, array $options, array $params = []) : string
+    {
+        $entityType = trim($entityType);
+        if (!mb_strlen($entityType))
+            throw new ArgumentNullException('entityType');
+
+        return TableSnippet::getSelectRow([
+            'options'   => $options,
+            'selected'  => $this->getProfile()->getDuplicateData()[$entityType][Profile::DUPLICATE_FIELDS] ?? null,
+            'params'    => [
+                'name'      => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_FIELDS . '][]',
+                'id'        => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_FIELDS . ']',
+                'multiple'  => true,
+                'size'      => min(6, count($options))
+            ]
+        ] + $params,
+            Loc::getMessage('rover-acpe__duplicate-fields-label'),
+            Loc::getMessage('rover-acpe__duplicate-fields-help')
+        );
+    }
+
+    /**
+     * @param string $entityType
+     * @param array  $params
+     * @return string
+     * @throws ArgumentNullException
+     * @throws ArgumentOutOfRangeException
+     * @throws Main\LoaderException
+     * @throws SystemException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getDuplicateLogicRow(string $entityType, array $params = []) : string
+    {
+        $entityType = trim($entityType);
+        if (!mb_strlen($entityType))
+            throw new ArgumentNullException('entityType');
+
+        return TableSnippet::getSelectRow([
+            'options'   => [
+                DuplicateAlias::LOGIC__AND  => Loc::getMessage('rover-acpe__duplicate-logic-' . DuplicateAlias::LOGIC__AND . '_label'),
+                DuplicateAlias::LOGIC__OR   => Loc::getMessage('rover-acpe__duplicate-logic-' . DuplicateAlias::LOGIC__OR . '_label'),
+            ],
+            'selected'  => $this->getProfile()->getDuplicateData()[$entityType][Profile::DUPLICATE_LOGIC] ?? null,
+            'params'    => [
+                'name'      => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_LOGIC . ']',
+                'id'        => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_LOGIC . ']',
+            ]
+        ] + $params, Loc::getMessage('rover-acpe__duplicate-logic-label'));
+    }
+
+    /**
+     * @param $entityType
      * @return array
      * @throws ArgumentNullException
      * @throws ArgumentOutOfRangeException
@@ -479,12 +328,30 @@ class RoverAmoCrmProfileElement extends ElementBase
      * @throws SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-    protected function getDuplicateFields(string $entityType, array $options) : array
+    public function getDuplicateActionRow(string $entityType, array $params = []) : string
     {
-        return $this->getSelect(Profile::UF_DUPLICATE_DATA . "[$entityType][" . Duplicate::FIELDS . ']',
-            Loc::getMessage('rover-acpe__duplicate-fields-label'), $options, true,
-            Loc::getMessage('rover-acpe__duplicate-fields-help'), false, 6, false,
-            $this->getProfile()->getDuplicateData()[$entityType][Duplicate::FIELDS] ?? null);
+        $entityType = trim($entityType);
+        if (!mb_strlen($entityType))
+            throw new ArgumentNullException('entityType');
+
+        $help = $this->getProfile()->isUnsorted()
+            ? Loc::getMessage('rover-acrm__duplicate-action-unsorted-help')
+            : '';
+
+        $actions = array(
+            DuplicateAlias::ACTION__ADD_NOTE => Loc::getMessage('rover-acpe__duplicate-action-' . DuplicateAlias::ACTION__ADD_NOTE . '_label'),
+            DuplicateAlias::ACTION__COMBINE => Loc::getMessage('rover-acpe__duplicate-action-' . DuplicateAlias::ACTION__COMBINE . '_label'),
+            DuplicateAlias::ACTION__SKIP => Loc::getMessage('rover-acpe__duplicate-action-' . DuplicateAlias::ACTION__SKIP . '_label'),
+        );
+
+        return TableSnippet::getSelectRow([
+                'options'   => $actions,
+                'selected'  => $this->getProfile()->getDuplicateData()[$entityType][Profile::DUPLICATE_ACTION] ?? null,
+                'params'    => [
+                    'name'      => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_ACTION . ']',
+                    'id'        => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Profile::DUPLICATE_ACTION . ']',
+                ]
+            ] + $params, Loc::getMessage('rover-acpe__duplicate-action-label'), $help);
     }
 
     /**
@@ -545,62 +412,6 @@ class RoverAmoCrmProfileElement extends ElementBase
     }
 
     /**
-     * @param $entityType
-     * @return array
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\LoaderException
-     * @throws SystemException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    protected function getDuplicateLogic($entityType) : array
-    {
-        $entityType = trim($entityType);
-        if (!strlen($entityType))
-            throw new ArgumentNullException('entityType');
-
-        return [
-            'id'        => Profile::UF_DUPLICATE_DATA . "[$entityType][" . Duplicate::LOGIC . ']',
-            'name'      => Loc::getMessage('rover-acpe__duplicate-logic-label'),
-            'required'  => false,
-            'type'      => 'select',
-            'items'     => array(
-                Duplicate::LOGIC__AND => Loc::getMessage('rover-acpe__duplicate-logic-' . Duplicate::LOGIC__AND . '_label'),
-                Duplicate::LOGIC__OR  => Loc::getMessage('rover-acpe__duplicate-logic-' . Duplicate::LOGIC__OR . '_label'),
-            ),
-            'value'     => $this->getProfile()->getDuplicateData()[$entityType][Duplicate::LOGIC] ?? null
-        ];
-    }
-
-    /**
-     * @return array
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\ArgumentException
-     * @throws ReflectionException
-     * @throws SystemException
-     * @throws Main\LoaderException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    protected function getTaskText() : array
-    {
-        $profile = $this->getProfile();
-
-        $textarea = '<textarea id="' . Profile::UF_TASK_TEXT . '" rows="5" cols="80" name="' . Profile::UF_TASK_TEXT . '">'
-            . $profile->getTaskText() .  '</textarea>'
-            . $this->getPlaceholder(Profile::UF_TASK_TEXT, ['FIELDS' => Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_TEXT . '_fields')])
-            . $this->getHelp(Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_TEXT . '_help'));
-
-        return [
-            'id'        => Profile::UF_TASK_TEXT,
-            'name'      => Profile::getFieldL18n(Profile::UF_TASK_TEXT),
-            'required'  => false,
-            'type'      => 'custom',
-            'value'     => $textarea
-        ];
-    }
-
-    /**
      * @return array[]
      * @throws AmoCRMApiException
      * @throws AmoCRMoAuthApiException
@@ -622,8 +433,8 @@ class RoverAmoCrmProfileElement extends ElementBase
 
         return array_merge($tabs, [
             $this->getLeadTab(),
-            $this->getContactCompanyTab(Contact::getType()),
-            $this->getContactCompanyTab(Company::getType()),
+            $this->getContactCompanyTab(EntityTypesInterface::CONTACTS),
+            $this->getContactCompanyTab(EntityTypesInterface::COMPANIES),
             $this->getTaskTab()
         ]);
     }
@@ -750,8 +561,8 @@ class RoverAmoCrmProfileElement extends ElementBase
         $profile    = $this->getProfile();
         $source     = $profile->getSource();
         $connection = $profile->getConnection();
-        $sites      = Params::getSites();
-        $responsibleList    = Params::getAmoUsers($connection);
+        $sites              = ['' => Loc::getMessage('rover-acpe__all')] + Params::getSites();
+        $responsibleList    = ['' => Loc::getMessage('rover-acpe__default')] + Params::getAmoUsers($connection);
 
         return [
             'id'        => 'header-main',
@@ -774,8 +585,8 @@ class RoverAmoCrmProfileElement extends ElementBase
                         )
                     ]
                 ],
-                $this->getSelect(Profile::UF_SITES_IDS, Profile::getFieldL18n(Profile::UF_SITES_IDS), $sites, true, Loc::getMessage('rover-acpe__field-' . Profile::UF_SITES_IDS . '_help')),
                 $this->getSelect(Profile::UF_RESPONSIBLE_LIST, Profile::getFieldL18n(Profile::UF_RESPONSIBLE_LIST), $responsibleList, true, Loc::getMessage('rover-acpe__field-' . Profile::UF_RESPONSIBLE_LIST . '_help')),
+                $this->getSelect(Profile::UF_SITES_IDS, Profile::getFieldL18n(Profile::UF_SITES_IDS), $sites, true, Loc::getMessage('rover-acpe__field-' . Profile::UF_SITES_IDS . '_help')),
                 [
                     'id'        => Profile::UF_COMMON_TAGS,
                     'name'      => Profile::getFieldL18n(Profile::UF_COMMON_TAGS),
@@ -784,11 +595,15 @@ class RoverAmoCrmProfileElement extends ElementBase
                     'params'    => [
                         'size'  => 50,
                         'id'    => Profile::UF_COMMON_TAGS,
-                        'a'     => $this->getPostInput($this->getPlaceholder(Profile::UF_COMMON_TAGS)
+                        'a'     => $this->getPostInput($this->getProfile()
+                                ->getMapping(Leads::class)
+                                ->getPlaceholder()
+                                ->getButton(Profile::UF_COMMON_TAGS)
                             . $this->getHelp(Loc::getMessage('rover-acpe__field-' . Profile::UF_COMMON_TAGS . '_help')))
                     ]
                 ],
-                $this->getCheckbox(Profile::UF_GROUP_NOTES),
+                $this->getCheckbox(Profile::UF_ADD_COMPLEX),
+                //$this->getCheckbox(Profile::UF_GROUP_NOTES),
                 $this->getCheckbox(Profile::UF_HIT_DUPLICATES),
             ]
         ];
@@ -819,23 +634,35 @@ class RoverAmoCrmProfileElement extends ElementBase
         ]);
         $leadStatuses   = ['' => '-'] + Params::getLeadPipelinesStatuses($connection);
 
-        $bxToAmoProductsParams = [];
-        $amoToBxProductsParams = [];
+        $bxToAmoProductsParams = $amoToBxProductsParams = [];
 
-        if ($this->getProfile()->isUnsorted())
+        if ($this->getProfile()->isUnsorted() || !$this->getProfile()->getConnection()->isCatalogElementsEnabled())
         {
-            $bxToAmoProductsParams['disabled'] = 'disabled';
-            $bxToAmoProductsParams['a'] = $this->getPostInput($this->getHelp(
-                    Loc::getMessage('rover-acpe__field-' . Profile::UF_ORDER_BX_AMO_PRODUCTS . '_unsorted_help')));
+            $bxToAmoProductsParams['disabled'] = $amoToBxProductsParams['disabled'] = 'disabled';
+            $catalogElementsHelp = !$this->getProfile()->getConnection()->isCatalogElementsEnabled()
+                ? Loc::getMessage('rover-acpe__field-products_disabled_help')
+                : Loc::getMessage('rover-acpe__field-products_unsorted_help');
 
-            $amoToBxProductsParams['disabled'] = 'disabled';
-            $amoToBxProductsParams['a'] = $this->getPostInput($this->getHelp(
-                    Loc::getMessage('rover-acpe__field-' . Profile::UF_ORDER_AMO_BX_PRODUCTS . '_unsorted_help')));
+            $bxToAmoProductsParams['a'] = $amoToBxProductsParams['a'] = $this->getPostInput($this->getHelp($catalogElementsHelp));
+        }
+
+        $count = $this->getProfile()->isAmoBxStatuses()
+            + $this->getProfile()->isBxAmoStatuses()
+            + $this->getProfile()->isAmoBxProducts()
+            + $this->getProfile()->isBxAmoProducts();
+
+        if ($count == 4)
+        {
+            $status = ' ✔';
+        } elseif ($count == 0) {
+            $status = ' ✖';
+        } else {
+            $status = ' ♦';
         }
 
         $tab = [
             'id'        => 'header-order',
-            'name'      => Loc::getMessage('rover-acpe__header-order'),
+            'name'      => Loc::getMessage('rover-acpe__header-order') . $status,
             'title'     => Loc::getMessage('rover-acpe__header-order'),
             'fields'    => [
                 [
@@ -843,15 +670,15 @@ class RoverAmoCrmProfileElement extends ElementBase
                     'name'  => Loc::getMessage('rover-acpe__header-fields-bx-to-amo-order'),
                     'type'  => 'section',
                 ],
-                $this->getCheckbox(Profile::UF_ORDER_BX_AMO_STATUSES),
-                $this->getCheckbox(Profile::UF_ORDER_BX_AMO_PRODUCTS, $bxToAmoProductsParams),
+                $this->getCheckbox(Profile::UF_BX_AMO_STATUSES),
+                $this->getCheckbox(Profile::UF_BX_AMO_PRODUCTS, $bxToAmoProductsParams),
                 [
                     'id'    => 'fields-settings-order-amo-to-bx',
                     'name'  => Loc::getMessage('rover-acpe__header-fields-amo-to-bx-order'),
                     'type'  => 'section',
                 ],
-                $this->getCheckbox(Profile::UF_ORDER_AMO_BX_STATUSES),
-                $this->getCheckbox(Profile::UF_ORDER_AMO_BX_PRODUCTS, $amoToBxProductsParams),
+                $this->getCheckbox(Profile::UF_AMO_BX_STATUSES),
+                $this->getCheckbox(Profile::UF_AMO_BX_PRODUCTS, $amoToBxProductsParams),
                 [
                     'id'    => 'fields-settings-order-statuses-mapping',
                     'name'  => Loc::getMessage('rover-acpe__header-fields-statuses-mapping-order'),
@@ -923,74 +750,158 @@ class RoverAmoCrmProfileElement extends ElementBase
             $pipelineField['value'] .= '<input type="hidden" name="' . Profile::UF_LEAD_PIPELINE_ID . '" value="' . key($pipelines) . '">';
         }
 
-        // duplicate options
-        $options = $this->getProfile()->getMapping()->getOptions(EntityTypesInterface::LEADS);
-        unset($options[Note::getType()]);
+        return [
+            'id'        => 'header-' . EntityTypesInterface::LEADS,
+            'name'      => Loc::getMessage('rover-acpe__header-' . EntityTypesInterface::LEADS)
+                . ($this->getProfile()->isLeadsEnabled() ? ' ✔' : ' ✖'),
+            'title'     => Loc::getMessage('rover-acpe__header-' . EntityTypesInterface::LEADS)
+                . ($this->getProfile()->isLeadsEnabled() ? '' : ' ' . Loc::getMessage('rover-acpe__disabled')),
+            'fields'    => [
+                $this->getCheckbox(Profile::UF_AMO_ENTITIES . '[' . EntityTypesInterface::LEADS . ']', [],
+                    Loc::getMessage('rover-acpe__field-create-' . EntityTypesInterface::LEADS),
+                    Loc::getMessage('rover-acpe__field-create-' . EntityTypesInterface::LEADS . '_help'),
+                    $this->getProfile()->isLeadsEnabled()
+                ),
+                $pipelineField,
+                $this->getCheckbox(Profile::UF_LEAD_VISITOR_UID),
+                [
+                    'id'        => 'mapping-fields-subtabs_' . Leads::getUFName(),
+                    'type'      => 'custom',
+                    'colspan'   => true,
+                    'value'     => $this->getEntitySubTabs($this->getProfile()->getMapping(Leads::class), $this->getLeadDuplicateOptions())
+                ],
+            ]
+        ];
+    }
 
-        $options[Lead::FIELD__SALE] = $options[Tabs::LEAD_SALE];
-        unset($options[Tabs::LEAD_SALE]);
+    /**
+     * @param Mapping $mapping
+     * @return false|string
+     * @throws AmoCRMApiException
+     * @throws AmoCRMoAuthApiException
+     * @throws ArgumentNullException
+     * @throws ArgumentOutOfRangeException
+     * @throws Main\LoaderException
+     * @throws Main\NotImplementedException
+     * @throws SystemException
+     * @throws \AmoCRM\Exceptions\InvalidArgumentException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getEntitySubTabs(Mapping $mapping, array $availableDuplicateFields)
+    {
+        $entityType = $mapping->getAmoEntity();
 
-        $options[Lead::FIELD__NAME]         = Profile::getFieldL18n(Profile::UF_LEAD_NAME);
-        $options[Lead::FIELD__STATUS_ID]    = $this->getProfile()->isMultiPipeline()
+        $enabled = $this->getProfile()->isDuplicateControl($entityType) && $this->getProfile()->getAddComplex();
+
+        $initTabs = [
+            [
+                "DIV"   => "opt_site_mapping_" . $mapping::getUFName(),
+                "TAB"   => Loc::getMessage('rover-acpe__header-mapping'),
+                'TITLE' => Profile::getFieldL18n($mapping::getUFName())
+            ],
+                [
+                "DIV"   => "opt_site_duplicates_" . $mapping::getUFName(),
+                "TAB"   => Loc::getMessage('rover-acpe__header-duplicates')
+                    . ($enabled ? ' &#10004;' : ' ✖'),
+                'TITLE' => Loc::getMessage('rover-acpe__header-duplicates-' . $entityType)
+                    . ($this->getProfile()->getAddComplex() ? Loc::getMessage('rover-acpe__duplicates-add-complex-note') : '')
+            ],
+        ];
+
+        ob_start();
+
+        $subTabControl = new \CAdminViewTabControl("subTabControl_mapping_fields_" . $entityType, $initTabs);
+        $subTabControl->Begin();
+
+        // mapping
+
+        $subTabControl->BeginNextTab();
+        echo '<table class="adm-detail-content-table edit-table bx-edit-table"><tbody>';
+        echo '<tr><td colspan="2">' . MappingSnippet::getTable($mapping, null, true) . '</td></tr>';
+        echo '</tbody></table>';
+
+        // duplicates
+        $subTabControl->BeginNextTab();
+        echo '<table class="adm-detail-content-table edit-table bx-edit-table"><tbody>';
+        echo $this->getDuplicateControlRow($entityType);
+        echo $this->getDuplicateFieldsRow($entityType, $availableDuplicateFields);
+        echo $this->getDuplicateLogicRow($entityType);
+
+        if ($entityType == EntityTypesInterface::LEADS):
+
+            $allStatuses= ['' => Loc::getMessage('rover-acpe__header-fields-adv-all')] + Params::getLeadPipelinesStatuses($this->getProfile()->getConnection());
+
+            echo TableSnippet::getSelectRow([
+                    'options'   => $allStatuses,
+                    'selected'  => $this->getProfile()->getDuplicateData()[EntityTypesInterface::LEADS][Profile::DUPLICATE_STATUS] ?? null,
+                    'params'    => [
+                        'name'      => Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Profile::DUPLICATE_STATUS . '][]',
+                        'id'        => Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Profile::DUPLICATE_STATUS . ']',
+                        'multiple'  => true,
+                        'size'      => min(6, count($allStatuses))
+                ],
+                ],
+                Loc::getMessage('rover-acpe__duplicate-' . Profile::DUPLICATE_STATUS . '_label'),
+                Loc::getMessage('rover-acpe__duplicate-' . Profile::DUPLICATE_STATUS . '_help')
+            );
+                // @TODO: LEAD_DUPLICATE_PIPELINE
+        endif;
+
+        echo $this->getDuplicateActionRow($entityType);
+
+        if ($entityType == EntityTypesInterface::LEADS):
+
+            echo TableSnippet::getCheckBoxRow([
+                    'name'      => Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Profile::DUPLICATE_UPDATE_NAME . ']',
+                    'checked'   => $this->getProfile()->isLeadDuplicateUpdateName(),
+                ],
+                Loc::getMessage('rover-acpe__duplicate-' . Profile::DUPLICATE_UPDATE_NAME . '_label'),
+                Loc::getMessage('rover-acpe__duplicate-' . Profile::DUPLICATE_UPDATE_NAME . '_help')
+            );
+
+            echo TableSnippet::getCheckBoxRow([
+                    'name'      => Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Profile::DUPLICATE_UPDATE_STATUS . ']',
+                    'checked'   => $this->getProfile()->isLeadDuplicateUpdateStatus(),
+                ],
+                Loc::getMessage('rover-acpe__duplicate-' . Profile::DUPLICATE_UPDATE_STATUS . '_label'),
+                Loc::getMessage('rover-acpe__duplicate-' . Profile::DUPLICATE_UPDATE_STATUS . '_help')
+            );
+
+        endif;
+
+        echo '</tbody></table>';
+
+        $subTabControl->End();
+
+        return ob_get_clean();
+    }
+
+    /**
+     * @return array|null
+     * @throws AmoCRMApiException
+     * @throws AmoCRMMissedTokenException
+     * @throws AmoCRMoAuthApiException
+     * @throws ArgumentNullException
+     * @throws ArgumentOutOfRangeException
+     * @throws Main\ArgumentException
+     * @throws Main\LoaderException
+     * @throws Main\ObjectPropertyException
+     * @throws SystemException
+     * @throws \AmoCRM\Exceptions\InvalidArgumentException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+    protected function getLeadDuplicateOptions(): ?array
+    {
+        $options = $this->getProfile()->getMappingHelper()->getOptions(EntityTypesInterface::LEADS);
+
+        $options['name']        = Loc::getMessage('rover-acpe__field-lead-name');
+        $options['status_id']   = $this->getProfile()->isMultiPipeline()
             ? Loc::getMessage('rover-acpe__field-' . Profile::UF_LEAD_STATUS_ID . '_label_multy')
             : Loc::getMessage('rover-acpe__field-' . Profile::UF_LEAD_STATUS_ID . '_label_single');
 
-        $options['contacts'] = Loc::getMessage('rover-acpe__field-contacts_id_label');
+        $options[EntityTypesInterface::CONTACTS] = Loc::getMessage('rover-acpe__field-contacts_id_label');
 
-        return [
-            'id'        => 'header-' . EntityTypesInterface::LEADS,
-            'name'      => Loc::getMessage('rover-acpe__header-' . Lead::getType()),
-            'title'     => Loc::getMessage('rover-acpe__header-' . Lead::getType()),
-            'fields'    => [
-                $this->getCheckbox(Profile::UF_LEAD_CREATE),
-                [
-                    'id'        => Profile::UF_LEAD_NAME,
-                    'name'      => Profile::getFieldL18n(Profile::UF_LEAD_NAME),
-                    //'required'  => true,
-                    'type'      => 'text',
-                    'params'    => [
-                        'id'    => Profile::UF_LEAD_NAME,
-                        'size' => 50,
-                        'a' => $this->getPostInput($this->getPlaceholder(Profile::UF_LEAD_NAME)
-                            . $this->getHelp(Loc::getMessage('rover-acpe__field-' . Profile::UF_LEAD_NAME . '_help'))
-                        )
-                    ]
-                ],
-                $pipelineField,
-                $this->getCheckbox(Profile::UF_LEAD_VISITOR_UID),
-                $this->getMappingSubTabControl(Lead::getType()),
-                [
-                    'id'    => 'fields-settings-lead-duplicates',
-                    'name'  => Loc::getMessage('rover-acpe__header-duplicates-' . EntityTypesInterface::LEADS),
-                    'type'  => 'section'
-                ],
-                $this->getDuplicateControl(EntityTypesInterface::LEADS),
-                $this->getCheckbox(Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Duplicate::CONTACT . ']',
-                    [], Loc::getMessage('rover-acpe__duplicate-' . Duplicate::CONTACT . '_label'),
-                    Loc::getMessage('rover-acpe__duplicate-' . Duplicate::CONTACT . '_help'),
-                    $this->getProfile()->getDuplicateData()[EntityTypesInterface::LEADS][Duplicate::CONTACT] ?? null
-                ),
-                $this->getDuplicateFields(EntityTypesInterface::LEADS, $options),
-                $this->getDuplicateLogic(EntityTypesInterface::LEADS),
-                // @TODO: LEAD_DUPLICATE_PIPELINE
-                $this->getSelect(Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Duplicate::STATUS  . ']',
-                    Loc::getMessage('rover-acpe__duplicate-' . Duplicate::STATUS . '_label'),
-                    $allStatuses, true, Loc::getMessage('rover-acpe__duplicate-' . Duplicate::STATUS . '_help'), false, 6, false,
-                    $this->getProfile()->getDuplicateData()[EntityTypesInterface::LEADS][Duplicate::STATUS] ?? null),
-
-                $this->getDuplicateAction(EntityTypesInterface::LEADS),
-                $this->getCheckbox(Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Duplicate::UPDATE_NAME . ']',
-                    [], Loc::getMessage('rover-acpe__duplicate-' . Duplicate::UPDATE_NAME . '_label'),
-                    Loc::getMessage('rover-acpe__duplicate-' . Duplicate::UPDATE_NAME . '_help'),
-                    $this->getProfile()->getDuplicateData()[EntityTypesInterface::LEADS][Duplicate::UPDATE_NAME] ?? null
-                ),
-                $this->getCheckbox(Profile::UF_DUPLICATE_DATA . '[' . EntityTypesInterface::LEADS . '][' . Duplicate::UPDATE_STATUS . ']',
-                    [], Loc::getMessage('rover-acpe__duplicate-' . Duplicate::UPDATE_STATUS . '_label'),
-                    Loc::getMessage('rover-acpe__duplicate-' . Duplicate::UPDATE_STATUS . '_help'),
-                    $this->getProfile()->getDuplicateData()[EntityTypesInterface::LEADS][Duplicate::UPDATE_STATUS] ?? null
-                ),
-            ]
-        ];
+        return $options;
     }
 
     /**
@@ -1009,34 +920,34 @@ class RoverAmoCrmProfileElement extends ElementBase
      * @throws \AmoCRM\Exceptions\InvalidArgumentException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-    protected function getContactCompanyTab($restType): array
+    protected function getContactCompanyTab($entityType): array
     {
-        $rest = Rest::buildByType($restType, $this->getProfile()->getConnection());
-        $entityType = $rest::getEntityType();
+        $options = $this->getProfile()->getMappingHelper()->getOptions($entityType);
 
-        $activeUfName = $entityType == EntityTypesInterface::CONTACTS
-            ? Profile::UF_CONTACT_CREATE
-            : Profile::UF_COMPANY_CREATE;
-
-        $options = $this->getProfile()->getMapping()->getOptions($entityType);
-        unset($options[Note::getType()]);
+        if ($entityType == EntityTypesInterface::CONTACTS)
+            $mappingClass = Contacts::class;
+        elseif ($entityType == EntityTypesInterface::COMPANIES)
+            $mappingClass = Companies::class;
+        else
+            throw new ArgumentOutOfRangeException('restType');
 
         return [
             'id'        => 'header-' . $entityType,
-            'name'      => Loc::getMessage('rover-acpe__header-' . $entityType),
+            'name'      => Loc::getMessage('rover-acpe__header-' . $entityType)
+                . ($this->getProfile()->isAmoEntityEnabled($entityType) ? ' ✔' : ' ✖'),
             'title'     => Loc::getMessage('rover-acpe__header-' . $entityType),
             'fields'    => [
-                $this->getCheckbox($activeUfName),
-                $this->getMappingSubTabControl($restType),
+                $this->getCheckbox(Profile::UF_AMO_ENTITIES . '[' . $entityType . ']', [],
+                    Loc::getMessage('rover-acpe__field-create-' . $entityType),
+                    Loc::getMessage('rover-acpe__field-create-' . $entityType . '_help'),
+                    $this->getProfile()->isAmoEntityEnabled($entityType)
+                ),
                 [
-                    'id'    => 'fields-settings-contact-duplicates',
-                    'name'  => Loc::getMessage('rover-acpe__header-duplicates-' . $entityType),
-                    'type'  => 'section'
+                    'id'        => 'mapping-fields-subtabs_' . $mappingClass::getUFName(),
+                    'type'      => 'custom',
+                    'colspan'   => true,
+                    'value'     => $this->getEntitySubTabs($this->getProfile()->getMapping($mappingClass), $options)
                 ],
-                $this->getDuplicateControl($entityType),
-                $this->getDuplicateFields($entityType, $options),
-                $this->getDuplicateLogic($entityType),
-                $this->getDuplicateAction($entityType),
             ]
         ];
     }
@@ -1056,20 +967,28 @@ class RoverAmoCrmProfileElement extends ElementBase
      */
     protected function getTaskTab() : array
     {
-        $profile    = $this->getProfile();
-        $connection = $profile->getConnection();
+        $profile        = $this->getProfile();
+        $connection     = $profile->getConnection();
         $elementTypes   = array(
-            Rest::ELEMENT_TYPE__CONTACT => Loc::getMessage('rover-acpe__entity-' . Contact::getType() . '_label'),
-            Rest::ELEMENT_TYPE__COMPANY => Loc::getMessage('rover-acpe__entity-' . Company::getType() . '_label'),
-            Rest::ELEMENT_TYPE__LEAD    => Loc::getMessage('rover-acpe__entity-' . Lead::getType() . '_label')
+            EntityTypesInterface::CONTACTS  => Loc::getMessage('rover-acpe__entity-' . EntityTypesInterface::CONTACTS . '_label'),
+            EntityTypesInterface::COMPANIES => Loc::getMessage('rover-acpe__entity-' . EntityTypesInterface::COMPANIES . '_label'),
+            EntityTypesInterface::LEADS     => Loc::getMessage('rover-acpe__entity-' . EntityTypesInterface::LEADS . '_label')
         );
 
+        $enabled = $this->getProfile()->isTasksEnabled() && !$profile->isUnsorted();
+
         return [
-            'id'        => '5_header',
-            'name'      => Loc::getMessage('rover-acpe__header-' . Task::getType()),
-            'title'     => Loc::getMessage('rover-acpe__header-' . Task::getType()),
+            'id'        => 'tasks_header',
+            'name'      => Loc::getMessage('rover-acpe__header-' . EntityTypesInterface::TASKS)
+                . ($enabled ? ' ✔' : ' ✖'),
+            'title'     => Loc::getMessage('rover-acpe__header-' . EntityTypesInterface::TASKS)
+                . ($profile->isUnsorted() ? Loc::getMessage('rover-acpe__header-' . EntityTypesInterface::TASKS . '-disabled') : ''),
             'fields'    => [
-                $this->getCheckbox(Profile::UF_TASK_CREATE),
+                $this->getCheckbox(Profile::UF_AMO_ENTITIES . '[' . EntityTypesInterface::TASKS . ']', [],
+                    Loc::getMessage('rover-acpe__field-create-' . EntityTypesInterface::TASKS),
+                    Loc::getMessage('rover-acpe__field-create-' . EntityTypesInterface::TASKS . '_help'),
+                    $this->getProfile()->isTasksEnabled()
+                ),
                 $this->getSelect(Profile::UF_TASK_ELEMENT_TYPE, Profile::getFieldL18n(Profile::UF_TASK_ELEMENT_TYPE),
                     $elementTypes, false, Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_ELEMENT_TYPE . '_help')),
                 [
@@ -1079,18 +998,30 @@ class RoverAmoCrmProfileElement extends ElementBase
                     'type'      => 'select',
                     'items'     => Params::getTaskTypes($connection),
                 ],
-                $this->getTaskText(),
                 [
                     'id'        => Profile::UF_TASK_DEADLINE,
                     'name'      => Profile::getFieldL18n(Profile::UF_TASK_DEADLINE),
                     'required'  => false,
                     'type'      => 'select',
                     'items'     => [
-                        \Rover\AmoCRM\Controller\AmoCRM\Task::DEADLINE__DAY_END => Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_DEADLINE . '_day-end'),
-                        \Rover\AmoCRM\Controller\AmoCRM\Task::DEADLINE__NOW     => Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_DEADLINE . '_now'),
+                        Profile::TASK_DEADLINE__NOW         => Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_DEADLINE . '_now'),
+                        Profile::TASK_DEADLINE__ONE_HOUR    => Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_DEADLINE . '_one-hour'),
+                        Profile::TASK_DEADLINE__DAY_END     => Loc::getMessage('rover-acpe__field-' . Profile::UF_TASK_DEADLINE . '_day-end'),
                     ],
+                    ],
+                [
+                    'id'    => Tasks::getUFName() . '-section',
+                    'name'  => Profile::getFieldL18n(Tasks::getUFName()),
+                    'type'  => 'section'
                 ],
-                $this->getMappingSubTabControl(Task::getType()),
+                [
+                        'id'        => Tasks::getUFName(),
+                        'name'      => Profile::getFieldL18n(Tasks::getUFName()),
+                        'required'  => false,
+                        'type'      => 'custom',
+                        'colspan'   => true,
+                        'value'     => MappingSnippet::getTable($this->getProfile()->getMapping(Tasks::class), null, true)
+                ],
             ]
         ];
     }
@@ -1157,12 +1088,13 @@ class RoverAmoCrmProfileElement extends ElementBase
 
         Profile::checkMandatoryData($data, [Profile::UF_CONNECTION_ID, Profile::UF_SOURCE_TYPE, Profile::UF_SOURCE_ID]);
 
+        unset($data[Profile::UF_CONNECTION_ID]); // do not update connection
         $result = Profile::update($this->arParams['ID'], $data);
 
         if ($result->isSuccess())
         {
             if ($this->request->getPost('apply'))
-                LocalRedirect('/bitrix/admin/rover-acrm__profile-element.php?preset_id=' . $result->getId() . '&lang=' . LANGUAGE_ID);
+                LocalRedirect('/bitrix/admin/rover-acrm__profile-element.php?profile_id=' . $result->getId() . '&lang=' . LANGUAGE_ID);
             else
                 LocalRedirect('/bitrix/admin/rover-acrm__profile-list.php?lang=' . LANGUAGE_ID);
         }
@@ -1174,11 +1106,12 @@ class RoverAmoCrmProfileElement extends ElementBase
 
     /**
      * @return array
-     * @throws Main\ArgumentNullException
-     * @throws Main\ArgumentOutOfRangeException
+     * @throws ArgumentNullException
+     * @throws ArgumentOutOfRangeException
      * @throws Main\LoaderException
      * @throws Main\NotImplementedException
-     * @throws Main\SystemException
+     * @throws ReflectionException
+     * @throws SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
     protected function getPostData(): array
@@ -1189,11 +1122,27 @@ class RoverAmoCrmProfileElement extends ElementBase
 
         foreach ($params as $fieldParam)
         {
+            if (in_array($fieldParam['FIELD_NAME'], [Profile::UF_AMO_ENTITIES]))
+            {
+                $value = [];
+                foreach ($postList->get($fieldParam['FIELD_NAME']) as $type => $checkBoxValue)
+                    if ($checkBoxValue == 'Y')
+                        $value[] = $type;
+            }
+            else
+            {
             $value = $postList->get($fieldParam['FIELD_NAME']);
 
             if (is_array($value) && $fieldParam['MULTIPLE'] != 'Y')
                 $value = serialize($value);
+                $mappingClassName = Mapping::getClassNameByUfName($fieldParam['FIELD_NAME']);
 
+                if ($mappingClassName)
+                {
+                    $value = $mappingClassName::encode($value);
+                }
+                else
+                {
             if ($fieldParam['USER_TYPE_ID'] == 'boolean')
             {
                 if (!in_array($value, ['Y', 'N']))
@@ -1203,44 +1152,13 @@ class RoverAmoCrmProfileElement extends ElementBase
 
             } elseif (is_null($value) && isset($fieldParam['SETTINGS']['DEFAULT_VALUE']))
                 $value = $fieldParam['SETTINGS']['DEFAULT_VALUE'];
+                }
+            }
 
             $result[$fieldParam['FIELD_NAME']] = $value;
         }
 
         return $result;
-    }
-
-    /**
-     * @throws AmoCRMApiException
-     * @throws AmoCRMoAuthApiException
-     * @throws ArgumentNullException
-     * @throws ArgumentOutOfRangeException
-     * @throws Main\ArgumentException
-     * @throws Main\LoaderException
-     * @throws Main\ObjectPropertyException
-     * @throws SystemException
-     * @author Pavel Shulaev (https://rover-it.me)
-     */
-    protected function fixPipelineStatuses() : void
-    {
-        // fix pipeline
-        if ($this->getProfile()->isMultiPipeline())
-        {
-            $pipelineId = $this->getProfile()->getLeadPipelineId();
-            if ($pipelineId)
-            {
-                try{
-                    // check pipeline existence
-                    $this->getProfile()->getConnection()->getApiClient()->pipelines()->getOne($pipelineId);
-                } catch (Exception $e) {
-                    $pipelines          = Params::getLeadPipelines($this->getProfile()->getConnection());
-                    $firstPipeline      = reset($pipelines);
-                    $firstPipelineId    = $firstPipeline['id'] ?? null;
-
-                    $this->getProfile()->setLeadPipelineId($firstPipelineId);
-                }
-            }
-        }
     }
 
     /**
@@ -1250,6 +1168,7 @@ class RoverAmoCrmProfileElement extends ElementBase
      * @throws Main\LoaderException
      * @throws Main\NotImplementedException
      * @throws SystemException
+     * @throws ReflectionException
      * @author Pavel Shulaev (https://rover-it.me)
      */
     protected function getData(): array
@@ -1278,6 +1197,10 @@ class RoverAmoCrmProfileElement extends ElementBase
         $this->arResult['ACTION_PANEL'] = $this->getActionPanel();
         $this->arResult['TABS']         = $this->getTabs();
         $this->arResult['DATA']         = $this->getData();
+
+        $serviceMessages = $this->getProfile()->getServiceMessages();
+        if ($serviceMessages)
+            Message::addError($serviceMessages);
     }
     
     /**
@@ -1327,7 +1250,7 @@ class RoverAmoCrmProfileElement extends ElementBase
 
 			$this->includeComponentTemplate();
 		} catch (Exception $e) {
-            RoverAmoCRMEvents::handleException($e, true);
+            RoverAmoCRM::handleException($e, true);
 			echo Loc::getMessage('rover-acpe__to-list');
 		}
 	}

@@ -16,7 +16,7 @@ ul {
     width: 100%;
     margin: 40px 0;
 }
-p {
+/* p:not(.landing-block-node-element-text p, .landing-block-node-text p) {
     list-style: none;
     font-style: normal;
     font-weight: normal;
@@ -24,7 +24,7 @@ p {
     line-height: 170%;
     color: #000000;
     padding: 5px 0;
-}
+} */
 hr {
     width: 100%;
     color: #000;
@@ -32,7 +32,7 @@ hr {
     border-top: 1px solid #000;
     opacity: .5;
 }
-li {
+li:not(.landing-block-node-text li) {
     width: 100%;
     list-style: none;
     font-style: normal;
@@ -43,6 +43,12 @@ li {
     margin-bottom: 50px;
     position: relative;
     padding-left: 40px;
+}
+.landing-block-node-text li{
+    list-style-type: none;
+}
+.landing-block-node-text span{
+    font-size: auto;
 }
 /*li:before {
     content: '';

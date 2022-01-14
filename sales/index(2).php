@@ -37,6 +37,17 @@ $APPLICATION->SetTitle("Акции");
 			</div>
 		</div>
 		<div class="akcii-item">
+			<div class="akcii-item-img">
+ <img src="/bitrix/images/sale/ocantovca.png">
+			</div>
+			<div class="akcii-item-title">
+				 Окантовка в подарок
+			</div>
+			<div class="akcii-item-txt">
+				 Акция распространяется на серии Original, Neoclassic, Grand. Акция комбинируется с предложением "сборка в блок в подарок" и "врезка замка в подарок".
+			</div>
+		</div>
+		<div class="akcii-item">
 			
 				<div class="akcii-item-img">
  <img src="/sales/img/akcii-7.jpg">

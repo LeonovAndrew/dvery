@@ -108,6 +108,12 @@ if($APPLICATION->GetCurDir() == '/')
     </div>
 </div>
 
+<? if ($APPLICATION->GetCurPage(false) === '/contacts/'): ?>
+	<div class="map">
+    	<?=html_entity_decode($CONTACTS['PREVIEW_TEXT'])?>
+	</div>
+<? endif; ?>
+
 <footer>
     <div class="cont">
         <div class="footer__cont">
@@ -259,6 +265,6 @@ if($APPLICATION->GetCurDir() == '/')
     <!-- cdnjs -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
-
+	<script async>(function(a,m,o,c,r,m){a[m]={id:"53446",hash:"927bee0a9948b591de52ca348d3603c6df122bd498b31268cd858a36f1e4ced4",locale:"ru",inline:false,setMeta:function(p){this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){(a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1632391558';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));</script>
 </body>
 </html>

@@ -54,3 +54,4 @@ $MESS['rover-apl__no-connection']           = 'Отсутствует соеди
 $MESS['rover-apl__yes']                     = 'Да';
 $MESS['rover-apl__no']                      = 'Нет';
 $MESS['rover-apl__disabled']                = 'откл.';
+$MESS['rover-acpl__profile-has-errors']     = 'Есть ошибки настройки!';
