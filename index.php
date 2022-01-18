@@ -381,7 +381,7 @@ global $MAIN_FILTER_COLORS;
 						<div class="sorting__name">
 							Цвет двери
 						</div>
-						<div class="sorting-select select-block">
+						<div class="sorting-select select-block select-color">
 							<div class="sorting-select-head select-head">
 								<div class="sorting-select-side select-side">
 									<div class="sorting-select-head-value sorting-select-head-value-img text-type-1 select-value">
@@ -400,7 +400,7 @@ global $MAIN_FILTER_COLORS;
 										<input id="colors<?=$key?>" name="color" type="radio" class="sorting-select-option-input js-filter-input js-filter-color" value="<?=$color['ID']?>">
 										<label for="colors<?=$key?>" class="sorting-select-option-text text-type-1">
 											<span class="sort-img">
-												<img class="sort-img__item" data-src="<?=CFile::GetPath($color['DETAIL_PICTURE'])?>" alt="img<?=$key?>">
+												<img class="sort-img__item" data-item="<?=CFile::GetPath($color['DETAIL_PICTURE'])?>" alt="img<?=$key?>">
 											</span>
 											<span><?=$color['NAME']?></span>
 										</label>

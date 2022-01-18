@@ -1,23 +1,37 @@
 $( document ).ready(function() {
 
     setTimeout(function(){
+        $('.main-slider__item-preloader').css('display','none');
+
         $('.main-slider__item').each(function() {
-            var $t = $(this);
-            $t
-                .attr({
-                    'data-src' : $t.attr('data-lol'),
-                })
-                .removeAttr('data-lol')
-            ;
+            let item = $(this);
+
+            item.attr({
+                'data-src' : item.attr('data-item'),
+            }).removeAttr('data-item');
         });
+
         $('.main-slider__item').Lazy({});
+
     }, 2500)
+
+    $('.select-color').on('click', function(){
+        $('.sort-img__item').each(function() {
+            let item = $(this);
+
+            item.attr({
+                    'data-src' : item.attr('data-item'),
+                }).removeAttr('data-item');
+        });
+
+        $('.sort-img__item').Lazy({});
+    })
    
 
     // jQuery Lazy
 
     $('.sect-list__img, .banner-type-1, .block3__item-bg, .js-loupe2, .js-loupe').Lazy({});
-    $('.main-banner, .catalog__img, .js-material-image, .js-design-image, .sort-img__item').Lazy({});
+    $('.main-banner, .catalog__img, .js-material-image, .js-design-image ').Lazy({});
     $('.systems__item_img, .sale__img, .menu__bg ').Lazy({});
 
     let sliderCatalogImg = $('.catalog__img__slider').Lazy({}),
