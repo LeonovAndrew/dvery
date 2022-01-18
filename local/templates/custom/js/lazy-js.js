@@ -13,7 +13,7 @@ $( document ).ready(function() {
 
         $('.main-slider__item').Lazy({});
 
-    }, 2500)
+    }, 3000)
 
     $('.select-color').on('click', function(){
         $('.sort-img__item').each(function() {
