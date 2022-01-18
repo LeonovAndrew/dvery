@@ -68,7 +68,7 @@ global $CONTACTS;
 
         </div>
         <div class="menu__content">
-            <div class="menu__bg" style="background-image: url(<?=SITE_TEMPLATE_PATH?>/img/menu__bg.png);">
+            <div class="menu__bg" data-src="<?=SITE_TEMPLATE_PATH?>/img/menu__bg.png">
 
             </div>
             <div class="menu__side">
