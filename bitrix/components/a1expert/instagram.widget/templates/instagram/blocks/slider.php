@@ -56,8 +56,8 @@
                                         <a href="<?php echo $arItem['permalink'] ?>"
                                            target="_blank" class="<?php echo $result['ACTION_CLICK_IMG'] == 'none' ? 'disabled' : ''?>">
                                             <div class="instagram-feed-item-image-wrapper">
-                                                <img class="instagram-feed-item-image"
-                                                     data-lazy="<?php echo $arItem['IMAGE'] ?>" alt="...">
+                                                <img data-src="<?php echo $arItem['IMAGE'] ?>" class="instagram-feed-item-image"
+                                                     alt="...">
                                                 <video class="instagram-feed-item-image" src="" muted=""
                                                        style="display: none;"></video>
                                                 <?php if ($arItem['media_type'] == 'VIDEO'): ?>
