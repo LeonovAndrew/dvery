@@ -46,6 +46,11 @@ if (!\Bitrix\Main\Loader::includeModule('landing'))
 	<?$APPLICATION->ShowHead()?>
 
 	<?
+if($APPLICATION->GetCurDir() != '/bitrix/admin/')
+{
+?>
+	<?
+	
 		$APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/css/colors.css');
 		$APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/fonts/Geometria/stylesheet.css');
 		$APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/css/slick-theme.css');
@@ -62,7 +67,7 @@ if (!\Bitrix\Main\Loader::includeModule('landing'))
 		
 		$APPLICATION->ShowProperty('MetaOG');
 		$APPLICATION->ShowProperty('BeforeHeadClose');
-	?>
+}?>
 </head>
 <body class="<?$APPLICATION->ShowProperty('BodyClass');?>" <?$APPLICATION->ShowProperty('BodyTag');?>>
 	<!-- Google Tag Manager (noscript) -->
