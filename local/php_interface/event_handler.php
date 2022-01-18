@@ -7,7 +7,7 @@ $eventManager = Main\EventManager::getInstance();
 $eventManager->addEventHandler('main', 'OnUserTypeBuildList', ['lib\UserType\CUserTypeUserGroupId', 'GetUserTypeDescription']);
 //$eventManager->addEventHandler('main', 'OnUserTypeBuildList', ['lib\UserType\CUserTypeColor', 'GetUserTypeDescription']);
 
-AddEventHandler("main", "OnEndBufferContent", "delete_type");
+ //AddEventHandler("main", "OnEndBufferContent", "delete_type");
 function delete_type(&$content) {
   $content = str_replace(" type=\"text/javascript\"", false, $content);
 }
