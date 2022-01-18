@@ -4,7 +4,11 @@
 
 <div class="main-slider">
 	<? foreach($arResult['ITEMS'] as $item) :?>
-	    <div class="main-slider__item" data-lol="<?=$item['DETAIL_PICTURE']['SRC']?>">
+	    <div class="main-slider__item" data-item="<?=$item['DETAIL_PICTURE']['SRC']?>">
+			<div class="main-slider__item-preloader-wrapper">
+				<div class="main-slider__item-preloader" data-v-6964b097=""></div>
+			</div>
+			
 	        <div class="main-slider__item-bg">
 	            <div class="cont">
 	                <div class="main-slider__cont">
