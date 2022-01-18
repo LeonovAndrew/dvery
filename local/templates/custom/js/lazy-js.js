@@ -1,16 +1,17 @@
 $( document ).ready(function() {
 
-    // $('.main-slider__item').setAttribute('data-lol', 'src2');
-
-    $('.main-slider__item').each(function() {
-        var $t = $(this);
-        $t
-            .attr({
-                'data-src' : $t.attr('data-lol'),
-            })
-            .removeAttr('data-lol')
-        ;
-    });
+    setTimeout(function(){
+        $('.main-slider__item').each(function() {
+            var $t = $(this);
+            $t
+                .attr({
+                    'data-src' : $t.attr('data-lol'),
+                })
+                .removeAttr('data-lol')
+            ;
+        });
+    }, 2500)
+   
 
     // jQuery Lazy
 
