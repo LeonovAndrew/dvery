@@ -54,12 +54,12 @@ $arUrlRewrite=array (
     'PATH' => '/sitemap.php',
     'SORT' => 100,
   ),
-  11 => 
+  22 => 
   array (
-    'CONDITION' => '#^/articles/#',
+    'CONDITION' => '#^/services/#',
     'RULE' => '',
     'ID' => 'bitrix:news',
-    'PATH' => '/articles/index.php',
+    'PATH' => '/services/index.php',
     'SORT' => 100,
   ),
   6 => 
@@ -70,12 +70,12 @@ $arUrlRewrite=array (
     'PATH' => '/personal/index.php',
     'SORT' => 100,
   ),
-  22 => 
+  11 => 
   array (
-    'CONDITION' => '#^/services/#',
+    'CONDITION' => '#^/articles/#',
     'RULE' => '',
     'ID' => 'bitrix:news',
-    'PATH' => '/services/index.php',
+    'PATH' => '/articles/index.php',
     'SORT' => 100,
   ),
   20 => 

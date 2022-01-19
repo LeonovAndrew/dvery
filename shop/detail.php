@@ -242,7 +242,7 @@ $APPLICATION->SetTitle("Каталог товаров");
                 <div class="same__body">
                     					    <div class="catalog__item-help">
 					        <a href="/catalog/klassika/klassika-baget/" class="catalog__item">
-					            <div class="catalog__img" style="background-image: url(/upload/iblock/0d2/nvhbc83wlkvzwlcuyl7pw42ngq8i29ku.jpg);"></div>
+					            <div class="catalog__img" data-src="/upload/iblock/0d2/nvhbc83wlkvzwlcuyl7pw42ngq8i29ku.jpg"></div>
 					            <div class="catalog__title">
 					                Коллекция Багет					            </div>
 					            <div class="catalog__text">

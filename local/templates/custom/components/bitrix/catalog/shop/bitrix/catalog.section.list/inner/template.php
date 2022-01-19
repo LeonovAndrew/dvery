@@ -9,7 +9,7 @@ if (empty($arResult['SECTIONS'])) return;
 		<? foreach ($arResult['SECTIONS'] as $arSection) :?>
 		    <div class="catalog__item-help">
 		        <a href="<?=$arSection['SECTION_PAGE_URL']?>" class="catalog__item">
-		            <?if(is_array($arSection['PICTURE']['SRC'])){?><div class="catalog__img" style="background-image: url(<?=$arSection['PICTURE']['SRC']?>);"></div><?}?>
+		            <?if(is_array($arSection['PICTURE']['SRC'])){?><div class="catalog__img" data-src="<?=$arSection['PICTURE']['SRC']?>"></div><?}?>
 		            <div class="catalog__title">
 		                <?=$arSection['NAME']?>
 		            </div>
