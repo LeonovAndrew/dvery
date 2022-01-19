@@ -51,7 +51,6 @@ global $CONTACTS;
 		$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/jquery.maskedinput.min.js');
 		$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/slick.min.js');
         $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/fancybox/jquery.fancybox.js');
-        $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/zoomsl.js');
 		$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/main.js');
 	?>
 </head>
@@ -176,9 +175,9 @@ global $CONTACTS;
                     <div class="header__left">
                         <a href="/" class="header__logo">
                             <?if($APPLICATION->GetCurDir() != '/' && !preg_match("/\/news\/([-_a-zA-Z0-9]+)/", $APPLICATION->GetCurDir()) && !preg_match("/\/articles\/([-_a-zA-Z0-9]+)/", $APPLICATION->GetCurDir()) && !preg_match("/\/catalog\/([-_a-zA-Z0-9]+)\/([-_a-zA-Z0-9]+)/", $APPLICATION->GetCurDir()) ||  preg_match("/\/catalog\/sistemy\/([a-zA-Z0-9]+)/", $APPLICATION->GetCurDir())):?>
-                                <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-black.png" alt="page-logo-black">
+                                <img class="header-logo" data-src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-black.png" alt="page-logo-black">
                             <? else :?>
-                                <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="page-logo-white">
+                                <img class="header-logo" data-src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="page-logo-white">
                             <? endif; ?>
                         </a>
                         

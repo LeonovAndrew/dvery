@@ -8,7 +8,7 @@ $this->setFrameMode(true);
 		<? foreach ($arResult['ITEMS'] as $item) :?>
 		    <div class="catalog__item-help">
 		        <a href="<?=$item['DETAIL_PAGE_URL']?>" class="catalog__item">
-		            <div class="catalog__img" style="background-image: url(<?=$item['PREVIEW_PICTURE']['SRC']?>);"></div>
+		            <div class="catalog__img" data-src="<?=$item['PREVIEW_PICTURE']['SRC']?>"></div>
 		            <div class="catalog__title">
 		                <?=$item['NAME']?>
 		            </div>

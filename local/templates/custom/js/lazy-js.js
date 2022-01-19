@@ -61,7 +61,7 @@ $( document ).ready(function() {
 
     $('.sect-list__img, .banner-type-1, .block3__item-bg, .js-loupe2, .js-loupe').Lazy({});
     $('.main-banner, .catalog__img, .js-material-image, .js-design-image ').Lazy({});
-    $('.systems__item_img, .sale__img, .instagram-feed-item-image ').Lazy({});
+    $('.systems__item_img, .sale__img, .instagram-feed-item-image,.header-logo ').Lazy({});
 
     let sliderCatalogImg = $('.catalog__img__slider').Lazy({}),
         sliderAdventagesImg = $('.adventages__img').Lazy({}),
@@ -76,6 +76,7 @@ $( document ).ready(function() {
     newsSlider.on('afterChange', newsImg.revalidate);
     articleSlide.on('afterChange', usefulKnow.revalidate);
     certificateSlider.on('afterChange', sertificateItem.revalidate);
+
 
 
 })

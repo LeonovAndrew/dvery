@@ -854,8 +854,8 @@ $( document ).ready(function() {
 		});
 	}
 	
-
 	$('.js-loupe').imagezoomsl({ zoomrange: [3, 3] });
+
 });
 
 function getCookie(name) {

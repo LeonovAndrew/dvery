@@ -51,7 +51,7 @@ $this->setFrameMode(true);
 				<?}else {?>
 					<div class="catalog__item-help">
 				        <a href="<?=$arSection['SECTION_PAGE_URL']?>" class="catalog__item">
-				            <div class="catalog__img" style="background-image: url(<?=$arSection['PICTURE']['SRC']?>);"></div>
+				            <div class="catalog__img" data-src="<?=$arSection['PICTURE']['SRC']?>"></div>
 				            <div class="catalog__title">
 				                <?=$arSection['NAME']?>
 				            </div>
