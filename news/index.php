@@ -1,7 +1,13 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Новости");
-?><?$APPLICATION->IncludeComponent(
+$APPLICATION->SetPageProperty("keywords", "новости фабрика дверей provance прованс производитель");
+$APPLICATION->SetPageProperty("description", "Актуальные и интересные новости от производителя дверей - Provance");
+$APPLICATION->SetPageProperty("title", "Новости компании Прованс");
+$APPLICATION->SetTitle("Новости компании Прованс");
+?>
+
+
+<?$APPLICATION->IncludeComponent(
 	"bitrix:news", 
 	"news", 
 	array(
@@ -74,8 +80,8 @@ $APPLICATION->SetTitle("Новости");
 		"SEF_MODE" => "Y",
 		"SET_LAST_MODIFIED" => "N",
 		"SET_STATUS_404" => "Y",
-		"SET_TITLE" => "Y",
-		"SHOW_404" => "N",
+		"SET_TITLE" => "N",
+		"SHOW_404" => "Y",
 		"SLIDER_PROPERTY" => "PICS_NEWS",
 		"SORT_BY1" => "ACTIVE_FROM",
 		"SORT_BY2" => "SORT",
@@ -92,6 +98,7 @@ $APPLICATION->SetTitle("Новости");
 		"USE_SEARCH" => "N",
 		"USE_SHARE" => "N",
 		"YANDEX" => "N",
+		"FILE_404" => "",
 		"SEF_URL_TEMPLATES" => array(
 			"news" => "",
 			"section" => "",

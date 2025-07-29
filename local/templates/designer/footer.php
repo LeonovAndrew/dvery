@@ -5,7 +5,7 @@
 						<div class="footer__logo"><img src="<?=SITE_TEMPLATE_PATH?>/assets/img/logo.png" alt=""></div>
 						<div class="footer__contacts">
 							<div class="footer__mail"><a href="mailto:design@dveri-provance.ru">design@dveri-provance.ru</a></div>
-							<div class="footer__tel"><a href="tel:+74998775820">+7 (499) 877-58-20</a></div>
+							<div class="footer__tel"><a href="tel:+74992836062">+7-499-283-60-62</a></div>
 						</div>
 						<div class="msg msg_white"><a class="msg__item" href="#">
 								<svg class="icon ic-whatchapp" width="34" height="34">

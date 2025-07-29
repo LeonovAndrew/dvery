@@ -7,10 +7,14 @@
     	<div class="block1__head">Новости фабрики</div>
         <div class="news__cont news__slide">
         	<? foreach($arResult['ITEMS'] as $arItem) :
+        	$img = CFile::ResizeImageGet($arItem['PREVIEW_PICTURE']['ID'], array('height' => 393, 'width' => 573 ), BX_RESIZE_IMAGE_EXACT, false, false, false, 70);
+			$arItem['PREVIEW_PICTURE']['SRC'] = $img['src'];
+		
         		$date = empty($arItem['ACTIVE_FROM']) ? $arItem['DATE_CREATE'] : $arItem['ACTIVE_FROM'];?>
 	            <div class="news__item-help">
 	                <div class="news__item">
-	                    <div class="news__img" data-src="<?=$arItem['PREVIEW_PICTURE']['SRC']?>"></div>
+	                    <div class="news__img" style="background-image:url(<?=$arItem['PREVIEW_PICTURE']['SRC']?>);"></div>
+	                    <?/*<div class="news__img" data-src="<?=$arItem['PREVIEW_PICTURE']['SRC']?>"></div>*/?>
 	                    <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="news__title">
 	                        <?=$arItem['NAME']?>
 	                    </a>

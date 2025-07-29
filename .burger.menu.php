@@ -9,7 +9,7 @@ $aMenuLinks = Array(
 	),
 	Array(
 		"Интернет-магазин", 
-		"/shop/", 
+		"/mezhkomnatnye-dveri/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -17,13 +17,6 @@ $aMenuLinks = Array(
 	Array(
 		"Акции", 
 		"/sales/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Консультация", 
-		"/consult/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -43,6 +36,13 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
+		"Отзывы", 
+		"/otzyvy/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
 		"О компании", 
 		"/about/", 
 		Array(), 
@@ -56,6 +56,13 @@ $aMenuLinks = Array(
 		Array(), 
 		"" 
 	),
+	/*Array(
+		"Сотрудничество", 
+		"/lp/dizayneramiarkhitektoram/", 
+		Array(), 
+		Array(), 
+		"" 
+),*/
 	Array(
 		"Где купить?", 
 		"/contacts/", 

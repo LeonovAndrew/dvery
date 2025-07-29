@@ -2,7 +2,7 @@
 $aMenuLinks = Array(
 	Array(
 		"Монтаж", 
-		"/services/montage/", 
+		"/services/ustanovka-mezhkomnatnyh-dverey/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -27,6 +27,19 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
-	)
+	),
+    Array(
+        "Двери по вашему дизайну",
+        "/services/dveri-po-vashemu-dizaynu/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Выезд менеджера на дом",
+        "/services/vyezdnoy-menedzher-po-prodazhe-dverey/",
+        Array(),
+        Array(),
+        ""
+    ),
 );
-?>

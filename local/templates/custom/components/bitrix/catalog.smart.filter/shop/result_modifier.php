@@ -33,3 +33,36 @@ else
 	$arParams["TEMPLATE_THEME"] = "blue";
 }
 $arParams["POPUP_POSITION"] = (isset($arParams["POPUP_POSITION"]) && in_array($arParams["POPUP_POSITION"], array("left", "right"))) ? $arParams["POPUP_POSITION"] : "left";
+
+\Bitrix\Main\Loader::includeModule('highloadblock');
+
+$arColors = array();
+
+$hl = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity('ColorReference');
+$dbResult = $hl->getDataClass()::getList();
+while ($arItem = $dbResult->fetch())
+{
+    $arFile = CFile::GetFileArray($arItem['UF_FILE']);
+    if (is_array($arFile))
+    {
+        $arColors[ToUpper($arItem['UF_NAME'])] = $arFile;
+    }
+}
+
+foreach ($arResult['ITEMS'] as &$arItem)
+{
+    if ($arItem['CODE'] == 'COLOR')
+    {
+        foreach ($arItem['VALUES'] as &$ar)
+        {
+            if (isset($arColors[$ar['UPPER']]))
+            {
+                $ar['FILE'] = $arColors[$ar['UPPER']];
+            }
+        }
+
+        unset($ar);
+    }
+}
+
+unset($arItem);

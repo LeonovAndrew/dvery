@@ -68,7 +68,11 @@ $this->setFrameMode(true);
 	),
 	$component
 );?>
+<div class="cont">
+<div class="news-detail">
 <p><a href="<?=$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["news"]?>"><?=GetMessage("T_NEWS_DETAIL_BACK")?></a></p>
+</div>
+</div>
 <?if($arParams["USE_RATING"]=="Y" && $ElementID):?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:iblock.vote",

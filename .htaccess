@@ -1,6 +1,13 @@
 Options -Indexes 
 ErrorDocument 404 /404.php
 
+
+RewriteCond %{HTTP_HOST} ^dveri-provance.ru$
+RewriteRule ^robots.txt$ /robots-main.txt [L]
+RewriteCond %{HTTP_HOST} ^old.dveri-provance.ru$
+RewriteRule ^robots.txt$ /robots-subdomain.txt [L]
+
+
 <IfModule mod_php5.c>
 	php_flag allow_call_time_pass_reference 1
 	php_flag session.use_trans_sid off
@@ -12,16 +19,49 @@ ErrorDocument 404 /404.php
 
 
 	php_value max_input_vars 11000
-	
 	php_value pcre.jit 0
 	php_value pcre.recursion_limit 100000
 
 <IfModule mod_rewrite.c>
 
-
-
 	Options +FollowSymLinks
 	RewriteEngine On
+
+
+	RewriteCond %{HTTPS} off
+	RewriteCond %{HTTP:X-Forwarded-Proto} !https
+	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/katalog/dveri-po-ostekleniyu/so-steklom-lakobel/$
+	RewriteRule ^.*$ https://dveri-provance.ru/articles/dveri-so-steklom-lakobel/ [R=301,L]
+
+	RewriteCond %{REQUEST_URI} ^/katalog/dveri-po-materialam/dveri-iz-massiva/$
+	RewriteRule ^.*$ https://dveri-provance.ru/articles/dveri_iz_lvl_brusa_osobennosti_i_preimushtestva/ [R=301,L]
+
+	RewriteCond %{REQUEST_URI} ^katalog/belye-dveri/$
+	RewriteRule ^.*$ https://dveri-provance.ru/shop/belye-dveri/ [R=301,L]
+
+	#добавлено 10.08 удаление цепочки редиректов
+	RewriteCond %{REQUEST_URI} ^/contacts$ [NC]
+	RewriteRule ^(.*)$ https://dveri-provance.ru/contacts/ [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/oplata$ [NC]
+	RewriteRule ^(.*)$ https://dveri-provance.ru/services/delivery/ [R=200,L]
+
+	RewriteRule ^uslugi$ https://dveri-provance.ru/services/? [L,R=301]
+
+	RewriteRule ^ustanovka$ https://dveri-provance.ru/services/ustanovka-mezhkomnatnyh-dverey/? [L,R=301]
+
+	RewriteRule ^about_us$ https://dveri-provance.ru/about/? [L,R=301]
+
+	#добавлено 02.08.2023
+	RewriteCond %{HTTP_HOST} ^www\.dveri-provance\.ru [NC]
+	RewriteRule ^(.*)$ https://dveri-provance.ru/$1 [L,R=301]
+
+	#добавлено 20.08.2023	
+	####RewriteRule ^shop/(.*)$ /mezhkomnatnye-dveri/$1 [R=301,L]
+	
+
 ###
 
 	RewriteCond %{REQUEST_FILENAME} !-f
@@ -30,13 +70,12 @@ ErrorDocument 404 /404.php
 	RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
 	RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
 	RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
-	
+
+
+
 
 </IfModule>
 
-<IfModule mod_dir.c>
-	DirectoryIndex index.php index.html
-</IfModule>
 
 <IfModule mod_expires.c>
 	ExpiresActive on
@@ -44,104 +83,124 @@ ErrorDocument 404 /404.php
 	ExpiresByType image/gif "access plus 3 day"
 </IfModule>
 
+#redirects filter pages
+Redirect 301	/shop/filter/price-base-from-31132-to-559990/glass-is-y/apply/ https://dveri-provance.ru/mezhkomnatnye-dveri/so-steklom/
+Redirect 301	/shop/filter/price-base-from-31132-to-559990/color-is-9a33a7738e8c6a9ecbc2af0efa88db36/apply/ https://dveri-provance.ru/mezhkomnatnye-dveri/chernye/
+Redirect 301	/shop/filter/price-base-from-31132-to-559990/color-is-f2bf1a8deddabc995dc37652628e196f/apply/ https://dveri-provance.ru/mezhkomnatnye-dveri/serye/
+Redirect 301	/shop/filter/price-base-from-31132-to-559990/color-is-c22dc346ef7c1c519733bb9811edd3ae-or-d7c6b7f3e9699a3914f4e303d9978168-or-9e5d0ac99c8729a7055d685a9a1239e6/apply/ https://dveri-provance.ru/mezhkomnatnye-dveri/svetlye/
+# /redirects filter pages
 
-Redirect 301	/katalog/dveri-po-materialam/emal/	/articles/Dveri_v_emali/
+Redirect 301	/services/montage/ https://dveri-provance.ru/services/ustanovka-mezhkomnatnyh-dverey/
+
+Redirect 301	/katalog/dveri-po-materialam/dveri-shpon/ https://dveri-provance.ru/articles/dveri_v_shpone/
+Redirect 301	/lp/nestandart/ https://dveri-provance.ru/
+Redirect 301	/lp/dizayneramiarkhitektoram/ https://dveri-provance.ru/
+Redirect 301	/katalog/dveri-po-materialam/emal/	https://dveri-provance.ru/articles/dveri_v_emali/
 Redirect 301	/katalog/vysokie-dveri-cena-ot-10400-rub/	/articles/visokie-dveri/
-Redirect 301	/katalog/po-modifikacii/gluhie/	/articles/gluhie-dveri/
 Redirect 301	/katalog/dveri-s-framugami/	/articles/dveri-s-framugoi/
-Redirect 301	/katalog/po-modifikacii/dveri-so-steklom/	/articles/dveri-so-steklom/
+Redirect 301	/katalog/po-modifikacii/dveri-so-steklom/	https://dveri-provance.ru/articles/dveri-so-steklom/
 Redirect 301	/katalog/po-razmeram/nestandartnye-dveri-na-zakaz/	/articles/nestandartnye-dveri/
-Redirect 301	/katalog/skrytye-dveri/	/articles/skrytye-dveri/
-Redirect 301	/katalog/dveri-po-materialam/glyancevye-dveri/	/articles/glyancevye-dveri/
-Redirect 301	/katalog/po-komplektacii/s-vrezannoj-furnituroj/	/articles/dveri-s-vrezannoj-furnituroj/
+Redirect 301	/katalog/skrytye-dveri/	https://dveri-provance.ru/articles/skrytye-dveri/
+Redirect 301	/katalog/dveri-po-materialam/glyancevye-dveri/	https://dveri-provance.ru/articles/glyancevye-dveri/
+Redirect 301	/katalog/po-komplektacii/s-vrezannoj-furnituroj/	https://dveri-provance.ru/articles/dveri-s-vrezannoj-furnituroj/
 Redirect 301	/katalog/dveri-po-stilu/sovremennye/	/catalog/sovremennyy-stil/
-Redirect 301	/katalog/dveri-po-stilu/klassicheskie/	/catalog/klassika/
-Redirect 301	/katalog/dveri-po-materialam/dveri-shpon/	/articles/Dveri_v_shpone/
-Redirect 301	/katalog/sistema-otkrivaniya/razdvizhnye-dveri-kupe/	/articles/razdvizhnye-mezhkomnatnye-dveri-kupe/
+Redirect 301	/katalog/dveri-po-stilu/klassicheskie/	https://dveri-provance.ru/catalog/klassika/
+
+Redirect 301	/katalog/sistema-otkrivaniya/razdvizhnye-dveri-kupe/	https://dveri-provance.ru/articles/razdvizhnye-mezhkomnatnye-dveri-kupe/
 Redirect 301	/katalog/sistema-otkrivaniya/so-skritoy-razdvizhnoy-sistemoy/	/articles/mezhkomnatnye-dveri-so-skritoy-razdvizhnoy-sistemoy/
-Redirect 301	/katalog/sistema-otkrivaniya/roto-dveri/	/articles/mezhkomnatnye-roto-dveri/
+Redirect 301	/katalog/sistema-otkrivaniya/roto-dveri/	https://dveri-provance.ru/articles/mezhkomnatnye-roto-dveri/
 Redirect 301	/katalog/sistema-otkrivaniya/podvesnye-dveri/	/articles/podvesnye-dveri/
-Redirect 301	/katalog/sistema-otkrivaniya/dveri-knizhka/	/articles/Dveri_knizhka-osobennosti_i_vidy_kak_vybrat%27/
-Redirect 301	/katalog/sistema-otkrivaniya/dveri-penal/	/articles/razdvizhnye-dveri-penal/
-Redirect 301	/katalog/sistema-otkrivaniya/razdvizhnye-peregorodki/	/articles/razdvizhnye-peregorodki/
+Redirect 301	/katalog/sistema-otkrivaniya/dveri-knizhka/	https://dveri-provance.ru/articles/dveri_knizhka-osobennosti_i_vidy_kak_vybrat%27/
+Redirect 301	/katalog/sistema-otkrivaniya/dveri-penal/	https://dveri-provance.ru/articles/razdvizhnye-dveri-penal/
+Redirect 301	/katalog/sistema-otkrivaniya/razdvizhnye-peregorodki/	https://dveri-provance.ru/articles/razdvizhnye-peregorodki/
 Redirect 301	/katalog/sistema-otkrivaniya/umniuy-porog/	/articles/umniuy-dvernoy-porog/
-Redirect 301	/katalog/sistema-otkrivaniya/skritie-mezhkomnatnie-dveri/	/articles/skritie-mezhkomnatnie-dveri/
+Redirect 301	/katalog/sistema-otkrivaniya/skritie-mezhkomnatnie-dveri/	https://dveri-provance.ru/articles/skritie-mezhkomnatnie-dveri/
 Redirect 301	/katalog/sistema-otkrivaniya/razdvizhnie-zerkalnie-dveri/	/articles/razdvizhnie-zerkalnie-dveri/
 Redirect 301	/katalog/dveri-po-stilu/sovremennye/	/articles/Dveri_v_sovremennom_stile/
-Redirect 301	/katalog/dveri-po-stilu/modern/	/articles/dveri_v_stile_modern/
-Redirect 301	/katalog/dveri-po-stilu/klassicheskie/	/articles/klassicheskie-mezhkomnatnye-dveri/
+Redirect 301	/katalog/dveri-po-stilu/modern/	https://dveri-provance.ru/articles/dveri_v_stile_modern/
 Redirect 301	/katalog/dveri-po-stilu/skandinavskie/	/articles/mezhkomnatnie-dveri-v-skandinavskom-stile/
-Redirect 301	/katalog/dveri-po-stilu/desinerskie/	/articles/desinerskie-dveri/
+Redirect 301	/katalog/dveri-po-stilu/desinerskie/	https://dveri-provance.ru/articles/desinerskie-dveri/
 Redirect 301	/katalog/dveri-po-stilu/neoklassika/	/catalog/neoklassika/
-Redirect 301	/katalog/dveri-po-stilu/barokko/	/articles/dveri-v-stile-barokko/
-Redirect 301	/katalog/dveri-po-stilu/provans/	/articles/Provans_v_stilistike_dverei/
+Redirect 301	/katalog/dveri-po-stilu/barokko/	https://dveri-provance.ru/articles/dveri-v-stile-barokko/
+Redirect 301	/katalog/dveri-po-stilu/provans/	https://dveri-provance.ru/articles/provans_v_stilistike_dverei/
 Redirect 301	/katalog/dveri-po-stilu/kantry/	/articles/Kantri_v_stilistike_dverei/
 Redirect 301	/katalog/dveri-po-stilu/hi-tech/	/articles/mezhkomnatnye-dveri-v-stile-hi-tech/
 Redirect 301	/katalog/dveri-po-stilu/yaponskie-dveri/	/articles/dveri-v-yaponskom-stile/
 Redirect 301	/katalog/dveri-po-stilu/pod-starinu/	/articles/mezhkomnatnie-dveri-pod-starinu/
-Redirect 301	/katalog/dveri-po-stilu/loft/	/articles/Dveri_v_stile_loft/
+Redirect 301	/katalog/dveri-po-stilu/loft/	https://dveri-provance.ru/articles/dveri_v_stile_loft/
 Redirect 301	/katalog/dveri-po-stilu/antichnaya-klassika/	/articles/dveri-v-stile-antichnoy-klassiki/
 Redirect 301	/katalog/dveri-po-stilu/dveri-v-stile-art-deko/	/articles/mezhkomnatnye-dveri-v-stile-art-deko/
 Redirect 301	/katalog/dveri-po-stilu/anglijskij/	/articles/mezhkomnatnie-dveri-v-anglijskom-stile/
-Redirect 301	/katalog/dveri-po-materialam/dveri-iz-massiva/	/articles/Dveri_iz_LVL_brusa_osobennosti_i_preimushtestva/
-Redirect 301	/katalog/dveri-po-materialam/dveri-shpon/	/articles/Dveri_v_shpone/
-Redirect 301	/katalog/dveri-po-materialam/shpon-ehlit/	/articles/Dveri_v_shpone/
+Redirect 301	/katalog/dveri-po-materialam/dveri-iz-massiva/	https://dveri-provance.ru/articles/dveri_iz_lvl_brusa_osobennosti_i_preimushtestva/
+Redirect 301	/katalog/dveri-po-materialam/shpon-ehlit/	https://dveri-provance.ru/articles/dveri_v_shpone/
 Redirect 301	/katalog/dveri-po-materialam/dub/	/articles/mezhkomnatnie-dveri-iz-duba/
 Redirect 301	/katalog/dveri-po-materialam/massiv-3d/	/articles/Dveri_iz_LVL_brusa_osobennosti_i_preimushtestva/
-Redirect 301	/katalog/dveri-po-materialam/kombin-mdf/	/articles/mezhkomnatnie-dveri-mdf/
+Redirect 301	/katalog/dveri-po-materialam/kombin-mdf/	https://dveri-provance.ru/articles/mezhkomnatnie-dveri-mdf/
 Redirect 301	/katalog/dveri-po-materialam/dveri-s-patinoy-po-emali/	/articles/Speceffekty_dlya_dverei/
-Redirect 301	/katalog/dveri-po-materialam/massiv-berezy/	/articles/Dveri_iz_LVL_brusa_osobennosti_i_preimushtestva/
-Redirect 301	/katalog/dveri-po-materialam/glyancevye-dveri/	/articles/mezhkomnatnie-glyancevye-dveri/
+Redirect 301	/katalog/dveri-po-materialam/massiv-berezy/	https://dveri-provance.ru/articles/dveri_iz_lvl_brusa_osobennosti_i_preimushtestva/
 Redirect 301	/katalog/dveri-po-materialam/dveri-s-patinoy-po-derevu/	/articles/Speceffekty_dlya_dverei/
-Redirect 301	/katalog/dveri-po-materialam/massiv-yasenya/	/articles/Dveri_iz_LVL_brusa_osobennosti_i_preimushtestva/
+Redirect 301	/katalog/dveri-po-materialam/massiv-yasenya/	https://dveri-provance.ru/articles/dveri_iz_lvl_brusa_osobennosti_i_preimushtestva/
 Redirect 301	/katalog/po-nalichiyu/dveri-na-zakaz/	/articles/mezhkomnatnie-dveri-na-zakaz/
 Redirect 301	/katalog/po-nalichiyu/dveri-v-nalichii/	/articles/mezhkomnatnie-dveri-v-nalichii/
-Redirect 301	/katalog/po-modifikacii/dvystvorchatye-dveri/	/articles/mezhkomnatnie-dvystvorchatye-dveri/
-Redirect 301	/katalog/po-modifikacii/gluhie/	/articles/gluhie-mezhkomnatnie-dveri/
+Redirect 301	/katalog/po-modifikacii/dvystvorchatye-dveri/	https://dveri-provance.ru/articles/mezhkomnatnie-dvystvorchatye-dveri/
+Redirect 301	/katalog/po-modifikacii/gluhie/	https://dveri-provance.ru/articles/gluhie-dveri/
 Redirect 301	/katalog/po-modifikacii/dveri-so-steklom/	/articles/osteklennye-dveri/
-Redirect 301	/katalog/po-modifikacii/gladkie/	/articles/gladkie-mezhkomnatnie-dveri/
-Redirect 301	/katalog/po-modifikacii/s-risunkom/	/articles/Rospis%27_dverei/
+Redirect 301	/katalog/po-modifikacii/gladkie/	https://dveri-provance.ru/articles/gladkie-mezhkomnatnie-dveri/
+Redirect 301	/katalog/po-modifikacii/s-risunkom/	https://dveri-provance.ru/articles/rospis%27_dverei/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-derevyanniy-dom/	/articles/dveri-v-derevyanny-%D0%B4%D0%BE%D0%BC/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-kvartiru/	/articles/Mezhkomnatnye_dveri_dlya_kvartiry/
-Redirect 301	/katalog/dveri-po-naznacheniyu/dlya-vannoy/	/articles/dveri_dlya_vannoy/
-Redirect 301	/katalog/dveri-po-naznacheniyu/dveri-dlya-kuhni/	/articles/dveri-dlya-kuhni-v-assortimente/
+Redirect 301	/katalog/dveri-po-naznacheniyu/dlya-vannoy/	https://dveri-provance.ru/articles/dveri_dlya_vannoy/
+Redirect 301	/katalog/dveri-po-naznacheniyu/dveri-dlya-kuhni/	https://dveri-provance.ru/articles/dveri-dlya-kuhni-v-assortimente/
 Redirect 301	/katalog/dveri-po-naznacheniyu/ofisnye/	/articles/dveri-dlya-ofisa/
 Redirect 301	/katalog/dveri-po-naznacheniyu/dlya-dachi/	/articles/Kak_vybrat%27_dveri_dlya_kottedzha/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-tualet/	/articles/mezhkomnatnie-dveri-v-tualet/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-detskuyu/	/articles/vibor_dverei_dlya_detskoi/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-komnatu/	/articles/derevyannye-dveri-v-komnatu/
-Redirect 301	/katalog/dveri-po-naznacheniyu/v-zal/	/articles/mezhkomnatnie-dveri-v-zal/
+Redirect 301	/katalog/dveri-po-naznacheniyu/v-zal/	https://dveri-provance.ru/articles/mezhkomnatnie-dveri-v-zal/
 Redirect 301	/katalog/dveri-po-naznacheniyu/dveri-dlya-gostinoy/	/articles/mezhkomnatnie-dveri-v-gostinnuu/
 Redirect 301	/katalog/dveri-po-naznacheniyu/dlya-kottedzha/	/articles/Kak_vybrat%27_dveri_dlya_kottedzha/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-spalnyu/	/articles/mezhkomnatnie-dveri-v-spalnyu/
 Redirect 301	/katalog/dveri-po-naznacheniyu/v-garderobnuyu/	/articles/dveri-v-garderobnuu/
 Redirect 301	/katalog/po-razmeram/nizkie-dveri/	/articles/nizkie-mezhkomnatnie-dveri/
 Redirect 301	/katalog/po-razmeram/visokie/	/articles/vysokie-mezhkomnatnie-dveri/
-Redirect 301	/katalog/po-razmeram/individualnye-dveri/	/articles/Dizaynerskie_dveri_i_ih_mnogoobrazie/
+Redirect 301	/katalog/po-razmeram/individualnye-dveri/	https://dveri-provance.ru/articles/dizaynerskie_dveri_i_ih_mnogoobrazie/
 Redirect 301	/katalog/po-razmeram/nestandartnye-dveri-na-zakaz/	/articles/nestandartnye-mezhkomnatnie-dveri/
 Redirect 301	/katalog/po-cvetu/yasen-belyj/	/articles/mezhkomnatnie-dveri-iz-belogo-yasenya/
 Redirect 301	/katalog/po-cvetu/dveri-slonovaya-kost/	/articles/mezhkomnatnie-dveri-cveta-slonovoy-kosti/
 Redirect 301	/katalog/po-cvetu/belyj-dub/	/articles/mezhkomnatnie-dveri-iz-belogo-duba/
 Redirect 301	/katalog/po-tipu/frezerovannie/	/articles/Frezerovannye_dveri/
-Redirect 301	/katalog/po-tipu/bagetnye-dveri/	/articles/filenchatye-bagetnye-dveri/
-Redirect 301	/katalog/po-tipu/filenchatye-dveri/	/articles/filenchatye-mezhkomnatnye-dveri/
+Redirect 301	/katalog/po-tipu/bagetnye-dveri/	https://dveri-provance.ru/articles/filenchatye-bagetnye-dveri/
+Redirect 301	/katalog/po-tipu/filenchatye-dveri/	https://dveri-provance.ru/articles/filenchatye-mezhkomnatnye-dveri/
 Redirect 301	/katalog/po-stoimosti/rasprodazha/	/articles/rasprodazha-mezhkomnatnyh-dverey/
-Redirect 301	/katalog/po-stoimosti/ehlitnye/	/articles/elitnye-mezhkomnatnye-dveri/
+Redirect 301	/katalog/po-stoimosti/ehlitnye/	https://dveri-provance.ru/articles/elitnye-mezhkomnatnye-dveri/
 Redirect 301	/katalog/po-stoimosti/premium/	/articles/dveri-premium-klassa/
-Redirect 301	/katalog/po-stoimosti/dveri-econom/	/articles/mezhkomnatnie-dveri-ekonom-klassa/
+Redirect 301	/katalog/po-stoimosti/dveri-econom/	https://dveri-provance.ru/articles/mezhkomnatnie-dveri-ekonom-klassa/
 Redirect 301	/katalog/po-komplektacii/dveri-v-sbore-s-korobkoy/	/articles/dveri-v-sbore-s-korobkoy/
 Redirect 301	/katalog/po-komplektacii/so-skrytymi-petlyami/	/articles/mezhkomnatnie-dveri-so-skrytymi-petlyami/
 Redirect 301	/katalog/po-komplektacii/s-alyuminievymi-torcami/	/articles/mezhkomnatnie-dveri-s-aluminievymi-torcami/
-Redirect 301	/katalog/po-komplektacii/s-alyuminievymi-nalichnikami-i-korobom/	/articles/dveri-v-sbore-s-aluminievym-nalichnikom-i-korobom/
+Redirect 301	/katalog/po-komplektacii/s-alyuminievymi-nalichnikami-i-korobom/	https://dveri-provance.ru/articles/dveri-v-sbore-s-aluminievym-nalichnikom-i-korobom/
 Redirect 301	/katalog/po-komplektacii/dveri-s-pritvorom/	/articles/mezhkomnatnie-dveri-s-pritvorom/
 Redirect 301	/katalog/po-komplektacii/teleskopicheskie/	/articles/teleskopicheskie-mezhkomnatnie-dveri/
-Redirect 301	/katalog/po-komplektacii/s-vrezannoj-furnituroj/	/articles/mezhkomnatnie-dveri-s-vrezannoy-furnituroy/
 Redirect 301	/katalog/dveri-po-ostekleniyu/so-steklom-lakobel/	/articles/dveri-so-steklom-lakobel/
-Redirect 301	/katalog/dveri-po-ostekleniyu/dveri-s-zerkalom/	/articles/Dveri_s_zerkalami/
+Redirect 301	/katalog/dveri-po-ostekleniyu/dveri-s-zerkalom/	https://dveri-provance.ru/articles/dveri_s_zerkalami/
 Redirect 301	/katalog/dveri-po-ostekleniyu/s-facetnym-steklom/	/articles/mezhkomnatnie-dveri-s-facetnym-steklom/
-Redirect 301	/katalog/dveri-po-ostekleniyu/vitrazhnye/	/articles/mezhkomnatnie-dveri-s-vitrazhami/
-Redirect 301	/katalog/dveri-po-ostekleniyu/reshetka/	/articles/mezhkomnatnie-dveri-so-steklom-reshetkoy/
+Redirect 301	/katalog/dveri-po-ostekleniyu/vitrazhnye/	https://dveri-provance.ru/articles/mezhkomnatnie-dveri-s-vitrazhami/
+Redirect 301	/katalog/dveri-po-ostekleniyu/reshetka/	https://dveri-provance.ru/articles/mezhkomnatnie-dveri-so-steklom-reshetkoy/
 Redirect 301	/katalog/dveri-po-ostekleniyu/tripleks/	/articles/mezhkomnatnie-dveri-triplex/
 Redirect 301	/katalog/dveri-po-ostekleniyu/iz-zakalennogo-stekla/	/articles/dveri-iz-zakalennogo-stekla/
-Redirect 301	/katalog/dveri-po-ostekleniyu/matovoe/	/articles/mezhkomnatnie-dveri-s-matovym-steklom/
-		
+Redirect 301	/katalog/dveri-po-ostekleniyu/matovoe/	https://dveri-provance.ru/articles/mezhkomnatnie-dveri-s-matovym-steklom/
+Redirect 301 	/dostavka https://dveri-provance.ru/services/delivery/
+Redirect 301 	/image/catalog/dveri/slonovaya-kost/dver-iz-yasenya-slonovaya-kost.jpg https://dveri-provance.ru/
+Redirect 301 	/image/catalog/dveri/s-pritvorom/dveri-s-pritvorom-v-interyere.jpg	https://dveri-provance.ru/
+
+Redirect 301 	/katalog/belye-dveri/ https://dveri-provance.ru/shop/belye-dveri/
+
+Redirect 301 	/articles/dveri_dlya_vannoy/dgg-seraya/ https://dveri-provance.ru/articles/
+Redirect 301	/articles/skrytye-dveri/ https://dveri-provance.ru/articles/
+Redirect 301	/katalog/filenchatyie-belyie-dveri/filyonchatyie-dveri-belyie-model-1029-turin/ https://dveri-provance.ru/shop/
+
+Redirect 301 	/services/repair/ https://dveri-provance.ru/services/
+
+
+
+

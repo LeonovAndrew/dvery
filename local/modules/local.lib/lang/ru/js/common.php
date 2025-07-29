@@ -1,0 +1,3 @@
+<?php
+$MESS['DEVBX_API_URL'] = '/ajax/api/';
+$MESS['DEVBX_PUBLIC_TEMPLATE_ID'] = SITE_TEMPLATE_ID;

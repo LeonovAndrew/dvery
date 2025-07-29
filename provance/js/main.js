@@ -102,6 +102,7 @@ $( document ).ready(function() {
 
     // Увеличение картинки
     $('.fancy_img').fancybox()
+    
 
 
     $('.accessories .slider').slick({

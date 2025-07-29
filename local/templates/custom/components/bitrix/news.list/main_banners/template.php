@@ -4,11 +4,11 @@
 
 <div class="main-slider">
 	<? foreach($arResult['ITEMS'] as $item) :?>
-	    <div class="main-slider__item" data-item="<?=$item['DETAIL_PICTURE']['SRC']?>">
-			<div class="main-slider__item-preloader-wrapper">
+	    <div class="main-slider__item" <?/*data-item="<?=$item['DETAIL_PICTURE']['SRC']?>"*/?>  style="background-image:url(<?=$item['DETAIL_PICTURE']['SRC']?>)">
+			<?/*<div class="main-slider__item-preloader-wrapper">
 				<div class="main-slider__item-preloader"></div>
 			</div>
-			
+			*/?>
 	        <div class="main-slider__item-bg">
 	            <div class="cont">
 	                <div class="main-slider__cont">

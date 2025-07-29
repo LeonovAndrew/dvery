@@ -4,20 +4,17 @@ $APPLICATION->SetTitle("Поиск");
 ?>
 
 <?$APPLICATION->IncludeComponent(
-	"bitrix:search.page", 
-	".default", 
+	"bitrix:catalog.search", 
+	"catalog", 
 	array(
 		"RESTART" => "Y",
 		"CHECK_DATES" => "N",
 		"USE_TITLE_RANK" => "N",
 		"DEFAULT_SORT" => "rank",
 		"arrFILTER" => array(
-			0 => "main",
-			1 => "iblock_catalog",
-			2 => "iblock_news",
+			0 => "iblock_catalog",
 		),
-		"arrFILTER_main" => array(
-		),
+		"arrFILTER_main" => "",
 		"arrFILTER_iblock_services" => array(
 			0 => "all",
 		),
@@ -25,7 +22,8 @@ $APPLICATION->SetTitle("Поиск");
 			0 => "all",
 		),
 		"arrFILTER_iblock_catalog" => array(
-			0 => "all",
+			0 => "2",
+			1 => "3",
 		),
 		"SHOW_WHERE" => "N",
 		"SHOW_WHEN" => "N",
@@ -48,13 +46,64 @@ $APPLICATION->SetTitle("Поиск");
 		"SHOW_ORDER_BY" => "N",
 		"SHOW_TAGS_CLOUD" => "N",
 		"AJAX_OPTION_ADDITIONAL" => "",
-		"COMPONENT_TEMPLATE" => ".default",
+		"COMPONENT_TEMPLATE" => "catalog",
 		"NO_WORD_LOGIC" => "N",
 		"FILTER_NAME" => "",
-		"USE_LANGUAGE_GUESS" => "Y",
+		"USE_LANGUAGE_GUESS" => "N",
 		"SHOW_RATING" => "",
 		"RATING_TYPE" => "",
-		"PATH_TO_USER_PROFILE" => ""
+		"PATH_TO_USER_PROFILE" => "",
+		"IBLOCK_TYPE" => "shop",
+		"IBLOCK_ID" => "22",
+		"ELEMENT_SORT_FIELD" => "sort",
+		"ELEMENT_SORT_ORDER" => "asc",
+		"ELEMENT_SORT_FIELD2" => "id",
+		"ELEMENT_SORT_ORDER2" => "desc",
+		"HIDE_NOT_AVAILABLE" => "N",
+		"HIDE_NOT_AVAILABLE_OFFERS" => "N",
+		"PAGE_ELEMENT_COUNT" => "30",
+		"LINE_ELEMENT_COUNT" => "3",
+		"PROPERTY_CODE" => array(
+			0 => "",
+			1 => "",
+		),
+		"OFFERS_FIELD_CODE" => array(
+			0 => "",
+			1 => "",
+		),
+		"OFFERS_PROPERTY_CODE" => array(
+			0 => "",
+			1 => "",
+		),
+		"OFFERS_SORT_FIELD" => "sort",
+		"OFFERS_SORT_ORDER" => "asc",
+		"OFFERS_SORT_FIELD2" => "id",
+		"OFFERS_SORT_ORDER2" => "desc",
+		"OFFERS_LIMIT" => "0",
+		"SECTION_URL" => "",
+		"DETAIL_URL" => "",
+		"BASKET_URL" => "/personal/basket.php",
+		"ACTION_VARIABLE" => "action",
+		"PRODUCT_ID_VARIABLE" => "id",
+		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
+		"PRODUCT_PROPS_VARIABLE" => "prop",
+		"SECTION_ID_VARIABLE" => "SECTION_ID",
+		"DISPLAY_COMPARE" => "N",
+		"PRICE_CODE" => array(
+			0 => "BASE",
+		),
+		"USE_PRICE_COUNT" => "N",
+		"SHOW_PRICE_COUNT" => "1",
+		"PRICE_VAT_INCLUDE" => "Y",
+		"USE_PRODUCT_QUANTITY" => "N",
+		"CONVERT_CURRENCY" => "N",
+		"OFFERS_CART_PROPERTIES" => "",
+		"USE_SEARCH_RESULT_ORDER" => "N",
+		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "N",
+		"PRODUCT_PROPERTIES" => array(
+		)
 	),
 	false
 );?>

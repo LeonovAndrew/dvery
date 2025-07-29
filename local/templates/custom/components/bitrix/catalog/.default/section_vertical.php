@@ -13,9 +13,7 @@ else
 }
 ?>
 
-<div class="catalog">
-    <div class="cont">
-		<? $intSectionID = $APPLICATION->IncludeComponent(
+<? $intSectionID = $APPLICATION->IncludeComponent(
 			"bitrix:catalog.section",
 			"",
 			array(
@@ -145,46 +143,3 @@ else
 			),
 			$component
 		);?>
-	</div>
-</div>
-
-<div class="catalog-info">
-    <div class="cont">
-        <div class="catalog-info__cont">
-            <div class="catalog-info__head">
-                <?$APPLICATION->IncludeComponent(
-					"bitrix:main.include",
-					"",
-					Array(
-						"AREA_FILE_SHOW" => "file",
-						"AREA_FILE_SUFFIX" => "",
-						"EDIT_TEMPLATE" => "",
-						"PATH" => "/include/catalog_title.php"
-					)
-			    );?>
-            </div>
-            <div class="catalog-info__body">
-                <?$APPLICATION->IncludeComponent(
-					"bitrix:main.include",
-					"",
-					Array(
-						"AREA_FILE_SHOW" => "file",
-						"AREA_FILE_SUFFIX" => "",
-						"EDIT_TEMPLATE" => "",
-						"PATH" => "/include/catalog_text.php"
-					)
-			    );?>
-            </div>rwar
-            <?$APPLICATION->IncludeComponent(
-				"bitrix:main.include",
-				"",
-				Array(
-					"AREA_FILE_SHOW" => "file",
-					"AREA_FILE_SUFFIX" => "",
-					"EDIT_TEMPLATE" => "",
-					"PATH" => "/include/catalog_link.php"
-				)
-		    );?>
-        </div>
-    </div> 
-</div>

@@ -201,9 +201,16 @@ if($APPLICATION->GetCurDir() != '/bitrix/admin/')
                                 <img src="<?=SITE_TEMPLATE_PATH?>/img/page-logo-white.png" alt="">
                             <? endif; ?>
                         </a>
-                        
-                        <a href="/catalog/" class="header__list-item text-type-1 header__left-item">Каталог</a>
 
+                                        <div class="catalog-menu">
+                                        <a href="/catalog/" class="header__list-item text-type-1 header__left-item">Каталог
+
+                                            </a>
+                <ul class="top-menu__sub"> 
+                    <li class="top-menu__sub-item"><a href="https://dveri-provance.ru/catalog/">Двери</a></li> 
+                    <li class="top-menu__sub-item"><a href=" https://dveri-provance.ru/stroy_paneli/">Стеновые панели</a></li> 
+                </ul>
+                </div>
                     </div>   
                     <div class="header__right">
                         <?$APPLICATION->IncludeComponent(

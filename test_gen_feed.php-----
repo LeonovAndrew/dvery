@@ -1,0 +1,149 @@
+<?
+require($_SERVER["DOCUMENT_ROOT"].'/bitrix/modules/main/include/prolog_before.php');
+
+function GenFeedByInfoblockCatalog111()
+{
+    CModule::IncludeModule("catalog");
+
+    $date_update = date("Y-m-d H:i");
+
+    $arSort= Array("ID"=>"DESC");
+    $arSelect = Array("ID", "NAME", "IBLOCK_SECTION_ID", "CATALOG_PRICE_1", "PREVIEW_PICTURE", "PREVIEW_TEXT", "DETAIL_PAGE_URL");
+    $arFilter = Array("IBLOCK_ID" => 2);
+    $res =  CIBlockElement::GetList($arSort, $arFilter, false, false, $arSelect);
+    while($ob = $res->GetNext()){
+
+        $elements_feed[] = $ob;
+        
+    }
+
+    /*получаем список разделов*/
+    $res = CIBlockSection::GetList(Array(), Array("IBLOCK_ID"=>2), Array("ID", "NAME", "SECTION_PAGE_URL", "DESCRIPTION"), false);
+    while($ob = $res->GetNext()){
+        $arSct111[] = $ob;
+    }
+
+    $feed  = "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+    <!DOCTYPE yml_catalog SYSTEM \"shops.dtd\">
+    <yml_catalog date=\"$date_update\">
+        <shop>
+            <name>
+                Фабрика дверей Прованс
+            </name>
+            <company>
+            </company>
+            <url>
+                http://dveri-provance.ru
+            </url>
+            <platform>
+                1C-Bitrix
+            </platform>
+            <currencies>
+                <currency id=\"RUB\" rate=\"1\" />
+                <currency id=\"USD\" rate=\"68.79\" />
+                <currency id=\"EUR\" rate=\"78.32\" />
+                <currency id=\"UAH\" rate=\"2.511\" />
+                <currency id=\"BYN\" rate=\"32.2\" />
+            </currencies>
+            <categories>";
+            foreach($arSct111 as $setc):
+                $feed .= "<category id=\"$setc[ID]\">".
+                $setc['NAME'].'</category>'.PHP_EOL;
+            endforeach;
+            $feed .= "</categories>
+            <offers>";
+            foreach($elements_feed as $feed_el):
+                $feed .= "<offer id=\"$feed_el[ID]\" available=\"true\">".PHP_EOL.
+                "<url>"."https://dveri-provance.ru".$feed_el[DETAIL_PAGE_URL]."</url>".PHP_EOL.
+                "<price>$feed_el[CATALOG_PRICE_1]</price>".PHP_EOL.
+                "<currencyId>$feed_el[CATALOG_CURRENCY_1]</currencyId>".PHP_EOL.
+                "<categoryId>$feed_el[IBLOCK_SECTION_ID]</categoryId>".PHP_EOL.
+                "<picture>"."https://dveri-provance.ru".CFile::GetPath($feed_el[PREVIEW_PICTURE])."</picture>".PHP_EOL.
+                "<name>$feed_el[NAME]</name>".PHP_EOL.
+                "<description>$feed_el[PREVIEW_TEXT]</description>".PHP_EOL."</offer>".PHP_EOL;
+            endforeach;
+            $feed .= "</offers>
+        </shop>
+    </yml_catalog>";
+
+
+    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/tst_gen_feed_catalog.xml', $feed);
+}
+
+function GenFeedByInfoblockShop111()
+{
+    CModule::IncludeModule("catalog");
+
+    $date_update = date("Y-m-d H:i");
+
+    $arSort= Array("ID"=>"DESC");
+    $arSelect = Array("ID", "NAME", "IBLOCK_SECTION_ID", "CATALOG_PRICE_1", "DETAIL_PICTURE", "PREVIEW_TEXT", "DETAIL_PAGE_URL", "PROPERTY_STYLE", "PROPERTY_MATERIAL", "PROPERTY_COLOR");
+    $arFilter = Array("IBLOCK_ID" => 22);
+    $res =  CIBlockElement::GetList($arSort, $arFilter, false, false, $arSelect);
+    while($ob = $res->GetNext()){
+
+        $elements_feed[] = $ob;
+        
+    }
+
+    /*получаем список разделов*/
+    $res = CIBlockSection::GetList(Array(), Array("IBLOCK_ID"=>22), Array("ID", "NAME", "SECTION_PAGE_URL", "DESCRIPTION"), false);
+    while($ob = $res->GetNext()){
+        $arSct111[] = $ob;
+    }
+
+    $feed  = "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+    <!DOCTYPE yml_catalog SYSTEM \"shops.dtd\">
+    <yml_catalog date=\"$date_update\">
+        <shop>
+            <name>
+                Фабрика дверей Прованс
+            </name>
+            <company>
+            </company>
+            <url>
+                http://dveri-provance.ru
+            </url>
+            <platform>
+                1C-Bitrix
+            </platform>
+            <currencies>
+                <currency id=\"RUB\" rate=\"1\" />
+                <currency id=\"USD\" rate=\"68.79\" />
+                <currency id=\"EUR\" rate=\"78.32\" />
+                <currency id=\"UAH\" rate=\"2.511\" />
+                <currency id=\"BYN\" rate=\"32.2\" />
+            </currencies>
+            <categories>";
+            foreach($arSct111 as $setc):
+                $feed .= "<category id=\"$setc[ID]\">".
+                $setc['NAME'].'</category>'.PHP_EOL;
+            endforeach;
+            $feed .= "</categories>
+            <offers>";
+            foreach($elements_feed as $feed_el):
+                $feed .= "<offer id=\"$feed_el[ID]\" available=\"true\">".PHP_EOL.
+                "<url>"."https://dveri-provance.ru".$feed_el[DETAIL_PAGE_URL]."</url>".PHP_EOL.
+                "<price>$feed_el[CATALOG_PRICE_1]</price>".PHP_EOL.
+                "<currencyId>$feed_el[CATALOG_CURRENCY_1]</currencyId>".PHP_EOL.
+                "<categoryId>$feed_el[IBLOCK_SECTION_ID]</categoryId>".PHP_EOL.
+                "<picture>"."https://dveri-provance.ru".CFile::GetPath($feed_el[DETAIL_PICTURE])."</picture>".PHP_EOL.
+                "<name>$feed_el[NAME]</name>".PHP_EOL.
+                "<description>$feed_el[PREVIEW_TEXT]</description>".PHP_EOL.
+                "<param name=\"Стилистика\">$feed_el[PROPERTY_STYLE_VALUE]</param>".PHP_EOL.
+                "<param name=\"Материал\">$feed_el[PROPERTY_MATERIAL_VALUE]</param>".PHP_EOL.
+                "<param name=\"Цвет\">$feed_el[PROPERTY_COLOR_VALUE]</param>".PHP_EOL.
+                "</offer>";
+            endforeach;
+            $feed .= "</offers>
+        </shop>
+    </yml_catalog>";
+
+    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/tst_gen_feed_shop.xml', $feed);
+}
+
+//GenFeedByInfoblockCatalog();
+
+GenFeedByInfoblockShop111();
+
+?>

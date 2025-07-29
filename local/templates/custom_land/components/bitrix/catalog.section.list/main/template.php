@@ -29,7 +29,7 @@ if (empty($arResult['SECTIONS'])) return;
 	    </a>
     <? endforeach; ?>
     <?/* Костыльный костыль чтобы дизайн вел куда-то на лэндинг... я этого не хотел :( */?>
-    <a href="/lp/nestandart/" class="block1__item-help">
+    <a href="/" class="block1__item-help">
         <div class="block1__item" style="background-image: url('/upload/iblock/feb/ab4xpycsycd22q6swb7nwgb4t2l50222.jpg');">
             <div class="block1__item-bg">
                 <div class="block1__item-cont">

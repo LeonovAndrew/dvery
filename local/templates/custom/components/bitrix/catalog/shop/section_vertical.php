@@ -21,6 +21,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH."/css/ion.rangeSlider.css");
 <script src="<?=SITE_TEMPLATE_PATH?>/js/jquery.fancybox.js"></script>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/ion.rangeSlider.min.js"></script>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/nice-select.js"></script>
+<script src="<?=SITE_TEMPLATE_PATH?>/js/favorite.js"></script>
 <!-- End Новые js -->
 
 <!-- Изменения в js -->
@@ -139,8 +140,7 @@ else
 			<div class="content_page">
 				
 			<?include('sort.php')?>
-				
-
+                
 				<?
 				$intSectionID = $APPLICATION->IncludeComponent(
 					"bitrix:catalog.section",

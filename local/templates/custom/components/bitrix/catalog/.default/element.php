@@ -195,9 +195,11 @@ if (isset($arParams['USER_CONSENT_IS_LOADED']))
 	$componentElementParams['USER_CONSENT_IS_LOADED'] = $arParams['USER_CONSENT_IS_LOADED'];
 }
 
+$template = isset($_GET['new']) && $USER->IsAdmin() ? 'test' : '';
+
 $elementId = $APPLICATION->IncludeComponent(
 	'bitrix:catalog.element',
-	'.default',
+	$template,
 	$componentElementParams,
 	$component
 );

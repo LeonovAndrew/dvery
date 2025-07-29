@@ -2,7 +2,7 @@
 $aMenuLinks = Array(
 	Array(
 		"Каталог дверей", 
-		"/shop/", 
+		"/mezhkomnatnye-dveri/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -17,6 +17,13 @@ $aMenuLinks = Array(
 	Array(
 		"О компании", 
 		"/about/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Гарантия", 
+		"/services/guarantee/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -69,6 +76,26 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Межкомнатные перегородки", 
+		"/peregorodki/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Отзывы", 
+		"/otzyvy/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Наши работы", 
+		"/portfolio/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
-?>

@@ -10,7 +10,7 @@ $phone = htmlspecialchars($_POST['PHONE']);
 $product = intval($_POST['PRODUCT']);
 $design = intval($_POST['DESIGN']);
 
-if ($iblockId > 0 && $name && $phone) {
+if ($iblockId > 0 && $phone) {
 	$el = new CIBlockElement;
 
 	$PROP = array(
@@ -25,8 +25,8 @@ if ($iblockId > 0 && $name && $phone) {
 		"PROPERTY_VALUES" => $PROP
   	);
 
-  	$arFields = array('NAME' => $name, 'PHONE' => $phone, 'DESIGN' => $design, 'PRODUCT' => $product);
-  	
+  	///$arFields = array('NAME' => $name, 'PHONE' => $phone, 'DESIGN' => $design, 'PRODUCT' => $product); htmlspecialchars($_POST['PRODUCT']
+  	$arFields = array('NAME' => $name, 'PHONE' => $phone, 'DESIGN' => $design, 'PRODUCT' => htmlspecialchars($_POST['PRODUCT_ONE_CL']));
 	if ($request_id = $el->Add($arLoadRequestArray))
 	{
   		echo json_encode(['success' => true, 'message' => 'Ваш заказ отправлен']);

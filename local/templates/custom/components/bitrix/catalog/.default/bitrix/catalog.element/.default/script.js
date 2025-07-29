@@ -72,6 +72,63 @@ $(function() {
     	$('.card__price span').html(prettify(offers[materialId][modelId].PRICE));
     	$('.card__text').html('Модель: '+prettify(offers[materialId][modelId].TEXT));
     });    
+
+    $('.open_card_popup').on('click', function() {
+
+    	let $trig = $(this),
+    		$targ = $($trig.attr('href'));
+
+    	if ($targ.length) {
+    	  $targ.addClass('shown');
+    	  $('body').addClass('noscroll');
+    	}
+
+    	return false;
+
+    });
+
+    $('.card__popup_close').on('click', function(e) {
+
+    	let $trig = $(this),
+    		$targ = $trig.closest('.card__popup');
+
+    	if ($targ.length) {
+    	  	$targ.removeClass('shown');
+    	  	$('body').removeClass('noscroll');
+    	}
+
+    	return false;
+
+    });
+
+    $('.card__popup').on('click', function(e) {
+
+    	let $trig = $(e.target);
+
+    	if (!$trig.hasClass('card__popup')) {
+    	  return false;
+    	}
+
+	  	$trig.removeClass('shown');
+	  	$('body').removeClass('noscroll');
+
+    	return false;
+
+    });
+
+    $('.card-text__head').on('click', function() {
+
+    	if (window.innerWidth > 850) return false;
+
+    	let $head = $(this),
+    		$body = $head.siblings('.card-text__body');
+
+    	$head.toggleClass('opened');
+    	$body.slideToggle();
+
+    	return false;
+
+    });
 });
 
 function prettify (num) {

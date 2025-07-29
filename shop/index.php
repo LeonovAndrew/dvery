@@ -1,13 +1,40 @@
 <?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetPageProperty("description", "Каталог межкомнатных дверей");
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetPageProperty("description", "Купить межкомнатные двери по выгодной цене на официальном сайте фабрики Provance. Широкий ассортимент. Бесплатный замер. Доставка по Москве и Московской области. Профессиональный монтаж.");
 $APPLICATION->SetPageProperty("keywords", "Межкомнатные двери");
-$APPLICATION->SetPageProperty("title", "Каталог межкомнатных дверей");
-$APPLICATION->SetTitle("Каталог межкомнатных дверей");
+$APPLICATION->SetPageProperty("title", "Межкомнатные двери – купить по цене производителя в Москве ");
+$APPLICATION->SetTitle("Межкомнатные двери");
 ?>
-		<?$APPLICATION->IncludeComponent(
-	"bitrix:catalog", 
-	"shop", 
+
+
+<?
+switch ($APPLICATION->GetCurDir()) {
+	case '/shop/filter/price-base-from-31132-to-559990/glass-is-y/apply/':
+		$APPLICATION->SetPageProperty('title', 'Межкомнатные двери со стеклом – купить по цене производителя в Москве');
+		$APPLICATION->SetPageProperty('description', 'Купить межкомнатные двери со стеклом по выгодной цене от фабрики Provance. Широкий ассортимент. Бесплатный замер. Доставка по Москве и Московской области. Профессиональный монтаж.');
+		$APPLICATION->SetTitle("Межкомнатные двери со стеклом");
+		break;
+	case '/shop/filter/price-base-from-31132-to-559990/color-is-9a33a7738e8c6a9ecbc2af0efa88db36/apply/':
+		$APPLICATION->SetPageProperty('title', 'Двери межкомнатные черные – купить с доставкой по цене производителя');
+		$APPLICATION->SetPageProperty('description', 'Купить межкомнатные двери черного цвета по выгодной цене от фабрики Provance. Широкий ассортимент. Бесплатный замер. Доставка по Москве и Московской области. Профессиональный монтаж.');
+		$APPLICATION->SetTitle("Черные межкомнатные двери");
+		break;
+	case '/shop/filter/price-base-from-31132-to-559990/color-is-f2bf1a8deddabc995dc37652628e196f/apply/':
+		$APPLICATION->SetPageProperty('title', 'Двери межкомнатные серые – купить в Москве с доставкой по цене производителя');
+		$APPLICATION->SetPageProperty('description', 'Купить межкомнатные двери серого цвета по выгодной цене от фабрики Provance. Широкий ассортимент. Бесплатный замер. Доставка по Москве и Московской области. Профессиональный монтаж.');
+		$APPLICATION->SetTitle("Двери серые межкомнатные");
+		break;
+	case '/shop/filter/price-base-from-31132-to-559990/color-is-c22dc346ef7c1c519733bb9811edd3ae-or-d7c6b7f3e9699a3914f4e303d9978168-or-9e5d0ac99c8729a7055d685a9a1239e6/apply/':
+		$APPLICATION->SetPageProperty('title', 'Двери межкомнатные светлые – купить в Москве с доставкой по цене производителя');
+		$APPLICATION->SetPageProperty('description', 'Купить светлые межкомнатные двери по выгодной цене от фабрики Provance. Широкий ассортимент. Бесплатный замер. Доставка по Москве и Московской области. Профессиональный монтаж.');
+		$APPLICATION->SetTitle("Межкомнатные светлые двери");
+		break;
+}
+?>
+
+<? $APPLICATION->IncludeComponent(
+	"bitrix:catalog",
+	"shop",
 	array(
 		"COMPONENT_TEMPLATE" => "shop",
 		"IBLOCK_TYPE" => "shop",
@@ -133,7 +160,7 @@ $APPLICATION->SetTitle("Каталог межкомнатных дверей");
 		"DETAIL_META_KEYWORDS" => "-",
 		"DETAIL_META_DESCRIPTION" => "-",
 		"DETAIL_BROWSER_TITLE" => "-",
-		"DETAIL_SET_CANONICAL_URL" => "Y",
+		"DETAIL_SET_CANONICAL_URL" => "N",
 		"SECTION_ID_VARIABLE" => "SECTION_ID",
 		"DETAIL_CHECK_SECTION_ID_VARIABLE" => "N",
 		"DETAIL_BACKGROUND_IMAGE" => "-",
@@ -190,21 +217,18 @@ $APPLICATION->SetTitle("Каталог межкомнатных дверей");
 		"DETAIL_SET_VIEWED_IN_COMPONENT" => "N",
 		"SEARCH_USE_SEARCH_RESULT_ORDER" => "N",
 		"MESS_BTN_LAZY_LOAD" => "Показать ещё",
-		"LABEL_PROP_MOBILE" => array(
-		),
+		"LABEL_PROP_MOBILE" => array(),
 		"LABEL_PROP_POSITION" => "top-left",
-		"LIST_PROPERTY_CODE_MOBILE" => array(
-		),
-		"DETAIL_MAIN_BLOCK_PROPERTY_CODE" => array(
-		),
+		"LIST_PROPERTY_CODE_MOBILE" => array(),
+		"DETAIL_MAIN_BLOCK_PROPERTY_CODE" => array(),
 		"DETAIL_SLIDER_INTERVAL" => "5000",
 		"DETAIL_SLIDER_PROGRESS" => "N",
 		"SEF_URL_TEMPLATES" => array(
+			"smart_filter_index" => "filter/#SMART_FILTER_PATH#/apply/",
 			"sections" => "",
 			"section" => "#SECTION_CODE#/",
 			"element" => "#SECTION_CODE#/#ELEMENT_CODE#/",
 			"compare" => "compare.php?action=#ACTION_CODE#",
-			"smart_filter_index" => "filter/#SMART_FILTER_PATH#/apply/",
 			"smart_filter" => "#SECTION_CODE#/filter/#SMART_FILTER_PATH#/apply/",
 		),
 		"VARIABLE_ALIASES" => array(
@@ -214,5 +238,7 @@ $APPLICATION->SetTitle("Каталог межкомнатных дверей");
 		)
 	),
 	false
-);?>
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+); ?>
+
+
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

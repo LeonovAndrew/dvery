@@ -1,3 +1,5 @@
+
+
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die(); ?>
 
 <? if (empty($arResult['ITEMS'])) return; ?>
@@ -8,7 +10,6 @@
         <div class="certificate__cont">
             <div class="certificate__head">
                 Сертификаты
-            </div>
             <div class="certificate__body-help">
                 <div class="certificate__next">
                     
@@ -25,13 +26,20 @@
                 
                 </div>
                 <div class="certificate__body">
-                    <? foreach($arResult['ITEMS'] as $item) :?>
+                    <? foreach($arResult['ITEMS'] as $item) :
+                    
+                    $image = CFile::ResizeImageGet($item['DETAIL_PICTURE']['ID'], array('height' => 300, 'width' => 213), BX_RESIZE_IMAGE_EXACT, false, false, false, 30);
+                    
+                    ?>
+                        
                         <div class="certificate__item-help">
-                            <a href="<?=$item['DETAIL_PICTURE']['SRC']?>" class="certificate__item" data-src="<?=$item['DETAIL_PICTURE']['SRC']?>"></a>
+                            <a href="<?=$item['DETAIL_PICTURE']['SRC']?>"   class="certificate__item certificate-fancy" style="background-image:url(<?=$image['src']?>)"></a>
                         </div>
+
                     <? endforeach; ?>
                 </div>
             </div>
         </div>
     </div>
-</div>
+ </div>
+

@@ -11,41 +11,8 @@
 
 	<link href="<?=SITE_TEMPLATE_PATH?>/assets/css/vendors.css" rel="stylesheet"><link href="<?=SITE_TEMPLATE_PATH?>/assets/css/app.css" rel="stylesheet"></head>
 	<body>
-	<script>(function(a,m,o,c,r,m){a[m]={id:"53446",hash:"927bee0a9948b591de52ca348d3603c6df122bd498b31268cd858a36f1e4ced4",locale:"ru",inline:false,setMeta:function(p){this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){(a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1632391558';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));</script>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-   ym(64922065, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true,
-        ecommerce:"dataLayer"
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/64922065" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVFSNFXLTH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-ZVFSNFXLTH');
-</script>
-<script>
-(function(w, d, s, h, id) {
-    w.roistatProjectId = id; w.roistatHost = h;
-    var p = d.location.protocol == "https:" ? "https://" : "http://";
-    var u = /^.roistat_visit=[^;]+(.)?$/.test(d.cookie) ? "/dist/module.js" : "/api/site/1.0/"+id+"/init?referrer="+encodeURIComponent(d.location.href);
-    var js = d.createElement(s); js.charset="UTF-8"; js.async = 1; js.src = p+h+u; var js2 = d.getElementsByTagName(s)[0]; js2.parentNode.insertBefore(js, js2);
-})(window, document, 'script', 'cloud.roistat.com', '3cfe629a5a2a7ef4a913d01aae5cc002');
-</script>
-
+	<?$APPLICATION->IncludeFile('/include/counter.php')?>
+	
 <script>
 window.onload = function(){
  setTimeout(function(){
@@ -81,7 +48,7 @@ window.onload = function(){
 										</svg></a><a class="msg__item" href="#">
 										<svg class="icon ic-whatchapp" width="30" height="30">
 											<use xlink:href="<?=SITE_TEMPLATE_PATH?>/assets/sprites/sprite.svg#ic-whatchapp"></use>
-										</svg></a></div><a href="tel:+74998771479">+7 (499) 877-14-79</a>
+										</svg></a></div><a href="tel:+74992836062">+7-499-283-60-62</a>
 							</div>
 						</div><a class="btn btn_small" href="#" data-popup-selector="callback" data-popup-wfid="1">
 							<svg class="icon ic-call" width="24" height="24">

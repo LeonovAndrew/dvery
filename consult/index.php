@@ -1,5 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetPageProperty("keywords", "Консультация по вашим вопросам подбор дверей");
+$APPLICATION->SetPageProperty("description", "Оставьте заявку, наш менеджер свяжется с вами для консультации по продукции и услугам.");
+$APPLICATION->SetPageProperty("title", "Консультация по вопросам продажи продукции");
 $APPLICATION->SetTitle("Консультация");
 ?><p>
 	 В изготовлении дверей&nbsp;есть много нюансов и особенностей. Наша политика не позволяет нам продавать продукцию не раскрывая всех секретов.
@@ -13,7 +16,16 @@ $APPLICATION->SetTitle("Консультация");
 <p>
 	<br>
 </p>
-<script>!function(a,m,o,c,r,m){a[o+c]=a[o+c]||{setMeta:function(p){this.params=(this.params||[]).concat([p])}},a[o+r]=a[o+r]||function(f){a[o+r].f=(a[o+r].f||[]).concat([f])},a[o+r]({id:"836197",hash:"c3ae14ff913acf206270997a9cc7234b",locale:"ru"})}(window,0,"amo_forms_","params","load");</script><script id="amoforms_script_836197" async="async" charset="utf-8" src="https://forms.amocrm.ru/forms/assets/js/amoforms.js?1639388154"></script>
+<script>
+    window.onRoistatAllModulesLoaded = function () {
+        window.roistat.registerOnVisitProcessedCallback(function() {
+        	
+            !function(a,m,o,c,r,m){a[o+c]=a[o+c]||{setMeta:function(p){this.params=(this.params||[]).concat([p])}},a[o+r]=a[o+r]||function(f){a[o+r].f=(a[o+r].f||[]).concat([f])},a[o+r]({id:"836197",hash:"c3ae14ff913acf206270997a9cc7234b",locale:"ru"})}(window,0,"amo_forms_","params","load");
+            
+        });
+    };
+</script>
+<script id="amoforms_script_836197" async="async" charset="utf-8" src="https://forms.amocrm.ru/forms/assets/js/amoforms.js?1639388154"></script>
 <p>
 	 Или позвоните&nbsp;нам по телефону, мы&nbsp;с радостью ответим на Ваши вопросы
 </p>

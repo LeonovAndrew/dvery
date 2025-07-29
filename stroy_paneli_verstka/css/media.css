@@ -1,0 +1,229 @@
+@media screen and (max-width: 1768px) {
+}
+@media screen and (max-width: 1680px) {
+}
+@media screen and (max-width: 1600px) {
+}
+@media screen and (max-width: 1440px) {
+}
+@media screen and (max-width: 1366px) {
+  .block_1_bot_slider_inner_in_txt_in {
+    padding: 30px 45px 30px 30px;
+  }
+  .block_1_bot_slider_inner_in_txt_in h4 {
+    font-size: 40px;
+  }
+}
+@media screen and (max-width: 1360px) {
+}
+@media screen and (max-width: 1280px) {
+  .block_1_bot_slider_inner_in_txt {
+    top: 140px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .block_3_card_slider .slick-next {
+    right: 0;
+  }
+  .block_3_card_slider .slick-prev {
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .block_1_bot_slider_inner_in_txt {
+    padding: 0 15px;
+  }
+  .block_1_bot_slider_inner_in_txt_in {
+    padding: 20px 25px 20px 25px;
+  }
+  .block_1_bot_slider_inner_in_txt_in h4 {
+    font-size: 28px;
+  }
+  .block_1_bot_slider_inner_in_txt a {
+    margin: 30px 0 0 0;
+  }
+  .block_3_flex {
+    justify-content: space-between;
+    margin: 0;
+  }
+  .block_3_flex_in {
+    width: 48%;
+    margin: 0 0 30px 0;
+  }
+  .block_6_slider_inner_in {
+    padding: 0 60px;
+  }
+  .block_6_slider .slick-prev {
+    left: 0;
+  }
+  .block_6_slider .slick-next {
+    right: 0;
+  }
+  .block_2_card_flex_txt_in1 {
+    flex-wrap: wrap;
+  }
+  .block_2_card_flex_txt_in1 p {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+  .block_3_card_slider_inner_in {
+    max-width: 300px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .block_4_in_img_punkt1 {
+    margin: 0 0 0 -450px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .block_1,
+  .block_2,
+  .block_3,
+  .block_4,
+  .block_5,
+  .block_6,
+  .block_7 {
+    margin: 0 0 50px 0;
+  }
+    
+  .block_1_bot_slider_inner_in_txt_in h4 {
+    font-size: 18px;
+    margin: 0;
+  }
+  .block_1_bot_slider_inner_in_txt_in p {
+    display: none;
+  }
+  .block_1_bot_slider_inner_in_txt a {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+  }
+  .block_2_flex {
+    flex-wrap: wrap;
+  }
+  .block_2_flex_txt {
+    width: 100%;
+  }
+  .block_2_flex_img {
+    width: 100%;
+  }
+  .block_4_in_img_punkt1 {
+    margin: 0 0 0 -350px;
+  }
+  .block_4_in_txt_in_main {
+    width: 100%;
+  }
+  .block_5_flex_in {
+    width: 100%;
+  }
+  .block_2_card_flex {
+    flex-wrap: wrap;
+  }
+  .block_2_card_flex_img {
+    margin: 0 0 20px 0;
+  }
+  .block_3_card_slider_inner_in {
+    max-width: 340px;
+  }
+  .total_block_flex {
+    flex-wrap: wrap;
+  }
+  .total_block_flex_left {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .total_block_flex_left_in {
+    margin: 0 30px 0 0;
+  }
+  .total_block_flex_right_flex {
+    align-items: flex-end;
+  }
+}
+@media screen and (max-width: 480px) {
+  .block_1_top {
+    padding: 20px 0;
+  }
+  .call_back {
+    margin: 0 0 10px 0;
+  }
+  .numcall {
+    margin: 0 0 10px 0;
+  }
+  .block_1_bot_slider_inner_in img {
+    width: auto;
+    height: 400px;
+  }
+  .block_1_bot_slider_inner_in_txt_in p {
+    display: block;
+    margin: 10px 0 0 0;
+    font-size: 14px;
+  }
+  .heading {
+    font-size: 26px;
+  }
+  .block_3_flex_in {
+    width: 100%;
+  }
+  .block_4_in_img_punkt > span {
+    width: 20px;
+    height: 20px;
+  }
+  .block_4_in_img_punkt2 {
+    margin: -50px 0 0 -160px;
+  }
+  .block_4_in_img_punkt5 {
+    top: 90px;
+  }
+  .block_4_in_img_punkt6 {
+    bottom: 20px;
+  }
+  .block_7_in_flex {
+    flex-wrap: wrap;
+  }
+  .block_7_in_flex_left {
+    width: 100%;
+  }
+  .inpt {
+    width: 100%;
+  }
+  .btn_send {
+    width: 100%;
+    padding: 15px 10px;
+    margin: 0;
+  }
+  .block_3_card_slider_inner_in {
+    max-width: 100%;
+  }
+  .block_2_card_flex_img {
+    width: 100%;
+  }
+  .block_1_card {
+    margin: 0 0 15px 0;
+  }
+  .kroshki {
+    font-size: 13px;
+    flex-wrap: wrap;
+    margin: 0 0 15px 0;
+  }
+  .total_block_flex_left {
+    display: block;
+  }
+  .total_block_flex_left_in {
+    padding: 3px 0;
+  }
+  .total_block_flex_right_flex {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .total_block_flex_right_flex_in1 {
+    margin: 10px 0 20px 0;
+  }
+  .total_block_flex_right_flex .btn_send {
+    margin: 0;
+    padding: 15px 20px;
+  }
+  .block_5_flex_in_bl img {
+    width: 150px;
+    height: 150px;
+  }
+}

@@ -108,6 +108,7 @@ $( document ).ready(function() {
 
     // Увеличение картинки
     $('.fancy_img').fancybox()
+ 
 
 
     $('.accessories .slider').slick({
@@ -635,7 +636,11 @@ $( document ).ready(function() {
 	            	}
 
 	            	formMessage.html(result.message);
-	            }
+					ym(64922065,'reachGoal','send_all_forms');
+					console.log('vizvat zamershika 111');
+                    ym(64922065,'reachGoal','zakazzvonotprav');
+                    console.log('цель отправлена');
+                }
 	        });
 	    }
     });

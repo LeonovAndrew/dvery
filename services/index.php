@@ -1,8 +1,11 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetPageProperty("title", "Услуги фабрики дверей Прованс");
-$APPLICATION->SetTitle("Услуги фабрики дверей Прованс");
+$APPLICATION->SetPageProperty("description", "Услуги - замер, доставка, монтаж, настройка фурнитуры, гарантия");
+$APPLICATION->SetPageProperty("keywords", "Услуги - замер, доставка, монтаж, настройка фурнитуры, гарантия");
+$APPLICATION->SetPageProperty("title", "Услуги компании Прованс");
+$APPLICATION->SetTitle("Услуги компании");
 ?>
+ 
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news", 
 	"services", 
@@ -37,7 +40,7 @@ $APPLICATION->SetTitle("Услуги фабрики дверей Прованс"
 		"SET_TITLE" => "Y",
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"ADD_SECTIONS_CHAIN" => "N",
-		"ADD_ELEMENT_CHAIN" => "N",
+		"ADD_ELEMENT_CHAIN" => "Y",
 		"USE_PERMISSIONS" => "N",
 		"STRICT_SECTION_CHECK" => "N",
 		"DISPLAY_DATE" => "N",

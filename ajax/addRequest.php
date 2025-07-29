@@ -8,7 +8,7 @@ $iblockId = intval($_POST['IBLOCK_ID']);
 $name = htmlspecialchars($_POST['NAME']);
 $phone = htmlspecialchars($_POST['PHONE']);
 
-if ($iblockId > 0 && $name && $phone) {
+if ($iblockId > 0 && $phone) {
 	$el = new CIBlockElement;
 
 	$PROP = array();

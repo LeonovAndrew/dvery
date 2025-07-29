@@ -2,10 +2,16 @@
 .product-item-detail-info-section { padding: 0 20px; }
 .order-block{display:flex; justify-content: space-between;}
 .order-block div{width:50%}
-.order-block .card__order{max-width:200px;}
+.order-block .card__order{max-width:200px;height:100%}
+
 @media (max-width: 1021px) {
 .order-block{display:block;}
 .order-block div{width:100%}
+}
+
+@media(min-width: 1010px)
+{
+	.by_one_cl {margin-left: 10px;}
 }
 
 @media (max-width: 992px) {
