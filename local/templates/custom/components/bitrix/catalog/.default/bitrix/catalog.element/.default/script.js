@@ -76,19 +76,12 @@ $(function () {
         $('.card__price_parts span').html(prettify(offers[materialId][modelId].PRICE_PARTS));
         $('.card__meta_model span').html(prettify(offers[materialId][modelId].TEXT));
 
-        if (offers[materialId][modelId].COVER) {
-            $('.card__meta_small').html('Покрытие: ' + prettify(offers[materialId][modelId].COVER));
-        } else {
-            $('.card__meta_small').html('');
-        }
-
         setComplectList(offers[materialId][modelId].ID);
     });
 
     $('.open_card_popup').on('click', function () {
 
-        let $trig = $(this),
-            $targ = $($trig.attr('href'));
+        let $trig = $(this), $targ = $($trig.attr('href'));
 
         if ($targ.length) {
             $targ.addClass('shown');
@@ -101,8 +94,7 @@ $(function () {
 
     $('.card__popup_close').on('click', function (e) {
 
-        let $trig = $(this),
-            $targ = $trig.closest('.card__popup');
+        let $trig = $(this), $targ = $trig.closest('.card__popup');
 
         if ($targ.length) {
             $targ.removeClass('shown');
@@ -131,8 +123,7 @@ $(function () {
 
         if (window.innerWidth > 850) return false;
 
-        let $head = $(this),
-            $body = $head.siblings('.card-text__body');
+        let $head = $(this), $body = $head.siblings('.card-text__body');
 
         $head.toggleClass('opened');
         $body.slideToggle();
@@ -160,3 +151,30 @@ function setComplectList(offerID) {
         complectList.innerHTML = string;
     }
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        const btns = document.querySelectorAll('.card-tabs-btn');
+        const tabs = document.querySelectorAll('.card-tabs-tab');
+
+        btns[0].classList.add('active');
+        tabs[0].classList.add('active');
+
+        btns.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btns.forEach(btn2 => {
+                    btn2.classList.remove('active');
+                });
+
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                btn.classList.add('active');
+                tabs[i].classList.add('active');
+            });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});

@@ -93,12 +93,8 @@ $this->setFrameMode(true);
 
                 <div class="card__info">
 
-                    <button type="button" class="mob-base-button"><span class="base-button__content"><!---->
+                    <button type="button" class="mob-base-button"><span class="base-button__content">
 						Выбрать модель и материал
-						<svg xmlns="http://www.w3.org/2000/svg"
-                             class="icon sprite-main-icons base-button__icon base-button__icon--right"><use
-                                    href="/upload/ic-btn.svg#i-configure"
-                                    xlink:href="/upload/ic-btn.svg#i-configure"></use></svg> <!----></span> <!---->
                     </button>
 
                     <?php if (!empty($arResult['OFFERS'])) : ?>
@@ -178,9 +174,9 @@ $this->setFrameMode(true);
 
                     <div class="card__price">
                         <?php
-                        $old_price_coef = $arResult['PROPERTIES']['OLD_PRICE_COEF']['VALUE'];
+                        $old_price_coef = $arResult['PROPERTIES']['OLD_PRICE_COEF']['VALUE'] ?: 20;
                         $price = current($arResult['CURRENT_OFFER']['ITEM_PRICES'])['PRICE'];
-                        $old_price = $price + (($price / 100) * 20);
+                        $old_price = $price + (($price / 100) * $old_price_coef);
                         ?>
                         <div class="card__price_old"><span><?= number_format($old_price, 0, '', ' ') ?></span> ₽
                         </div>
@@ -195,7 +191,7 @@ $this->setFrameMode(true);
                         <div class="card__popup" id="card__kit_popup">
                             <div class="card__popup_window">
                                 <div class="card__popup_head">
-                                    <div class="card__popup_title">*В комплект входит:</div>
+                                    <div class="card__popup_title">В комплект входит:</div>
                                     <button type="button" class="card__popup_close">
                                         <?= file_get_contents($_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . '/img/cross.svg'); ?>
                                     </button>
@@ -232,9 +228,11 @@ $this->setFrameMode(true);
                         <?php endif; ?>
                     </div>
 
-                    <a href="#card__warranty_popup" class="card__warranty open_card_popup _link">
+                    <a href="#card__warranty_popup" class="open_card_popup card__warranty-mobile">Гарантия до <?php echo $arResult['PROPERTIES']['GARANTY']['VALUE'] ?: 5; ?> лет</a>
+
+                    <a href="#card__warranty_popup" class="card__warranty open_card_popup _link desktop">
                         <div class="card__warranty_pic"><?= file_get_contents($_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . '/img/warranty.svg'); ?></div>
-                        <div class="card__warranty_text">Гарантия<br>до 5 лет</div>
+                        <div class="card__warranty_text">Гарантия<br>до <?php echo $arResult['PROPERTIES']['GARANTY']['VALUE'] ?: 5; ?> лет</div>
                     </a>
                     <div class="card__popup" id="card__warranty_popup">
                         <div class="card__popup_window">
@@ -250,8 +248,6 @@ $this->setFrameMode(true);
                                     "",
                                     [
                                         "AREA_FILE_SHOW" => "file",
-                                        "AREA_FILE_SUFFIX" => "",
-                                        "EDIT_TEMPLATE" => "",
                                         "PATH" => "/include/garanty-text.php",
                                     ]
                                 ); ?>
@@ -259,9 +255,26 @@ $this->setFrameMode(true);
                         </div>
                     </div>
 
-                    <div class="card__order" data-popup-selector="order">Получить расчет</div>
+                    <div class="card__links mobile">
+                        <a href="#card__place_popup" class="open_card_popup _link">
+                            <div class="_icon">
+                                <?= file_get_contents($_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . '/img/place.svg'); ?>
+                            </div>
+                            <div class="_text">Где посмотреть?<br>Адреса салонов</div>
+                        </a>
+                    </div>
 
-                    <div class="card__links">
+                    <div class="card-order-btns">
+                        <div class="card__order" data-popup-selector="order">Получить расчет</div>
+
+                        <a href="https://wa.me/79671098956?text=Здравствуйте! Пришлите, пожалуйста, полный каталог дверей"
+                           target="_blank" class="card__download">
+                            Получить каталог на WhatsApp<i class="fa fa-whatsapp"
+                                                           style="font-size:24px;margin-left:4px;position: relative;top: 4px;"></i>
+                        </a>
+                    </div>
+
+                    <div class="card__links desktop">
                         <a href="#card__place_popup" class="open_card_popup _link">
                             <div class="_icon">
                                 <?= file_get_contents($_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . '/img/place.svg'); ?>
@@ -392,18 +405,53 @@ $this->setFrameMode(true);
     </div>
 </div>
 
+<div class="card-text">
+    <div class="cont">
+        <div class="card-tabs-btns">
+            <?php if ($arResult['DETAIL_TEXT']) : ?>
+                <div class="card-tabs-btn">Описание</div>
+            <?php endif; ?>
+            <div class="card-tabs-btn">Сервис и доставка</div>
+            <div class="card-tabs-btn">Мой дизайн</div>
+        </div>
 
-<?php if ($arResult['DETAIL_TEXT']) : ?>
-    <div class="card-text">
-        <div class="cont">
-            <div class="card-text__cont">
+        <div class="cart-tabs">
+            <?php if ($arResult['DETAIL_TEXT']) : ?>
+                <div class="card-tabs-tab card-text__cont">
+                    <div class="card-text__body">
+                        <p><?= $arResult['DETAIL_TEXT'] ?></p>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="card-tabs-tab card-text__cont">
                 <div class="card-text__body">
-                    <?= $arResult['DETAIL_TEXT'] ?>
+                    <? $APPLICATION->IncludeComponent(
+                        "bitrix:main.include",
+                        "",
+                        [
+                            "AREA_FILE_SHOW" => "file",
+                            "PATH" => "/include/service.php",
+                        ]
+                    ); ?>
+                </div>
+            </div>
+
+            <div class="card-tabs-tab card-text__cont">
+                <div class="card-text__body">
+                    <? $APPLICATION->IncludeComponent(
+                        "bitrix:main.include",
+                        "",
+                        [
+                            "AREA_FILE_SHOW" => "file",
+                            "PATH" => "/include/design.php",
+                        ]
+                    ); ?>
                 </div>
             </div>
         </div>
     </div>
-<?php endif; ?>
+</div>
 
 <?php if ($arResult['PROPERTIES']['VIDEO']['VALUE']) : ?>
     <div class="video">

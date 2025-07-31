@@ -1000,6 +1000,7 @@
         display: none;
     }
     .menu__list {
+        margin-top: 35px !important;
         border-top: 1px solid #000;
         border-bottom: 1px solid #000;
     }

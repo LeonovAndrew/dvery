@@ -69,14 +69,22 @@ if (!empty($arResult['MATERIALS']) && !empty($arResult['DESIGN'])) {
 
             if (!isset($arResult['CURRENT_OFFER'])) {
                 $arResult['CURRENT_OFFER'] = $offer;
-                $arResult['CURRENT_OFFER']['COVER'] = $offer['PROPERTIES']['COVER']['VALUE'];
+
+                if (!empty($arResult['MATERIALS'])) {
+                    foreach ($arResult['MATERIALS'] as $materialSection) {
+                        if (!empty($materialSection['NAME'])) {
+                            $arResult['CURRENT_OFFER']['COVER'] = $materialSection['NAME'];
+                            break;
+                        }
+                    }
+                }
             }
         }
 
         $price = current($offer['ITEM_PRICES'])['PRICE'];
         $price_parts = round(current($offer['ITEM_PRICES'])['PRICE'] / 6);
-        $old_price_coef = $arResult['PROPERTIES']['OLD_PRICE_COEF']['VALUE'];
-        $old_price = $price + (($price / 100) * 20);
+        $old_price_coef = $arResult['PROPERTIES']['OLD_PRICE_COEF']['VALUE'] ?: 20;
+        $old_price = $price + (($price / 100) * $old_price_coef);
 
         $arResult["JSON_OFFERS"][$offer['PROPERTIES']['MATERIAL']['VALUE']][$offer['PROPERTIES']['MODEL']['VALUE']] = [
             'PICTURE' => $offer['DETAIL_PICTURE']['SRC'],
@@ -86,7 +94,7 @@ if (!empty($arResult['MATERIALS']) && !empty($arResult['DESIGN'])) {
             'TEXT' => $offer['DETAIL_TEXT'],
             'ID' => $offer['ID'],
             'COVER' => $offer['PROPERTIES']['COVER']['VALUE'],
-            'COMPLECT' => ''
+            'COMPLECT' => '',
         ];
     }
 }

@@ -246,26 +246,30 @@ $(document).ready(function () {
             },
         ],
     });
-    let articleSlide = $(".article__slide").slick({
-        lazyLoad: "ondemand",
-        dots: false,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        infinite: true,
-        speed: 500,
-        variableWidth: false,
-        arrows: true,
-        slidesToShow: 3,
-        draggable: true,
-        centerMode: false,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 600,
-                settings: "unslick",
-            },
-        ],
-    });
+
+   setTimeout(() => {
+       let articleSlide = $(".article__slide").slick({
+           lazyLoad: "ondemand",
+           dots: false,
+           autoplay: true,
+           autoplaySpeed: 5000,
+           infinite: true,
+           speed: 500,
+           variableWidth: false,
+           arrows: false,
+           slidesToShow: 3,
+           draggable: true,
+           centerMode: false,
+           slidesToScroll: 1,
+           responsive: [
+               {
+                   breakpoint: 600,
+                   settings: "unslick",
+               },
+           ],
+       });
+   }, 1000);
+
     let certificateSlider = $(".certificate__body").slick({
         lazyLoad: "ondemand",
         dots: false,
