@@ -1,5 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetPageProperty("description", "Станьте партнером - дилером дверей фабрики Прованс. Отличные условия для дилеров и поддержка на всех этапах сотрудничества! Откройте свой магазин по продаже элитных дверей!");
 $APPLICATION->SetPageProperty("title", "Бизнес по продаже межкомнатных дверей. Условия сотрудничества с фабрикой Прованс");
 $APPLICATION->SetTitle("Дилерам");
 ?><h3>
