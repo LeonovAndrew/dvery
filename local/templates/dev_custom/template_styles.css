@@ -261,6 +261,9 @@
 max-width: 100%!important;
 width:800px;
 }
+header .favorites_link {
+	display: none !important;
+}
 @media (min-width: 1200px) {
 	header .menu-toggle{display: none;}
 header .menu-toggle{display: none;}

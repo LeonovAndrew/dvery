@@ -147,6 +147,7 @@ global $CONTACTS;
 	<p style="font-size:13px; max-width:900px; margin:0 auto; color:#fff; text-align:center;">Цены на сайте носят ознакомительный характер и не являются публичной офертой! Просьба уточнять актуальность цен при обращении в нашу компанию. Для Вас постоянно действуют скидки, акции и специальные предложения на различные группы товаров!</p>
 </footer>
 
+
 <div class="popup" data-popup="callback">
 	<form class="popup__cont js-form-ajax">
 		<div class="popup__close">
@@ -159,8 +160,8 @@ global $CONTACTS;
 		<div class="popup__list">
 			<input type="hidden" name="IBLOCK_ID" value="8">
 
-			<input type="hidden" name="NAME" placeholder="Имя" class="popup__list-item" value=" ">
-			<input type="text" name="PHONE" autocomplete="off" placeholder="Телефон" class="popup__list-item tel">
+			<input type="text" name="NAME" placeholder="Введите ваше имя" class="popup__list-item" value="">
+			<input type="text" name="PHONE" autocomplete="off" placeholder="Введите ваш телефон" class="popup__list-item tel">
 		</div>
 		<div class="popup__text">
 			Нажимая кнопку «Заказать звонок», Вы принимаете условия обработки Ваших персональных данных

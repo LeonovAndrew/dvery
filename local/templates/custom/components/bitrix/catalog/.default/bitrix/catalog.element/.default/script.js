@@ -1,138 +1,180 @@
-$(function() {
-	$("a.video__link").fancybox({
-       type:'swf'
+$(function () {
+    $("a.video__link").fancybox({
+        type: 'swf'
     });
 
-    $('.decor-item').on('click', function() {
-    	var materialId = $('.material-item.card__material-p-active').data('id');
-    	var designId = $(this).data('id');
+    $('.decor-item').on('click', function () {
+        var materialId = $('.material-item.card__material-p-active').data('id');
+        var designId = $(this).data('id');
 
-		$('.js-loupe')
-		.attr('src', design[materialId][designId].PICTURE)
-		.attr('data-result-id', design[materialId][designId].ID);
+        $('.js-loupe')
+            .attr('src', design[materialId][designId].PICTURE)
+            .attr('data-result-id', design[materialId][designId].ID);
 
-		$('.magnifier img:last-child').attr('src', design[materialId][designId].PICTURE);
+        $('.magnifier img:last-child').attr('src', design[materialId][designId].PICTURE);
 
-    	$('.js-design-image')
-		.css('background-image', 'url(' + design[materialId][designId].PICTURE + ')')
-		.attr('data-result-id', design[materialId][designId].ID);
+        $('.js-design-image')
+            .css('background-image', 'url(' + design[materialId][designId].PICTURE + ')')
+            .attr('data-result-id', design[materialId][designId].ID);
     });
 
-    $('.material-item').on('click', function() {
-    	var designId = $('.decor-item.card__material-p-active').data('id');
-    	var materialId = $(this).data('id');
-    	var actualModelId = $('.model-item.card__model-active').data('id');
+    $('.material-item').on('click', function () {
+        var designId = $('.decor-item.card__material-p-active').data('id');
+        var materialId = $(this).data('id');
+        var actualModelId = $('.model-item.card__model-active').data('id');
 
-    	$('.js-loupe')
-		.attr('src', design[materialId][designId].PICTURE)
-		.attr('data-result-id', design[materialId][designId].ID);
+        $('.js-loupe')
+            .attr('src', design[materialId][designId].PICTURE)
+            .attr('data-result-id', design[materialId][designId].ID);
 
-    	$('.js-design-image')
-		.css('background-image', 'url(' + design[materialId][designId].PICTURE + ')')
-		.attr('data-result-id', design[materialId][designId].ID);
+        $('.js-design-image')
+            .css('background-image', 'url(' + design[materialId][designId].PICTURE + ')')
+            .attr('data-result-id', design[materialId][designId].ID);
 
-		$('.magnifier img:last-child').attr('src', design[materialId][designId].PICTURE);
+        $('.magnifier img:last-child').attr('src', design[materialId][designId].PICTURE);
 
-    	$('.model-item').each(function() {
-    		var modelId = $(this).data('id');
-    		$(this).find('.js-material-image').css('background-image', 'url(' + offers[materialId][modelId].PICTURE + ')');
-    	});
+        $('.model-item').each(function () {
+            var modelId = $(this).data('id');
+            $(this).find('.js-material-image').css('background-image', 'url(' + offers[materialId][modelId].PICTURE + ')');
+        });
 
-    	$('.js-loupe2')
-		.attr('src', offers[materialId][actualModelId].PICTURE)
-		.attr('data-result-id', offers[materialId][actualModelId].ID);
+        $('.js-loupe2')
+            .attr('src', offers[materialId][actualModelId].PICTURE)
+            .attr('data-result-id', offers[materialId][actualModelId].ID);
 
-		$('.magnifier .loupe2').attr('src', offers[materialId][actualModelId].PICTURE);
-		
+        $('.magnifier .loupe2').attr('src', offers[materialId][actualModelId].PICTURE);
 
-    	$('.js-material-image-left')
-		.css('background-image', 'url(' + offers[materialId][actualModelId].PICTURE + ')')
-		.attr('data-result-id', offers[materialId][actualModelId].ID);
-		
 
-    	$('.card__price span').html(prettify(offers[materialId][actualModelId].PRICE));
-    	$('.card__text').html('Модель: '+prettify(offers[materialId][actualModelId].TEXT));
+        $('.js-material-image-left')
+            .css('background-image', 'url(' + offers[materialId][actualModelId].PICTURE + ')')
+            .attr('data-result-id', offers[materialId][actualModelId].ID);
+
+
+        $('.card__price_act span').html(prettify(offers[materialId][actualModelId].PRICE));
+        $('.card__price_old span').html(prettify(offers[materialId][actualModelId].PRICE_OLD));
+        $('.card__price_parts span').html(prettify(offers[materialId][modelId].PRICE_PARTS));
+        $('.card__meta_model span').html(prettify(offers[materialId][actualModelId].TEXT));
     });
 
-    $('.model-item').on('click', function() {
-    	var materialId = $('.material-item.card__material-p-active').data('id');
-    	var modelId = $(this).data('id');
+    $('.model-item').on('click', function () {
+        var materialId = $('.material-item.card__material-p-active').data('id');
+        var modelId = $(this).data('id');
 
-    	$('.js-loupe2')
-		.attr('src', offers[materialId][modelId].PICTURE)
-		.attr('data-result-id', offers[materialId][modelId].ID);
+        $('.js-loupe2')
+            .attr('src', offers[materialId][modelId].PICTURE)
+            .attr('data-result-id', offers[materialId][modelId].ID);
 
-    	$('.magnifier .loupe2').attr('src', offers[materialId][modelId].PICTURE);
+        $('.magnifier .loupe2').attr('src', offers[materialId][modelId].PICTURE);
 
-    	$('.js-material-image-left')
-		.css('background-image', 'url(' + offers[materialId][modelId].PICTURE + ')')
-		.attr('data-result-id', offers[materialId][modelId].ID);
-		
+        $('.js-material-image-left')
+            .css('background-image', 'url(' + offers[materialId][modelId].PICTURE + ')')
+            .attr('data-result-id', offers[materialId][modelId].ID);
 
-    	$('.card__price span').html(prettify(offers[materialId][modelId].PRICE));
-    	$('.card__text').html('Модель: '+prettify(offers[materialId][modelId].TEXT));
-    });    
 
-    $('.open_card_popup').on('click', function() {
+        $('.card__price_act span').html(prettify(offers[materialId][modelId].PRICE));
+        $('.card__price_old span').html(prettify(offers[materialId][modelId].PRICE_OLD));
+        $('.card__price_parts span').html(prettify(offers[materialId][modelId].PRICE_PARTS));
+        $('.card__meta_model span').html(prettify(offers[materialId][modelId].TEXT));
 
-    	let $trig = $(this),
-    		$targ = $($trig.attr('href'));
-
-    	if ($targ.length) {
-    	  $targ.addClass('shown');
-    	  $('body').addClass('noscroll');
-    	}
-
-    	return false;
-
+        setComplectList(offers[materialId][modelId].ID);
     });
 
-    $('.card__popup_close').on('click', function(e) {
+    $('.open_card_popup').on('click', function () {
 
-    	let $trig = $(this),
-    		$targ = $trig.closest('.card__popup');
+        let $trig = $(this), $targ = $($trig.attr('href'));
 
-    	if ($targ.length) {
-    	  	$targ.removeClass('shown');
-    	  	$('body').removeClass('noscroll');
-    	}
+        if ($targ.length) {
+            $targ.addClass('shown');
+            $('body').addClass('noscroll');
+        }
 
-    	return false;
+        return false;
 
     });
 
-    $('.card__popup').on('click', function(e) {
+    $('.card__popup_close').on('click', function (e) {
 
-    	let $trig = $(e.target);
+        let $trig = $(this), $targ = $trig.closest('.card__popup');
 
-    	if (!$trig.hasClass('card__popup')) {
-    	  return false;
-    	}
+        if ($targ.length) {
+            $targ.removeClass('shown');
+            $('body').removeClass('noscroll');
+        }
 
-	  	$trig.removeClass('shown');
-	  	$('body').removeClass('noscroll');
-
-    	return false;
+        return false;
 
     });
 
-    $('.card-text__head').on('click', function() {
+    $('.card__popup').on('click', function (e) {
 
-    	if (window.innerWidth > 850) return false;
+        let $trig = $(e.target);
 
-    	let $head = $(this),
-    		$body = $head.siblings('.card-text__body');
+        if ($trig.hasClass('card__popup') && !$trig.closest('card__popup_window').length) {
 
-    	$head.toggleClass('opened');
-    	$body.slideToggle();
+            $trig.removeClass('shown');
+            $('body').removeClass('noscroll');
+            return false;
 
-    	return false;
+        }
+
+    });
+
+    $('.card-text__head').on('click', function () {
+
+        if (window.innerWidth > 850) return false;
+
+        let $head = $(this), $body = $head.siblings('.card-text__body');
+
+        $head.toggleClass('opened');
+        $body.slideToggle();
+
+        return false;
 
     });
 });
 
-function prettify (num) {
+function prettify(num) {
     var n = num.toString();
     var separator = " ";
     return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + separator);
 }
+
+function setComplectList(offerID) {
+    const complectList = document.querySelector('#complect-list');
+    let string = '';
+
+    if (complect[offerID]) {
+        complect[offerID].forEach(item => {
+            string += `<li>${item}</li>`;
+        });
+
+        complectList.innerHTML = string;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        const btns = document.querySelectorAll('.card-tabs-btn');
+        const tabs = document.querySelectorAll('.card-tabs-tab');
+
+        btns[0].classList.add('active');
+        tabs[0].classList.add('active');
+
+        btns.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btns.forEach(btn2 => {
+                    btn2.classList.remove('active');
+                });
+
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                btn.classList.add('active');
+                tabs[i].classList.add('active');
+            });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});

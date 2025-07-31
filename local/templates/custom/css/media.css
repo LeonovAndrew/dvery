@@ -1612,6 +1612,7 @@
         padding-bottom: 20px; */
     }
     .menu__list {
+        margin-top: 35px;
         max-height: calc(100vh - 240px);
         overflow-y: scroll;
     }

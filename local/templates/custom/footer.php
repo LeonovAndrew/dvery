@@ -99,60 +99,60 @@ if ($APPLICATION->GetCurDir() == '/') { ?>
     </div>
     </div>
 <? endif; ?>
-<?
-if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
-    <? $APPLICATION->IncludeComponent(
-        "devbx:form",
-        "footer-signup",
-        array(
-            "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
-            "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
-            "AJAX_MODE" => "Y",    // Включить режим AJAX
-            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
-            "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
-            "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
-            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
-            "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
-                0 => "",
-                1 => "",
-            ),
-            "FORM_ID" => "2",    // Форма
-            "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
-                0 => "",
-                1 => "",
-            ),
-            "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
-            "FORM_TITLE" => ($curPage == '/portfolio/' ? 'Написать директору' : 'Получите консультацию специалиста'),
-        ),
-        false
-    ); ?>
-<? else : ?>
-    <? $APPLICATION->IncludeComponent(
-        "devbx:form",
-        "footer-form",
-        array(
-            "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
-            "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
-            "AJAX_MODE" => "Y",    // Включить режим AJAX
-            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
-            "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
-            "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
-            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
-            "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
-                0 => "",
-                1 => "",
-            ),
-            "FORM_ID" => "1",    // Форма
-            "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
-                0 => "",
-                1 => "",
-            ),
-            "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
-            "FORM_TITLE" => ($curPage == '/about/' ? 'Написать директору' : 'Обсудить индивидуальный проект дверей'),
-        ),
-        false
-    ); ?>
-<? endif ?>
+<?//
+//if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
+<!--    --><?// $APPLICATION->IncludeComponent(
+//        "devbx:form",
+//        "footer-signup",
+//        array(
+//            "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
+//            "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
+//            "AJAX_MODE" => "Y",    // Включить режим AJAX
+//            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
+//            "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
+//            "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
+//            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
+//            "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
+//                0 => "",
+//                1 => "",
+//            ),
+//            "FORM_ID" => "2",    // Форма
+//            "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
+//                0 => "",
+//                1 => "",
+//            ),
+//            "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
+//            "FORM_TITLE" => ($curPage == '/portfolio/' ? 'Написать директору' : 'Получите консультацию специалиста'),
+//        ),
+//        false
+//    ); ?>
+<?// else : ?>
+<!--    --><?// $APPLICATION->IncludeComponent(
+//        "devbx:form",
+//        "footer-form",
+//        array(
+//            "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
+//            "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
+//            "AJAX_MODE" => "Y",    // Включить режим AJAX
+//            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
+//            "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
+//            "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
+//            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
+//            "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
+//                0 => "",
+//                1 => "",
+//            ),
+//            "FORM_ID" => "1",    // Форма
+//            "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
+//                0 => "",
+//                1 => "",
+//            ),
+//            "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
+//            "FORM_TITLE" => ($curPage == '/about/' ? 'Написать директору' : 'Обсудить индивидуальный проект дверей'),
+//        ),
+//        false
+//    ); ?>
+<?// endif ?>
 
 <? if ($APPLICATION->GetCurPage(false) === '/contacts/') : ?>
     <div class="map">
@@ -218,33 +218,33 @@ if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
                     </div>
                     <div class="contact">
                         <span>Производство:</span> <a href="mailto:production@dveri-provance.ru" class="footer__mail">production@dveri-provance.ru</a><br>
-                        <span>Консультация или заказ:</span> <a href="https://t.me/provance_dveri"><i class="fa fa-telegram"></i></a> <a href="https://wa.me/79671098956"><i class="fa fa-whatsapp"></i></a>
-
+                        <span>Консультация или заказ:</span>
+                        <a href="https://t.me/provance_dveri"><i class="fa fa-telegram"></i></a> <a href="https://wa.me/79671098956"><i class="fa fa-whatsapp"></i></a>
+                        <a href="https://www.youtube.com/channel/UCwmyltRnPd-2humjbmLZIQQ"><i class="fa fa-youtube-square"></i></a>
+<!--                        --><?// $APPLICATION->IncludeComponent(
+//                            "bitrix:news.list",
+//                            "socv",
+//                            array(
+//                                "COMPONENT_TEMPLATE" => "socv",
+//                                "IBLOCK_TYPE" => "content",
+//                                "IBLOCK_ID" => "4",
+//                                "NEWS_COUNT" => "4",
+//                                "SORT_BY1" => "SORT",
+//                                "SORT_ORDER1" => "ASC",
+//                                "SORT_BY2" => "ID",
+//                                "SORT_ORDER2" => "DESC",
+//                                "AJAX_MODE" => "N",
+//                                "CACHE_TYPE" => "A",
+//                                "CACHE_TIME" => "36000000",
+//                                "SET_TITLE" => "N",
+//                                "SET_BROWSER_TITLE" => "N",
+//                                "SET_META_KEYWORDS" => "N",
+//                                "SET_META_DESCRIPTION" => "N",
+//                                "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+//                            ),
+//                            false
+//                        ); ?>
                     </div>
-
-                    <? $APPLICATION->IncludeComponent(
-                        "bitrix:news.list",
-                        "socv",
-                        array(
-                            "COMPONENT_TEMPLATE" => "socv",
-                            "IBLOCK_TYPE" => "content",
-                            "IBLOCK_ID" => "4",
-                            "NEWS_COUNT" => "4",
-                            "SORT_BY1" => "SORT",
-                            "SORT_ORDER1" => "ASC",
-                            "SORT_BY2" => "ID",
-                            "SORT_ORDER2" => "DESC",
-                            "AJAX_MODE" => "N",
-                            "CACHE_TYPE" => "A",
-                            "CACHE_TIME" => "36000000",
-                            "SET_TITLE" => "N",
-                            "SET_BROWSER_TITLE" => "N",
-                            "SET_META_KEYWORDS" => "N",
-                            "SET_META_DESCRIPTION" => "N",
-                            "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
-                        ),
-                        false
-                    ); ?>
                     <div class="copy">
                         *Пользователь данного интернет-ресурса, обратившийся через специальные формы связи, размещённые на данном сайте, а также по средствам телефонного звонка, выражает свое безусловное согласие продолжить устную или письменную коммуникацию с помощью электронных средств связи, в т.ч.: sms-информирование, e-mail-рассылка , мессенджеры и т.п.
                     </div>
@@ -276,8 +276,8 @@ if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
         </div>
         <div class="popup__list">
             <input type="hidden" name="IBLOCK_ID" value="8">
-            <input type="hidden" name="NAME" placeholder="Имя" class="popup__list-item" value=" ">
-            <input type="text" name="PHONE" autocomplete="off" placeholder="Телефон" class="popup__list-item tel">
+            <input type="text" name="NAME" placeholder="Введите ваше имя" class="popup__list-item" value="">
+            <input type="text" name="PHONE" autocomplete="off" placeholder="Введите ваш телефон" class="popup__list-item tel">
             <!-- <input type="text" name="EMAIL" autocomplete="off" placeholder="E-mail" class="popup__list-item"> -->
         </div>
         <div class="popup__text">
@@ -300,7 +300,7 @@ if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
         <div class="popup__list">
             <input type="hidden" name="IBLOCK_ID" value="18">
             <input type="hidden" name="PRODUCT_ONE_CL" value="<?=$APPLICATION->GetTitle()?>">
-			<input type="hidden" name="NAME" placeholder="Введите ваше имя" class="popup__list-item" value=" ">
+			<input type="text" name="NAME" placeholder="Введите ваше имя" class="popup__list-item">
             <input type="text" name="PHONE" autocomplete="off" placeholder="Введите ваш телефон" class="popup__list-item tel">
             <!-- <input type="text" name="EMAIL" autocomplete="off" placeholder="E-mail (не обязательно)" class="popup__list-item"> -->
         </div>

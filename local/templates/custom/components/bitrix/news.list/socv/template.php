@@ -2,10 +2,10 @@
 
 <? if (empty($arResult['ITEMS'])) return; ?>
 
-<div class="footer__social">
+<!--<div class="footer__social">-->
 	<? foreach($arResult['ITEMS'] as $item) :?>
-	    <a href="<?=$item['CODE']?>" class="footer__social-item" title="<?=$item['NAME']?>">
+	    <a href="<?=$item['CODE']?>" title="<?=$item['NAME']?>">
 	    	<?=$item['DETAIL_TEXT']?>
 	    </a>
     <? endforeach; ?>
-</div>
+<!--</div>-->
