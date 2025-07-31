@@ -62,3 +62,85 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+
+    // Очищаем все классы (опционально)
+    body.className = '';
+
+    if (screen.width > 768) {
+        // Для экранов >= 768px
+        body.classList.add(
+            'is-view',
+            'is-chrome',
+            'DOMContentLoaded',
+            'is-desktop',
+            'is-pointer',
+            'adaptive-desktop'
+        );
+    } else {
+        // Для экранов < 768px
+        body.classList.add(
+            'is-view',
+            'adaptive-mobile',
+            'is-mobile',
+            'is-touch',
+            'is-android',
+            'is-chrome',
+            'DOMContentLoaded'
+        );
+    }
+
+    // Добавляем обработчик изменения размера окна (опционально)
+    window.addEventListener('resize', function() {
+        console.log(screen.width);
+        if (screen.width > 768) {
+            // Удаляем мобильные классы и добавляем десктопные
+            body.classList.remove(
+                'adaptive-mobile',
+                'is-mobile',
+                'is-touch',
+                'is-android'
+            );
+            body.classList.add(
+                'is-desktop',
+                'is-pointer',
+                'adaptive-desktop'
+            );
+        } else {
+            // Удаляем десктопные классы и добавляем мобильные
+            body.classList.remove(
+                'is-desktop',
+                'is-pointer',
+                'adaptive-desktop'
+            );
+            body.classList.add(
+                'adaptive-mobile',
+                'is-mobile',
+                'is-touch',
+                'is-android'
+            );
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const videoComponents = document.querySelectorAll('.component-video');
+
+    videoComponents.forEach(component => {
+        const iframe = component.querySelector('iframe');
+        const preview = component.querySelector('.component-video__preview');
+
+        if (preview) {
+            preview.addEventListener('click', function() {
+                // Удаляем атрибут data-src и вставляем src напрямую
+                const videoSrc = iframe.getAttribute('data-src');
+                iframe.setAttribute('src', videoSrc);
+
+                // Скрываем превью после клика (опционально)
+                preview.style.display = 'none';
+            });
+        }
+    });
+});

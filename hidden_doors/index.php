@@ -1,34 +1,16 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
-global $USER;
-if (!$USER->IsAdmin()){
-    // Устанавливаем HTTP-статус 404
-    \CHTTP::SetStatus("404 Not Found");
-
-    // Подключаем шаблон 404-страницы, если он есть
-    @define("ERROR_404", "Y");
-    @define("B_PROLOG_INCLUDED", true);
-
-    // Опционально: передать сообщение
-    $APPLICATION->SetTitle("Страница не найдена");
-    $APPLICATION->AddChainItem("Ошибка 404", "");
-
-    // Подключаем шаблон 404 (если используется стандартный обработчик)
-    include $_SERVER["DOCUMENT_ROOT"] . "/404.php";
-
-    // Останавливаем дальнейшее выполнение
-    die();
-}
+global $CONTACTS;
 ?>
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://xn-%2Db1adccph6becm2hb.xn-%2Dp1ai/ -->
-<html lang="ru" style="--scrollbarWidth: 15px; --100vw: 1905px; --100vh: 803px;">
+<html lang="ru">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Скрытые межкомнатные дери под отделку.</title>
     <meta name="flexbe-theme-id" value="4">
-    <meta name="viewport" content="width=390, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="/hidden_doors/">
     <meta name="description" content="Скрытые двери напрямую от производителя со склада в Москве по оптовым ценам от 1 шт. Межкомнатные двери под любую отделку.">
     <meta name="keywords" content="двери под скрытый монтаж, двери скрытого монтажа, двери скрытого монтажа купить межкомнатный, двери скрытого монтажа москва, двери скрытого монтажа цена, двери со скрытой коробкой, двери со скрытым коробом москва, двери со скрытыми наличниками, заказать скрытую дверь, межкомнатные двери скрытого монтажа купить, скрытая дверь в стене, скрытая дверь с зеркалом, скрытая дверь межкомнатная москва,
@@ -3681,7 +3663,8 @@ if (!$USER->IsAdmin()){
                 <div class="content-zone elements-list hidden-mobile " data-is="zone" data-id="661724987" data-e-id="zone_header" data-direction="header" data-am-direction="column">
                     <div class="element-item element-item--static" data-element-justify="center" data-is="element" data-id="812661117" data-e-id="header_logo" data-item-id="2">
                         <div class="element-content element-812661117  element-content--static">
-                            <div class="component-logo" data-component="logo" style="--logoSize: 100%; --logoSizeAdaptive: 100%; --ratio: 3.669724770642201"> <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/hidden_doors/assets/40672862.png"> </div>
+                            <div class="component-logo" data-component="logo" style="--logoSize: 100%; --logoSizeAdaptive: 100%; --ratio: 3.669724770642201">
+                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/custom/img/page-logo-black.webp"> </div>
                         </div>
                     </div>
                     <div class="element-item element-item--static" data-element-justify="center" data-am-element-justify="center" data-is="element" data-id="593569143" data-e-id="header_text" data-item-id="4">
@@ -3696,15 +3679,17 @@ if (!$USER->IsAdmin()){
                             <div class="component-socials font-family-content shape--none size--medium position--horizontal margin--small style--none hover--zoom color--custom " data-component="socials" style="--socialMargin:10px; --socialSize:20px; --socialCustomColor:#282828; --socialCustomContrast:#FFF">
                                 <a class="social-container telegram  js-hover" aria-label="telegram" rel="noopener noreferrer nofollow" href="https://t.me//Provancebot" target="_blank">
                                     <div class="social">
-                                        <svg class="social-icon">
-                                            <use href="/_s/images/theme/4/res/socials/telegram.svg?6#icon"></use>
+
+                                        <svg class="social-icon"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" id="icon">
+                                            <path d="M1.19434 10.1345C5.85934 8.12369 8.9693 6.7979 10.5243 6.15739C14.9693 4.3284 15.8918 4.01074 16.4943 4.0001C16.6268 3.99788 16.9218 4.03029 17.1143 4.18441C17.2743 4.3143 17.3193 4.48995 17.3418 4.61315C17.3618 4.73635 17.3893 5.01715 17.3668 5.23634C17.1268 7.73998 16.0843 13.8155 15.5543 16.6197C15.3318 17.8063 14.8893 18.2041 14.4618 18.2429C13.5318 18.3275 12.8268 17.6353 11.9268 17.0517C10.5193 16.1381 9.72432 15.5695 8.35682 14.6782C6.77682 13.648 7.80179 13.0817 8.70179 12.1565C8.93679 11.9143 13.0318 8.22932 13.1093 7.89509C13.1193 7.85328 13.1293 7.69742 13.0343 7.61529C12.9418 7.53291 12.8042 7.56111 12.7042 7.58337C12.5617 7.61504 10.3142 9.08655 5.95423 11.9976C5.31673 12.4316 4.73925 12.6431 4.21925 12.632C3.64925 12.6198 2.54932 12.3123 1.73182 12.0496C0.73182 11.7272 -0.0657192 11.5568 0.00428084 11.0093C0.0392808 10.7243 0.436844 10.4326 1.19434 10.1345Z" />
                                         </svg>
+
                                     </div>
                                 </a>
                                 <a class="social-container whatsapp  js-hover" aria-label="whatsapp" rel="noopener noreferrer nofollow" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank">
                                     <div class="social">
-                                        <svg class="social-icon">
-                                            <use href="/_s/images/theme/4/res/socials/whatsapp.svg?6#icon"></use>
+                                        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="icon">
+                                            <path d="M13.608 2.325A7.88 7.88 0 0 0 7.998 0C3.625 0 .067 3.556.065 7.928c0 1.397.365 2.76 1.06 3.964L0 16l4.204-1.102a7.928 7.928 0 0 0 3.79.965h.004c4.37 0 7.93-3.557 7.93-7.93a7.88 7.88 0 0 0-2.32-5.608zm-5.61 12.2h-.003a6.583 6.583 0 0 1-3.355-.92l-.24-.143-2.496.654.666-2.43-.157-.25a6.573 6.573 0 0 1-1.007-3.508A6.6 6.6 0 0 1 8 1.338a6.55 6.55 0 0 1 4.66 1.934 6.55 6.55 0 0 1 1.93 4.662 6.6 6.6 0 0 1-6.592 6.59zm2.26-5.58c-.18-.068-.313-.1-.445.098s-.512.644-.627.777c-.116.132-.23.148-.43.05-.198-.1-.836-.31-1.593-.984-.59-.525-.987-1.174-1.102-1.373-.115-.198-.012-.305.087-.404.09-.09.2-.232.298-.348.1-.116.132-.198.198-.33.066-.133.033-.248-.017-.348-.05-.1-.446-1.074-.61-1.47-.162-.387-.325-.334-.447-.34a7.945 7.945 0 0 0-.38-.007.728.728 0 0 0-.53.247c-.18.2-.692.678-.692 1.653s.71 1.917.81 2.05c.098.132 1.396 2.133 3.384 2.99.473.205.842.327 1.13.418.474.15.906.13 1.248.08.38-.058 1.172-.48 1.338-.943.165-.463.165-.86.115-.942-.05-.083-.182-.133-.38-.232-.198-.1-1.172-.578-1.354-.644z"></path>
                                         </svg>
                                     </div>
                                 </a>
@@ -3721,7 +3706,8 @@ if (!$USER->IsAdmin()){
                 <div class="content-zone elements-list hidden-desktop" data-is="zone" data-id="482865536" data-e-id="zone_header" data-direction="header" data-am-direction="header">
                     <div class="element-item element-item--static" data-element-justify="center" data-am-element-justify="center" data-is="element" data-id="458383378" data-e-id="header_logo" data-item-id="2">
                         <div class="element-content element-458383378  element-content--static">
-                            <div class="component-logo" data-component="logo" style="--logoSize: 100%; --logoSizeAdaptive: 100%; --ratio: 3.669724770642201"> <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/hidden_doors/assets/40672862.png"> </div>
+                            <div class="component-logo" data-component="logo" style="--logoSize: 100%; --logoSizeAdaptive: 100%; --ratio: 3.669724770642201">
+                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/custom/img/page-logo-black.webp"> </div>
                         </div>
                     </div>
                     <div class="element-item element-item--static" data-element-justify="center" data-am-element-justify="center" data-is="element" data-id="340230565" data-e-id="header_text" data-item-id="4">
@@ -3735,9 +3721,10 @@ if (!$USER->IsAdmin()){
                             <div class="component-socials font-family-content shape--rounded size--medium position--horizontal margin--small style--filled hover--zoom color--custom " data-component="socials" style="--socialMargin:10px; --socialSize:20px; --socialCustomColor:#282828; --socialCustomContrast:#FFF">
                                 <a class="social-container whatsapp  js-hover" aria-label="whatsapp" rel="noopener noreferrer nofollow" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC.">
                                     <div class="social">
-                                        <svg class="social-icon">
-                                            <use href="/_s/images/theme/4/res/socials/whatsapp.svg?6#icon"></use>
+                                        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="icon">
+                                            <path d="M13.608 2.325A7.88 7.88 0 0 0 7.998 0C3.625 0 .067 3.556.065 7.928c0 1.397.365 2.76 1.06 3.964L0 16l4.204-1.102a7.928 7.928 0 0 0 3.79.965h.004c4.37 0 7.93-3.557 7.93-7.93a7.88 7.88 0 0 0-2.32-5.608zm-5.61 12.2h-.003a6.583 6.583 0 0 1-3.355-.92l-.24-.143-2.496.654.666-2.43-.157-.25a6.573 6.573 0 0 1-1.007-3.508A6.6 6.6 0 0 1 8 1.338a6.55 6.55 0 0 1 4.66 1.934 6.55 6.55 0 0 1 1.93 4.662 6.6 6.6 0 0 1-6.592 6.59zm2.26-5.58c-.18-.068-.313-.1-.445.098s-.512.644-.627.777c-.116.132-.23.148-.43.05-.198-.1-.836-.31-1.593-.984-.59-.525-.987-1.174-1.102-1.373-.115-.198-.012-.305.087-.404.09-.09.2-.232.298-.348.1-.116.132-.198.198-.33.066-.133.033-.248-.017-.348-.05-.1-.446-1.074-.61-1.47-.162-.387-.325-.334-.447-.34a7.945 7.945 0 0 0-.38-.007.728.728 0 0 0-.53.247c-.18.2-.692.678-.692 1.653s.71 1.917.81 2.05c.098.132 1.396 2.133 3.384 2.99.473.205.842.327 1.13.418.474.15.906.13 1.248.08.38-.058 1.172-.48 1.338-.943.165-.463.165-.86.115-.942-.05-.083-.182-.133-.38-.232-.198-.1-1.172-.578-1.354-.644z"></path>
                                         </svg>
+
                                     </div>
                                 </a>
                             </div>
@@ -3747,7 +3734,10 @@ if (!$USER->IsAdmin()){
                         <div class="element-content element-221874408  element-content--static">
                             <button class="component-button scale-only-bg bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
                                 <a data-action="phone" href="tel:84992836062" tabindex="-1"></a> <span class="bg-fill-hover"></span> <span class="bg-border "></span>
-                                <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-left" style="  --stroke: 1.5; " data-component="icon" data-img-lazy="1" data-img-url="/hidden_doors/img/35298728.svg#icon"> <span class="icon-wrap"> <svg class="icon vector-icon"> <use href="/hidden_doors/img/35298728.svg#icon"></use> </svg> </span> </div>
+                                <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-left" style="  --stroke: 1.5; " data-component="icon" data-img-lazy="1" data-img-url="/hidden_doors/img/35298728.svg#icon"> <span class="icon-wrap">
+
+                                        <svg class="icon vector-icon" id="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><path xmlns="http://www.w3.org/2000/svg" d="M85.078,60.037c-1.183-0.92-4.85-3.4-11.201-7.655c-1.156-0.774-2.06-1.38-2.461-1.653  c-1.889-1.288-3.901-1.942-5.977-1.942c-1.58,0-5.24,0.45-8.017,4.232c-1.788-1.733-3.806-3.746-5.585-5.568l-0.066-0.069  l-0.07-0.067c-1.822-1.779-3.834-3.797-5.568-5.585c2.508-1.841,3.536-4.051,3.949-5.708c0.399-1.599,0.714-4.801-1.66-8.286  c-0.271-0.397-0.873-1.297-1.644-2.448c-4.26-6.358-6.743-10.029-7.666-11.216c-2.708-3.487-5.865-4.221-8.037-4.221  c-1.774,0-3.199,0.484-4.239,0.837l-0.342,0.116c-2.523,0.839-5.117,1.917-9.02,5.821c-7.533,7.536-8.745,16.4-3.818,27.899  c4.714,10.999,15.983,22.45,17.253,23.719S43.63,80.781,54.629,85.496c4.646,1.99,8.756,2.959,12.564,2.959  c5.758,0,10.773-2.217,15.335-6.777c3.9-3.9,4.979-6.493,5.822-9.023l0.114-0.339C89.106,70.427,91.059,64.681,85.078,60.037z   M80.761,70.126c-0.53,1.592-1.061,3.066-3.889,5.895c-2.622,2.622-5.515,4.435-9.679,4.435c-2.574,0-5.633-0.692-9.413-2.312  c-9.9-4.243-21.214-15.558-21.214-15.558S25.253,51.271,21.01,41.372c-4.242-9.9-2.121-14.848,2.122-19.092  c2.828-2.828,4.303-3.359,5.895-3.889c0.901-0.3,1.518-0.542,2.049-0.542c0.588,0,1.073,0.295,1.722,1.131  c1.227,1.578,7.888,11.604,9.014,13.258c1.003,1.473,0.653,2.547-1.118,3.477c-2.474,1.295-6.497,3.898-5.541,5.656  c1.122,2.062,10.961,11.666,10.961,11.666S55.718,62.879,57.78,64c0.181,0.099,0.37,0.145,0.567,0.145  c1.711,0,3.926-3.467,5.089-5.686c0.588-1.121,1.233-1.673,2.003-1.673c0.445,0,0.933,0.186,1.474,0.555  c1.653,1.126,11.68,7.787,13.259,9.015C81.763,67.591,81.394,68.229,80.761,70.126z" style="fill: inherit;"></path></svg>
+                                    </span> </div>
                             </button>
                         </div>
                     </div>
@@ -3804,7 +3794,7 @@ if (!$USER->IsAdmin()){
             </div>
             <div class="element-item element-item--free transition-target" style="--zIndex: 5;" data-is="element" data-id="149051449" data-e-id="button01" data-element-justify="start" data-containment="layout" data-snap-to="top" data-am-snap-to="top">
                 <div class="element-content button-1 element-149051449  element-content--free">
-                    <button class="component-button scale-only-bg wide high bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
+                    <button class="component-button scale-only-bg wide high bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover js-slider-left" data-component="button" data-action-target="">
                         <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span>
                         <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-right" style=" " data-component="icon" data-img-lazy="1" data-img-url="/_s/images/svg/mingcute/whatsapp-outlined.svg#icon"> <span class="icon-wrap"> <svg class="icon vector-icon" viewBox="0 0 50 50"> <use href="/_s/images/svg/mingcute/whatsapp-outlined.svg#icon"></use> </svg> </span> </div> <span class="apply-text-style btn-text ">   Получить расчет стоимости в WhatsApp </span> </button>
                 </div>
@@ -3958,7 +3948,7 @@ if (!$USER->IsAdmin()){
                 <div class="element-content element-777221768  element-content--free">
                     <div class="component-video loaded started" data-autoplay="1" data-type="custom" data-component="video" data-prevent-action="">
                         <video class="video-wrapper custom-video scale-contain" data-src="/files/video-18-04-24-04-52.mov.mp4" allowfullscreen="" controlslist="nodownload" disablepictureinpicture="" disableremoteplayback="" pip="false" data-poster="/hidden_doors/img/40917828.png" preload="none" controls="" autoplay="" muted="" playsinline="" poster="/hidden_doors/img/40917828.png">
-                            <source type="video/mp4" src="/files/video-18-04-24-04-52.mov.mp4">
+                            <source type="video/mp4" src="/hidden_doors/img/video-18-04-24-04-52.mov.mp4">
                         </video>
                     </div>
                 </div>
@@ -3985,7 +3975,7 @@ if (!$USER->IsAdmin()){
             </div>
         </div>
     </section>
-    <section class="b_block block-513047393 was-view" data-is="block" data-id="513047393" data-b-id="BUNDLE" data-page-id="2009964" data-hidden="mobile" data-contrast="dark" tabindex="-1">
+    <section class="b_block block-513047393 was-view" data-is="block" data-id="513047393" data-b-id="BUNDLE" data-page-id="2009964" data-hidden="" data-contrast="dark" tabindex="-1">
         <div class="component-bg " aria-hidden="true" data-component="background" data-type="color" data-has-placeholder="true" data-lazy="true">
             <div class="layer overlay"></div>
         </div>
@@ -4351,394 +4341,7 @@ if (!$USER->IsAdmin()){
             <div class="main-area_spacer main-area_spacer--bottom"></div>
         </div>
     </section>
-    <section class="b_block block-193016012 was-view" data-is="block" data-id="193016012" data-b-id="BUNDLE" data-page-id="2009964" data-hidden="desktop" data-contrast="dark" tabindex="-1">
-        <div class="component-bg " aria-hidden="true" data-component="background" data-type="color" data-has-placeholder="true" data-lazy="true">
-            <div class="layer overlay"></div>
-        </div>
-        <div class="main-area main-area--tabs-inited">
-            <div class="main-area_spacer main-area_spacer--top"></div>
-            <div class="layout-type-tabs font-family-content apply-text-style justify--start justify-am--start style--lined shape--smooth size--medium size-am--medium line-size--small color--#282828 text--auto wide--disable container container-tabs" style="">
-                <div class="tabs-list" role="tablist">
-                    <div class="tab-wrap first-tab first-in-line active" data-item-id="1" data-tab-uid="730333068" tabindex="-1" role="tab" aria-selected="true" aria-controls="panel-730333068" id="tab-730333068">
-                        <a class="tab" href="/hidden_doors/#tab730333068" draggable="false"> <span class="tab-label text-keep-wrap apply-text-style">В ГРУНТЕ ПОД ОТДЕЛКУ</span> </a>
-                    </div>
-                    <div class="tab-wrap" data-item-id="2" data-tab-uid="756497854" tabindex="-1" role="tab" aria-selected="false" aria-controls="panel-756497854" id="tab-756497854">
-                        <a class="tab" href="/hidden_doors/#tab756497854" draggable="false"> <span class="tab-label text-keep-wrap apply-text-style">КРАШЕННАЯ</span> </a>
-                    </div>
-                    <div class="tab-wrap" data-item-id="3" data-tab-uid="855654127" tabindex="-1" role="tab" aria-selected="false" aria-controls="panel-855654127" id="tab-855654127">
-                        <a class="tab" href="/hidden_doors/#tab855654127" draggable="false"> <span class="tab-label text-keep-wrap apply-text-style">ШПОН</span> </a>
-                    </div>
-                    <div class="tab-wrap last-tab last-in-line" data-item-id="4" data-tab-uid="250119016" tabindex="-1" role="tab" aria-selected="false" aria-controls="panel-250119016" id="tab-250119016">
-                        <a class="tab" href="/hidden_doors/#tab250119016" draggable="false"> <span class="tab-label text-keep-wrap apply-text-style">ЗЕРКАЛЬНОЕ ПОКРЫТИЕ</span> </a>
-                    </div>
-                </div>
-                <div class="swiper-mobile-helper tab-swiper-helper"></div>
-            </div>
-            <div class="tab-content active" data-item-id="1" data-tab-uid="730333068" tabindex="0" role="tabpanel" aria-labelledby="tab-730333068" id="panel-730333068">
-                <a class="_anchor" name="tab730333068"></a>
-                <div class="layout-type-cards flexbe-cards-root slider-has-buttons slider-has-pagination normal-width am-normal-width align-items-center gap-normal gap-am-normal cards-zone container lightbox-container zone-730333068 slider-enabled slider-inited" data-is="zone" data-id="730333068" data-e-id="zone_cards">
-                    <div class="flexbe-cards-container mode-slider col-24 col-am-24  " data-component="cards" data-mode="slider">
-                        <div class="flexbe-cards-wrapper hide-overflow">
-                            <div class="swiper gap-container flexbe-cards-slider flexbe-cards-slider--mobile swiper-initialized swiper-horizontal swiper-pointer-events swiper-watch-progress swiper-backface-hidden swiper-effect-slide swiper-inited swiper-active" data-cards="3" data-cards-mobile="1" data-slider-responsive-mode="mobile" data-count="6" data-loop="0" data-autoplay="" data-effect="slide" data-effect-mobile="slide" data-overflow="1">
-                                <div class="flexbe-cards cards-3 cards-am-1 align-items-stretch justify-content-start slider-wrapper" style="transform: translate3d(0px, 0px, 0px);">
-                                    <div class="flexbe-card gap-item swiper-slide first-card zone-431947385 content-zone content-zone--vertical bg-element swiper-slide-visible swiper-slide-active" data-item-id="1" data-is="zone" data-id="431947385" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style="width: 390px;"> <span class="bg-fill" data-type="color"></span>
-                                        <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                            <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="987647244" data-e-id="media01">
-                                                <div class="element-content element-987647244  element-content--static">
-                                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40608551_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40608551" data-img-ext="jpg" data-img-proportion="162.2057834566241" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                                        <a data-action="popup" tabindex="-1"></a>
-                                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(74, 71, 71); background-image: url( /hidden_doors/img/40608551_540_q70.webp );" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40608551_540_q70.webp"></div>
-                                                        <noscript><img alt="Заголовок" src="/hidden_doors/img/40608551_540_q70.webp" itemprop="image" /></noscript>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="135931963" data-e-id="button01">
-                                                <div class="element-content button-1 element-135931963  element-content--static">
-                                                    <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                        <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flexbe-card gap-item swiper-slide zone-756433619 content-zone content-zone--vertical bg-element swiper-slide-hidden swiper-slide-next" data-item-id="2" data-is="zone" data-id="756433619" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style="width: 390px;"> <span class="bg-fill" data-type="color"></span>
-                                        <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                            <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="764241505" data-e-id="media01">
-                                                <div class="element-content element-764241505  element-content--static">
-                                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40607040.jpg" data-img-scale="cover" data-img-type="background" data-img-id="40607040" data-img-ext="jpg" data-img-proportion="202.30905861456483" data-img-x="50%" data-img-y="93.01358234295415%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 93.01358234295415%">
-                                                        <a data-action="popup" tabindex="-1"></a>
-                                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(217, 212, 206); background-image: url(/hidden_doors/img/40607040.jpg);" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40607040.jpg"></div>
-                                                        <noscript><img alt="Заголовок" src="/hidden_doors/img/40607040.jpg" itemprop="image" /></noscript>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="941329249" data-e-id="button01">
-                                                <div class="element-content button-1 element-941329249  element-content--static">
-                                                    <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                        <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flexbe-card gap-item swiper-slide zone-912352739 content-zone content-zone--vertical bg-element swiper-slide-hidden" data-item-id="3" data-is="zone" data-id="912352739" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style="width: 390px;"> <span class="bg-fill" data-type="color"></span>
-                                        <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                            <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="630787632" data-e-id="media01">
-                                                <div class="element-content element-630787632  element-content--static">
-                                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40732984.jpg" data-img-scale="cover" data-img-type="background" data-img-id="40732984" data-img-ext="jpg" data-img-proportion="55.490445859872615" data-img-x="94.03558431055399%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 94.03558431055399%; --imagePositionY: 50%">
-                                                        <a data-action="popup" tabindex="-1"></a>
-                                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(48, 47, 45); background-image: url(/hidden_doors/img/40732984.jpg);" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40732984.jpg"></div>
-                                                        <noscript><img alt="Заголовок" src="/hidden_doors/img/40732984.jpg" itemprop="image" /></noscript>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="286353164" data-e-id="button01">
-                                                <div class="element-content button-1 element-286353164  element-content--static">
-                                                    <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                        <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flexbe-card gap-item swiper-slide zone-900431687 content-zone content-zone--vertical bg-element swiper-slide-hidden" data-item-id="4" data-is="zone" data-id="900431687" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style="width: 390px;"> <span class="bg-fill" data-type="color"></span>
-                                        <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                            <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="335647139" data-e-id="media01">
-                                                <div class="element-content element-335647139  element-content--static">
-                                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40733614.png" data-img-scale="cover" data-img-type="background" data-img-id="40733614" data-img-ext="png" data-img-proportion="156.5749235474006" data-img-x="50%" data-img-y="100%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 100%">
-                                                        <a data-action="popup" tabindex="-1"></a>
-                                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(226, 217, 212); background-image: url(/hidden_doors/img/40733614.png);" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40733614.png"></div>
-                                                        <noscript><img alt="Заголовок" src="/hidden_doors/img/40733614.png" itemprop="image" /></noscript>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="899817034" data-e-id="button01">
-                                                <div class="element-content button-1 element-899817034  element-content--static">
-                                                    <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                        <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flexbe-card gap-item swiper-slide zone-664920758 content-zone content-zone--vertical bg-element swiper-slide-hidden" data-item-id="5" data-is="zone" data-id="664920758" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style="width: 390px;"> <span class="bg-fill" data-type="color"></span>
-                                        <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                            <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="336050977" data-e-id="media01">
-                                                <div class="element-content element-336050977  element-content--static">
-                                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40733597.jpg" data-img-scale="cover" data-img-type="background" data-img-id="40733597" data-img-ext="jpg" data-img-proportion="75" data-img-x="85%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 85%; --imagePositionY: 50%">
-                                                        <a data-action="popup" tabindex="-1"></a>
-                                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(111, 157, 170); background-image: url(/hidden_doors/img/40733597.jpg);" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40733597.jpg"></div>
-                                                        <noscript><img alt="Заголовок" src="/hidden_doors/img/40733597.jpg" itemprop="image" /></noscript>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="951126797" data-e-id="button01">
-                                                <div class="element-content button-1 element-951126797  element-content--static">
-                                                    <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                        <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flexbe-card gap-item swiper-slide last-card zone-705883506 content-zone content-zone--vertical bg-element swiper-slide-hidden" data-item-id="6" data-is="zone" data-id="705883506" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style="width: 390px;"> <span class="bg-fill" data-type="color"></span>
-                                        <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                            <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="797749016" data-e-id="media01">
-                                                <div class="element-content element-797749016  element-content--static">
-                                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40733610.jpg" data-img-scale="cover" data-img-type="background" data-img-id="40733610" data-img-ext="jpg" data-img-proportion="75" data-img-x="89%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 89%; --imagePositionY: 50%">
-                                                        <a data-action="popup" tabindex="-1"></a>
-                                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(206, 200, 203); background-image: url(/hidden_doors/img/40733610.jpg);" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40733610.jpg"></div>
-                                                        <noscript><img alt="Заголовок" src="/hidden_doors/img/40733610.jpg" itemprop="image" /></noscript>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="764569774" data-e-id="button01">
-                                                <div class="element-content button-1 element-764569774  element-content--static">
-                                                    <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                        <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-mobile-helper"></div>
-                            </div>
-                        </div>
-                        <div class="slider-button swiper-button-prev slider-button--cards size--medium style--flat shape--none color--dark position--inside swiper-button-disabled" data-direction="prev" data-prevent-action="">
-                            <div class="slider-button-holder">
-                                <div class="slider-button-bg"></div>
-                                <svg class="slider-button-icon">
-                                    <use href="/_s/images/theme/4/res/slider.svg#btn-medium-1"></use>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="slider-button swiper-button-next slider-button--cards size--medium style--flat shape--none color--dark position--inside" data-direction="next" data-prevent-action="">
-                            <div class="slider-button-holder">
-                                <div class="slider-button-bg"></div>
-                                <svg class="slider-button-icon">
-                                    <use href="/_s/images/theme/4/res/slider.svg#btn-medium-1"></use>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="slider-pagination slider-pagination--cards type--fraction color--dark position--outside size--medium swiper-pagination-fraction swiper-pagination-horizontal" data-type="fraction" data-direction="horizontal" data-prevent-action=""><span class="swiper-pagination-current">1</span> / <span class="swiper-pagination-total">6</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content " data-item-id="2" data-tab-uid="756497854" tabindex="0" role="tabpanel" aria-labelledby="tab-756497854" id="panel-756497854" hidden="">
-                <a class="_anchor" name="tab756497854"></a>
-                <div class="layout-type-cards flexbe-cards-root   normal-width am-normal-width align-items-center gap-normal gap-am-normal cards-zone container lightbox-container zone-756497854  " data-is="zone" data-id="756497854" data-e-id="zone_cards">
-                    <div class="flexbe-cards-container col-24 col-am-24 ">
-                        <div class="flexbe-cards cards-3 cards-am-1 align-items-stretch justify-content-start gap-container">
-                            <div class="flexbe-card gap-item first-card zone-349846207 content-zone content-zone--vertical bg-element" data-item-id="1" data-is="zone" data-id="349846207" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="257619295" data-e-id="media01">
-                                        <div class="element-content element-257619295  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40733203.jpg" data-img-scale="cover" data-img-type="background" data-img-id="40733203" data-img-ext="jpg" data-img-proportion="66.66666666666666" data-img-x="13.073076923076922%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 13.073076923076922%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #DDD1C5" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40733203.jpg"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40733203.jpg" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="230373428" data-e-id="button01">
-                                        <div class="element-content button-1 element-230373428  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item last-card zone-242036373 content-zone content-zone--vertical bg-element" data-item-id="2" data-is="zone" data-id="242036373" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="803959992" data-e-id="media01">
-                                        <div class="element-content element-803959992  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40682427.jpg" data-img-scale="cover" data-img-type="background" data-img-id="40682427" data-img-ext="jpg" data-img-proportion="140" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #88806C" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40682427.jpg"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40682427.jpg" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="366079194" data-e-id="button01">
-                                        <div class="element-content button-1 element-366079194  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content " data-item-id="3" data-tab-uid="855654127" tabindex="0" role="tabpanel" aria-labelledby="tab-855654127" id="panel-855654127" hidden="">
-                <a class="_anchor" name="tab855654127"></a>
-                <div class="layout-type-cards flexbe-cards-root   normal-width am-normal-width align-items-center gap-normal gap-am-normal cards-zone container lightbox-container zone-855654127  " data-is="zone" data-id="855654127" data-e-id="zone_cards">
-                    <div class="flexbe-cards-container col-24 col-am-24 ">
-                        <div class="flexbe-cards cards-3 cards-am-1 align-items-stretch justify-content-start gap-container">
-                            <div class="flexbe-card gap-item first-card zone-372604582 content-zone content-zone--vertical bg-element" data-item-id="1" data-is="zone" data-id="372604582" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="665556651" data-e-id="media01">
-                                        <div class="element-content element-665556651  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40732955_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40732955" data-img-ext="png" data-img-proportion="75" data-img-x="100%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 100%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #898780" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40732955_700_q70.webp"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40732955_700_q70.webp" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="683915654" data-e-id="button01">
-                                        <div class="element-content button-1 element-683915654  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item zone-289669543 content-zone content-zone--vertical bg-element" data-item-id="2" data-is="zone" data-id="289669543" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="702870463" data-e-id="media01">
-                                        <div class="element-content element-702870463  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40733299.png" data-img-scale="cover" data-img-type="background" data-img-id="40733299" data-img-ext="png" data-img-proportion="52.13333333333333" data-img-x="84.81811989100818%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 84.81811989100818%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #7E7973" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40733299.png"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40733299.png" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="203144168" data-e-id="button01">
-                                        <div class="element-content button-1 element-203144168  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item zone-267846481 content-zone content-zone--vertical bg-element" data-item-id="3" data-is="zone" data-id="267846481" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="244788063" data-e-id="media01">
-                                        <div class="element-content element-244788063  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40682437_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40682437" data-img-ext="jpg" data-img-proportion="140" data-img-x="100%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 100%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #8C7D73" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40682437_375_q70.webp"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40682437_375_q70.webp" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="424894607" data-e-id="button01">
-                                        <div class="element-content button-1 element-424894607  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item zone-444284183 content-zone content-zone--vertical bg-element" data-item-id="4" data-is="zone" data-id="444284183" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="614339513" data-e-id="media01">
-                                        <div class="element-content element-614339513  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681020_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681020" data-img-ext="png" data-img-proportion="100" data-img-x="84%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 84%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #9D958A" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40681020_1920_q70.webp"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40681020_1920_q70.webp" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="743633640" data-e-id="button01">
-                                        <div class="element-content button-1 element-743633640  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item zone-546486628 content-zone content-zone--vertical bg-element" data-item-id="5" data-is="zone" data-id="546486628" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="489562117" data-e-id="media01">
-                                        <div class="element-content element-489562117  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40732949_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40732949" data-img-ext="png" data-img-proportion="75" data-img-x="40%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 40%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #A7A6A0" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40732949_1920_q70.webp"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40732949_1920_q70.webp" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="995112896" data-e-id="button01">
-                                        <div class="element-content button-1 element-995112896  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item last-card zone-470888218 content-zone content-zone--vertical bg-element" data-item-id="6" data-is="zone" data-id="470888218" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="820251919" data-e-id="media01">
-                                        <div class="element-content element-820251919  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681016_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681016" data-img-ext="jpg" data-img-proportion="129.0065264684554" data-img-x="0%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 0%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #E0D4C7" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40681016_1920_q70.webp"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40681016_1920_q70.webp" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="733227031" data-e-id="button01">
-                                        <div class="element-content button-1 element-733227031  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content " data-item-id="4" data-tab-uid="250119016" tabindex="0" role="tabpanel" aria-labelledby="tab-250119016" id="panel-250119016" hidden="">
-                <a class="_anchor" name="tab250119016"></a>
-                <div class="layout-type-cards flexbe-cards-root   normal-width am-normal-width align-items-center gap-normal gap-am-normal cards-zone container lightbox-container zone-250119016  " data-is="zone" data-id="250119016" data-e-id="zone_cards">
-                    <div class="flexbe-cards-container col-24 col-am-24 ">
-                        <div class="flexbe-cards cards-3 cards-am-1 align-items-stretch justify-content-start gap-container">
-                            <div class="flexbe-card gap-item first-card zone-647779538 content-zone content-zone--vertical bg-element" data-item-id="1" data-is="zone" data-id="647779538" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="292176893" data-e-id="media01">
-                                        <div class="element-content element-292176893  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40683467_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40683467" data-img-ext="jpg" data-img-proportion="140" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: #E2DBD5" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40683467.jpg"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40683467.jpg" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="165950025" data-e-id="button01">
-                                        <div class="element-content button-1 element-165950025  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flexbe-card gap-item last-card zone-905540556 content-zone content-zone--vertical bg-element" data-item-id="2" data-is="zone" data-id="905540556" data-e-id="zone" data-multivar="" data-contrast="dark" data-hover-contrast="dark" data-component="backgroundElement" style=""> <span class="bg-fill" data-type="color"></span>
-                                <div class="elements-list elements-list--static lightbox-container elements-list--only elements-list--allowFill" data-direction="column" data-elements-scope="zone" data-element-align="start" data-element-justify="start" data-control-descent="true">
-                                    <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="324351186" data-e-id="media01">
-                                        <div class="element-content element-324351186  element-content--static">
-                                            <figure class="component-image js-hover loading " data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40732941.png" data-img-scale="cover" data-img-type="background" data-img-id="40732941" data-img-ext="png" data-img-proportion="60.79207920792079" data-img-x="28.533851276359602%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-img-transparent="" style="--imagePositionX: 28.533851276359602%; --imagePositionY: 50%">
-                                                <a data-action="popup" tabindex="-1"></a>
-                                                <div class="component-image__image component-image__bg component-image__bg--cover" role="img" aria-label="Заголовок" data-original="/hidden_doors/img/40732941.png"></div>
-                                                <noscript><img alt="Заголовок" src="/hidden_doors/img/40732941.png" itemprop="image" /></noscript>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="785124221" data-e-id="button01">
-                                        <div class="element-content button-1 element-785124221  element-content--static">
-                                            <button class="component-button scale-only-bg wide bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                                                <a data-action="link" href="https://wa.me/79671098956?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D1%80%D0%B8%D1%88%D0%BB%D0%B8%D1%82%D0%B5,%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0,%20%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BE%D0%BF%D1%82%D0%BE%D0%B2%D1%8B%D0%BC%20%D1%86%D0%B5%D0%BD%D0%B0%D0%BC." target="_blank" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span> <span class="bg-border "></span> <span class="apply-text-style btn-text ">   ПОЛУЧИТЬ РАСЧЕТ </span> </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="main-area_spacer main-area_spacer--bottom"></div>
-        </div>
-    </section>
+
     <section class="b_block block-267738420 was-view" data-is="block" data-id="267738420" data-b-id="BUNDLE" data-page-id="2009964" data-contrast="dark" tabindex="-1">
         <div class="component-bg " aria-hidden="true" data-component="background" data-type="color" data-has-placeholder="true" data-lazy="true">
             <div class="layer overlay"></div>
@@ -4757,187 +4360,102 @@ if (!$USER->IsAdmin()){
                     </div>
                 </div>
             </div>
-            <div class="flexbe-cards-root layout-type-cards slider-has-pagination normal-width am-full-width gap-small gap-am-small gallery-zone container lightbox-container zone-727426503 slider-enabled slider-inited" data-is="zone" data-id="727426503" data-e-id="zone_gallery" style="--proportion: 91%">
-                <div class="flexbe-cards-container mode-slider col-24 col-am-24" data-component="cards" data-mode="slider" style="">
-                    <div class="flexbe-cards-wrapper show-overflow show-overflow--opacity">
-                        <div class="swiper gap-container flexbe-cards-slider flexbe-cards-slider--desktop flexbe-cards-slider--mobile swiper-initialized swiper-horizontal swiper-pointer-events swiper-watch-progress swiper-effect-slide swiper-inited swiper-active" data-cards="3" data-cards-mobile="1" data-slider-responsive-mode="all" data-count="18" data-loop="1" data-autoplay="0" data-effect="slide" data-effect-mobile="slide" data-overflow="0">
-                            <div class="flexbe-cards cards-3 cards-am-1 align-items-stretch justify-content-start slider-wrapper" style="transition-duration: 0ms; transform: translate3d(-783.333px, 0px, 0px);">
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-duplicate swiper-slide-hidden" data-item-id="17" style="--radius: ; width: 391.667px;" data-swiper-slide-index="16" data-cloned="1">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681019_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681019" data-img-ext="jpg" data-img-proportion="66.66666666666666" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(136, 132, 92); background-image: url(/hidden_doors/img/40681019_502_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40681019_502_q70.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681019_502_q70.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-duplicate swiper-slide-hidden swiper-slide-prev" data-item-id="18" style="--radius: ; width: 391.667px;" data-swiper-slide-index="17" data-cloned="1">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681020_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681020" data-img-ext="png" data-img-proportion="100" data-img-x="0%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 0%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(157, 149, 138); background-image: url(/hidden_doors/img/40681020_367_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40681020_1920_q70.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681020_1920_q70.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-visible swiper-slide-active" data-item-id="1" style="--radius: ; width: 391.667px;" data-swiper-slide-index="0">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692635.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692635" data-img-ext="webp" data-img-proportion="62.42187500000001" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(137, 128, 122); background-image: url(/hidden_doors/img/40692635.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692635.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692635.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-visible swiper-slide-next" data-item-id="2" style="--radius: ; width: 391.667px;" data-swiper-slide-index="1">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632312.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632312" data-img-ext="webp" data-img-proportion="66.640625" data-img-x="34.434306569343065%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 34.434306569343065%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(221, 209, 198); background-image: url(/hidden_doors/img/40632312.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40632312.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632312.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-visible" data-item-id="3" style="--radius: ; width: 391.667px;" data-swiper-slide-index="2">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632401.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632401" data-img-ext="webp" data-img-proportion="75" data-img-x="37.06896551724138%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 37.06896551724138%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(140, 128, 114); background-image: url(/hidden_doors/img/40632401.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40632401.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632401.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="4" style="--radius: ; width: 391.667px;" data-swiper-slide-index="3">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632390.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632390" data-img-ext="webp" data-img-proportion="60.78125" data-img-x="26.013630463003032%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-img-transparent="" style="--imagePositionX: 26.013630463003032%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" role="img" aria-label="" data-original="/hidden_doors/img/40632390.webp" style="background-image: url(/hidden_doors/img/40632390.webp);"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632390.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="5" style="--radius: ; width: 391.667px;" data-swiper-slide-index="4">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692644.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692644" data-img-ext="webp" data-img-proportion="66.640625" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(118, 97, 94); background-image: url(/hidden_doors/img/40692644.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692644.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692644.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="6" style="--radius: ; width: 391.667px;" data-swiper-slide-index="5">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692648.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692648" data-img-ext="webp" data-img-proportion="63.74999999999999" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(199, 129, 124); background-image: url(/hidden_doors/img/40692648.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692648.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692648.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="7" style="--radius: ; width: 391.667px;" data-swiper-slide-index="6">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681009.png" data-img-scale="cover" data-img-type="background" data-img-id="40681009" data-img-ext="png" data-img-proportion="133.33333333333331" data-img-x="50%" data-img-y="100%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 100%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(135, 124, 115); background-image: url(/hidden_doors/img/40681009.png);" role="img" aria-label="" data-original="/hidden_doors/img/40681009.png"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681009.png" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="8" style="--radius: ; width: 391.667px;" data-swiper-slide-index="7">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632310_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632310" data-img-ext="webp" data-img-proportion="133.24137931034483" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(128, 119, 119); background-image: url(/hidden_doors/img/40632310_367_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40632310.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632310.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="9" style="--radius: ; width: 391.667px;" data-swiper-slide-index="8">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692653_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692653" data-img-ext="webp" data-img-proportion="75" data-img-x="31.896551724137932%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 31.896551724137932%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(169, 167, 161); background-image: url(/hidden_doors/img/40692653_446_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692653.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692653.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="10" style="--radius: ; width: 391.667px;" data-swiper-slide-index="9">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681013_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681013" data-img-ext="jpg" data-img-proportion="78.88888888888889" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(147, 135, 124); background-image: url(/hidden_doors/img/40681013_424_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40681013.jpg"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681013.jpg" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="11" style="--radius: ; width: 391.667px;" data-swiper-slide-index="10">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692660_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692660" data-img-ext="webp" data-img-proportion="150" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(219, 213, 210); background-image: url(/hidden_doors/img/40692660_367_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692660.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692660.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="12" style="--radius: ; width: 391.667px;" data-swiper-slide-index="11">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692663_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692663" data-img-ext="webp" data-img-proportion="202.09205020920504" data-img-x="50%" data-img-y="23.947798704051348%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 23.947798704051348%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(220, 213, 207); background-image: url(/hidden_doors/img/40692663_367_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692663.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692663.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="13" style="--radius: ; width: 391.667px;" data-swiper-slide-index="12">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632443_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632443" data-img-ext="webp" data-img-proportion="75" data-img-x="77.1551724137931%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 77.1551724137931%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(195, 190, 195); background-image: url(/hidden_doors/img/40632443_446_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40632443.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632443.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="14" style="--radius: ; width: 391.667px;" data-swiper-slide-index="13">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681016_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681016" data-img-ext="jpg" data-img-proportion="129.0065264684554" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(224, 212, 199); background-image: url(/hidden_doors/img/40681016_367_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40681016_1920_q70.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681016_1920_q70.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="15" style="--radius: ; width: 391.667px;" data-swiper-slide-index="14">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40622655_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40622655" data-img-ext="webp" data-img-proportion="55.46875" data-img-x="91.85308343409915%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 91.85308343409915%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(49, 47, 46); background-image: url(/hidden_doors/img/40622655_603_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40622655.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40622655.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="16" style="--radius: ; width: 391.667px;" data-swiper-slide-index="15">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632350.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632350" data-img-ext="webp" data-img-proportion="124.96765847347994" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(182, 178, 184); background-image: url(/hidden_doors/img/40632350.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40632350.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632350.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden" data-item-id="17" style="--radius: ; width: 391.667px;" data-swiper-slide-index="16">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681019_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681019" data-img-ext="jpg" data-img-proportion="66.66666666666666" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(136, 132, 92); background-image: url(/hidden_doors/img/40681019_502_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40681019.jpg"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681019.jpg" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-hidden swiper-slide-duplicate-prev" data-item-id="18" style="--radius: ; width: 391.667px;" data-swiper-slide-index="17">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40681020_1920_q70.webp" data-img-scale="cover" data-img-type="background" data-img-id="40681020" data-img-ext="png" data-img-proportion="100" data-img-x="0%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-has-placeholder="" style="--imagePositionX: 0%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(157, 149, 138); background-image: url(/hidden_doors/img/40681020_367_q70.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40681020.png"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40681020.png" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-duplicate swiper-slide-hidden swiper-slide-duplicate-active" data-item-id="1" style="--radius: ; width: 391.667px;" data-swiper-slide-index="0" data-cloned="1">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40692635.webp" data-img-scale="cover" data-img-type="background" data-img-id="40692635" data-img-ext="webp" data-img-proportion="62.42187500000001" data-img-x="50%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 50%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(137, 128, 122); background-image: url(/hidden_doors/img/40692635.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40692635.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40692635.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                                <div class="flexbe-card gap-item swiper-slide card-am-flexible swiper-slide-duplicate swiper-slide-hidden swiper-slide-duplicate-next" data-item-id="2" style="--radius: ; width: 391.667px;" data-swiper-slide-index="1" data-cloned="1">
-                                    <figure class="component-image js-hover" data-component="image" data-action-target="" data-lightbox="/hidden_doors/img/40632312.webp" data-img-scale="cover" data-img-type="background" data-img-id="40632312" data-img-ext="webp" data-img-proportion="66.640625" data-img-x="34.434306569343065%" data-img-y="50%" data-img-lazy="" data-img-autoload="" data-img-original="" data-has-placeholder="" style="--imagePositionX: 34.434306569343065%; --imagePositionY: 50%">
-                                        <a data-action="popup" tabindex="-1"></a>
-                                        <div class="component-image__image component-image__bg component-image__bg--cover" style="background-color: rgb(221, 209, 198); background-image: url(/hidden_doors/img/40632312.webp);" role="img" aria-label="" data-original="/hidden_doors/img/40632312.webp"></div>
-                                        <noscript><img alt="" src="/hidden_doors/img/40632312.webp" itemprop="image" /></noscript>
-                                    </figure>
-                                </div>
-                            </div>
+            <div class="swiper-cards-slider-wrap">
+                <div class="swiper swiper-cards-slider">
+                    <div class="swiper-wrapper">
+
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40692635.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
                         </div>
+
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40632312.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40632401.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40632390.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40692644.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40681019_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40622655_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40681016_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40632443_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40692663_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40692660_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure class="component-image">
+                                <img src="/hidden_doors/img/40681013_1920_q70.webp" alt="Скрытая дверь" class="component-image__image" />
+                            </figure>
+                        </div>
+
                     </div>
+
+
+                    <!-- Пагинация -->
+                    <!--<div class="swiper-pagination"></div>-->
                 </div>
-                <div class="slider-pagination slider-pagination--cards type--fraction color--custom position--outside size--medium swiper-pagination-fraction swiper-pagination-horizontal" data-type="fraction" data-direction="horizontal" data-prevent-action="" style="color:#282828"><span class="swiper-pagination-current">1</span> / <span class="swiper-pagination-total">18</span></div>
             </div>
+
+
             <div class="main-area_spacer main-area_spacer--bottom"></div>
         </div>
         <div class="free-area elements-list elements-list--free" data-direction="free" data-control-descent="true">
             <div class="element-item element-item--free autowidth-desktop autoheight-desktop autowidth-mobile autoheight-mobile transition-target" style="--zIndex: 1;" data-is="element" data-id="900282861" data-e-id="button01" data-element-justify="start" data-containment="layout" data-snap-to="top" data-am-snap-to="top">
                 <div class="element-content button-1 element-900282861  element-content--free">
-                    <button class="component-button scale-only-bg wide high bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
+                    <button class="component-button component-button-right scale-only-bg wide high bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
                         <a data-action="link" href="/hidden_doors/#next:727426503" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span>
-                        <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-left" style=" " data-component="icon" data-img-lazy="1" data-img-url="/hidden_doors/img/35390348.svg#icon"> <span class="icon-wrap"> <svg class="icon vector-icon"> <use href="/hidden_doors/img/35390348.svg#icon"></use> </svg> </span> </div>
+                        <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-left" style=" " data-component="icon" data-img-lazy="1" data-img-url="/hidden_doors/img/35390348.svg#icon"> <span class="icon-wrap">
+<svg class="icon vector-icon" id="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 99.999"><polygon xmlns="http://www.w3.org/2000/svg" points="74,49.668 52.492,28.001 48.098,32.243 62.495,46.638 25.224,46.638 25.224,52.638 62.6,52.638 48.098,67.032   52.492,71.274 74,49.732 73.967,49.7 " style="fill: inherit;"></polygon></svg> </span> </div>
                     </button>
                 </div>
             </div>
             <div class="element-item element-item--free autowidth-desktop autoheight-desktop autowidth-mobile autoheight-mobile transition-target" style="--zIndex: 0;" data-is="element" data-id="968016407" data-e-id="button01" data-element-justify="start" data-containment="layout" data-snap-to="top" data-am-snap-to="top">
                 <div class="element-content button-1 element-968016407  element-content--free">
-                    <button class="component-button scale-only-bg wide high bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
-                        <a data-action="link" href="/hidden_doors/#prev:727426503" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span>
-                        <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-left" style=" " data-component="icon" data-img-lazy="1" data-img-url="/hidden_doors/img/37000426.svg#icon"> <span class="icon-wrap"> <svg class="icon vector-icon"> <use href="/hidden_doors/img/37000426.svg#icon"></use> </svg> </span> </div>
+                    <button class="component-button component-button-left scale-only-bg wide high bg-element hover-trigger-text hover-trigger-fill_fade hover-trigger js-hover" data-component="button" data-action-target="">
+                        <a  data-action="link" href="/hidden_doors/#prev:727426503" tabindex="-1"></a> <span class="bg-fill" data-type="color"></span> <span class="bg-fill-hover"></span>
+                        <div class="component-icon component-ico style--none color--contrast border--small shape--none  scale--contain btn-icon icon-left" style=" " data-component="icon" data-img-lazy="1" data-img-url="/hidden_doors/img/37000426.svg#icon"> <span class="icon-wrap">
+<svg class="icon vector-icon" id="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 99.999"><polygon xmlns="http://www.w3.org/2000/svg" points="26,49.607 47.508,71.274 51.902,67.032 37.505,52.638 74.776,52.638 74.776,46.638 37.4,46.638 51.902,32.243   47.508,28.001 26,49.543 26.033,49.575 " style="fill: inherit;"></polygon></svg></span> </div>
                     </button>
                 </div>
             </div>
@@ -5096,10 +4614,8 @@ if (!$USER->IsAdmin()){
                                 </div>
                                 <div class="element-item element-item--static" style="--zIndex: 5;" data-element-justify="start" data-is="element" data-id="768439078" data-e-id="text01">
                                     <div class="element-content element-768439078  element-content--static">
-                                        <div class="element-text text-style-content  "> <span color-type="color" style="color: #282828;"><strong>ШОУ-РУМ:</strong></span>
-                                            <br><span color-type="color" style="color: #282828;"><strong>Адрес:&nbsp;</strong>Москва, Рублёвское шоссе, 22к2</span>
-                                            <br><span color-type="color" style="color: #282828;"><strong>Время работы:</strong> с 9 до 18 (пн-пт), с 10 до 18 (сб), с 10 до 17 (вс)</span>
-                                            <br><span color-type="color" style="color: #282828;"><strong>Телефон:</strong> +7 (495) 799-60-92</span>
+                                        <div class="element-text text-style-content  ">
+                                            <br><span color-type="color" style="color: #282828;"><strong>Контактный телефон:</strong> <a href="tel:<?=str_replace(array('-','(',')'), '', $CONTACTS['PROPERTIES']['PHONE']['VALUE'])?>" class="contacts-block__call"> <?=$CONTACTS['PROPERTIES']['PHONE']['VALUE']?> </a></span>
                                             <br> </div>
                                     </div>
                                 </div>
@@ -5108,12 +4624,15 @@ if (!$USER->IsAdmin()){
                                         <hr> </div>
                                 </div>
                                 <div class="element-item element-item--static" style="--zIndex: 3;" data-element-justify="start" data-is="element" data-id="476228207" data-e-id="text01">
-                                    <div class="element-content element-476228207  element-content--static">
-                                        <div class="element-text text-style-content  "> <span color-type="color" style="color: #282828;"><strong>ПРОИЗВОДСТВО:</strong></span>
-                                            <br><span color-type="color" style="color: #282828;"><strong><strong>Адрес:&nbsp;</strong></strong>Кооперативная ул., 4а, посёлок Медведево, Республика Марий Эл, 425200</span>
-                                            <br><span color-type="color" style="color: #282828;"><strong>Телефон для ком. предложений по поставкам материалов:&nbsp;</strong></span>
-                                            <br><span color-type="color" style="color: #282828;">8 966 031-52-86</span>
-                                            <br> </div>
+                                    <div class="contacts-block__block">
+                                        <div class="contacts-block__block-head">
+                                        </div>
+                                        <div class="contact bl">
+                                            <strong>Производство:</strong> <a href="mailto:production@dveri-provance.ru" class="footer__mail">production@dveri-provance.ru</a><br>
+                                            <strong>Консультация или заказ</strong>: <a href="https://t.me/provance_dveri"><i class="fa fa-telegram"></i></a> <a href="https://wa.me/79671098956"><i class="fa fa-whatsapp"></i></a>
+                                            <div style="margin: 10px 0;">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="element-item element-item--static" style="--zIndex: 2;" data-element-justify="start" data-is="element" data-id="369675838" data-e-id="hr01">
@@ -5143,7 +4662,12 @@ if (!$USER->IsAdmin()){
                                     <div class="element-content element-471159884  element-content--static">
                                         <div class="component-map loading" data-prevent-action="" data-component="map" data-format="element" data-type="yandex" data-center="55.742621926726834,37.43054300014149" data-zoom="17">
                                             <div class="map-wrap">
-                                                <div class="map"></div>
+                                                <div class="map">
+                                                    <?php
+
+                                                    echo html_entity_decode($CONTACTS['PREVIEW_TEXT']);
+                                                    ?>
+                                                </div>
                                             </div>
                                             <div class="overlay"></div>
                                         </div>
@@ -5167,16 +4691,16 @@ if (!$USER->IsAdmin()){
                     <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="957725929" data-e-id="logo01">
                         <div class="element-content element-957725929  element-content--static">
                             <div class="component-logo" data-component="logo" style="--logoSize: 271px; --logoSizeAdaptive: 271px; --ratio: 3.669724770642201">
-                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/hidden_doors/img/40681448.png">
+                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/dev_custom/img/page-logo-white.webp">
                             </div>
                         </div>
                     </div>
                     <div class="element-item is-last-child element-item--static" style="--zIndex: 0;" data-element-justify="start" data-is="element" data-id="502416530" data-e-id="text01">
                         <div class="element-content element-502416530  element-content--static">
-                            <div class="element-text text-style-content  "> Реквизиты ООО Актэн:
-                                <br>Общество с ограниченной ответственностью «АКТЭН»&nbsp;
-                                <br>Юр. Адрес: 127055, Москва, Лесная, д. 41.&nbsp;
-                                <br>ИНН 7707720091
+                            <div class="element-text text-style-content  "> Юридические реквизиты:
+                                <br>ИП Соломин Александр Александрович&nbsp;
+                                <br>ИНН 471506439086
+                                <br>ОГРН 315471500000291
                                 <br> </div>
                         </div>
                     </div>
@@ -6355,10 +5879,50 @@ if (!$USER->IsAdmin()){
 </script>
 
 
-<script async="" src="/hidden_doors/assets/swiper-bundle.min.js"></script>
+
 <link rel="stylesheet" href="/hidden_doors/assets/lightgallery.min.css">
 <script async="" src="/hidden_doors/assets/lightgallery.min.js"></script>
 <script async="" src="/hidden_doors/assets/caf7.js"></script>
+<link rel="stylesheet" href="/bitrix/css/font-awesome.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/css/lightgallery.min.css" integrity="sha512-QMCloGTsG2vNSnHcsxYTapI6pFQNnUP6yNizuLL5Wh3ha6AraI6HrJ3ABBaw6SIUHqlSTPQDs/SydiR98oTeaQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/lightgallery.min.js" integrity="sha512-n02TbYimj64qb98ed5WwkNiSw/i9Xlvv4Ehvhg0jLp3qMAMWCYUHbOMbppZ0vimtyiyw9NqNqxUZC4hq86f4aQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<link rel="stylesheet" href="/hidden_doors/assets/style.css">
+<!-- Подключение стилей Swiper -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+<!-- Подключение скрипта Swiper -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<!-- Инициализация -->
+<script>
+    const slider = new Swiper('.swiper-cards-slider', {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        loop: true,
+        navigation: {
+            nextEl: '.component-button-left',
+            prevEl: '.component-button-right',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 5,
+            }
+        }
+    });
+</script>
+
 </body>
 
 </html>
