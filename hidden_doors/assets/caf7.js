@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Добавляем обработчик изменения размера окна (опционально)
     window.addEventListener('resize', function() {
-        console.log(screen.width);
-        if (screen.width > 768) {
+        console.log(window.innerWidth);
+        if (screen.width > 769) {
             // Удаляем мобильные классы и добавляем десктопные
             body.classList.remove(
                 'adaptive-mobile',

@@ -1,0 +1,157 @@
+body{
+    font-family: Federov2,Helvetica,Arial,sans-serif;
+    color: #282828;
+}
+body img{
+    max-width: 100%;
+}
+.first {
+    padding: 60px 20px;
+    background-image: url(/hidden_doors/img/first-bg.jpg);
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-position: top, center;
+    position: relative;
+}
+h1.hidden-doors-h1 {
+    font-size: 69px;
+    font-weight: 400;
+    line-height: 1.1em;
+}
+.first-subtitle {
+    font-size: 30px;
+    padding-top: 20px;
+}
+
+.first-sub-white {
+    display: flex;
+    flex-direction: column;
+    font-size: 40px;
+    color: #fff;
+    margin-top: 83px;
+}
+.first-sub-white span {
+    font-size: 30px;
+}
+.first-cta {
+    font-size: 25px;
+    margin-top: 50px;
+}
+.hidden-doors-btn {
+    display: flex;
+    background-color: #7e939f;
+    padding: 27px 20px;
+    max-width: 450px;
+    gap: 10px;
+    color: #fff;
+    text-decoration: none;
+    justify-content: center;
+    font-size: 18px;
+}
+.first .hidden-doors-btn{
+    margin-top: 40px;
+}
+.first-btn-wrap {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+.first-price-wrap{
+    margin-left: 200px;
+    padding: 20px;
+    background-color: rgba(126, 147, 159, 0.2);
+    border-right: 15px;
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 600;
+}
+.old-price {
+    font-size: 30px;
+    text-decoration: line-through;
+    font-weight: 500;
+}
+.first-img-wrap{
+    margin: 20px auto;
+    display: none;
+}
+.first-left {
+    position: relative;
+}
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .first-price-wrap {
+        margin-left: 100px;
+        padding: 20px;
+        background-color: rgba(126, 147, 159, 0.2);
+        border-right: 15px;
+        color: #ffffff;
+        font-size: 48px;
+        font-weight: 600;
+    }
+}
+
+@media (max-width: 998px) {
+    .first{
+        background-image: none;
+    }
+    h1.hidden-doors-h1{
+        font-size: 39px;
+    }
+    .first-subtitle {
+        font-size: 22px;
+        padding-top: 20px;
+    }
+    .first-img-wrap{
+        display: block;
+    }
+    .first-sub-white {
+        display: flex;
+        flex-direction: column;
+        font-size: 35px;
+        margin-top: 25px;
+        align-items: center;
+        color: #7e939f;
+    }
+    .first-cta {
+        font-size: 16px;
+        margin-top: 25px;
+        text-align: center;
+    }
+    .first-price-wrap {
+        margin-left: 100px;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-right: 15px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 600;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        position: absolute;
+        bottom: 300px;
+        right: 0;
+    }
+    .old-price{
+        font-size: 16px;
+    }
+    .first .hidden-doors-btn {
+        margin-top: 25px;
+    }
+    .first-btn-wrap {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+        justify-content: center;
+    }
+    .hidden-doors-btn {
+        display: flex;
+        background-color: #7e939f;
+        padding: 16px 18px;
+        gap: 10px;
+        color: #fff;
+        text-decoration: none;
+        justify-content: center;
+        font-size: 16px;
+    }
+}
