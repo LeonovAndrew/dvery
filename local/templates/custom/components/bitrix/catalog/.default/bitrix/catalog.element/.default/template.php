@@ -202,9 +202,7 @@ $this->setFrameMode(true);
                                             if (!$offer['ACTUAL']) continue;
 
                                             if (!empty($offer['PROPERTIES']['COMPLECT']['VALUE'])) {
-                                                foreach ($offer['PROPERTIES']['COMPLECT']['VALUE'] as $complectItem) { ?>
-                                                    <li><?php echo $complectItem; ?></li>
-                                                <?php }
+                                                echo $offer['PROPERTIES']['COMPLECT']['~VALUE']['TEXT'];
                                                 break;
                                             }
                                         } ?>

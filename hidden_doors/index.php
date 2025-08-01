@@ -3664,7 +3664,7 @@ global $CONTACTS;
                     <div class="element-item element-item--static" data-element-justify="center" data-is="element" data-id="812661117" data-e-id="header_logo" data-item-id="2">
                         <div class="element-content element-812661117  element-content--static">
                             <div class="component-logo" data-component="logo" style="--logoSize: 100%; --logoSizeAdaptive: 100%; --ratio: 3.669724770642201">
-                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/custom/img/page-logo-black.webp"> </div>
+                                <a href="/"><img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/custom/img/page-logo-black.webp"></a> </div>
                         </div>
                     </div>
                     <div class="element-item element-item--static" data-element-justify="center" data-am-element-justify="center" data-is="element" data-id="593569143" data-e-id="header_text" data-item-id="4">
@@ -3707,7 +3707,7 @@ global $CONTACTS;
                     <div class="element-item element-item--static" data-element-justify="center" data-am-element-justify="center" data-is="element" data-id="458383378" data-e-id="header_logo" data-item-id="2">
                         <div class="element-content element-458383378  element-content--static">
                             <div class="component-logo" data-component="logo" style="--logoSize: 100%; --logoSizeAdaptive: 100%; --ratio: 3.669724770642201">
-                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/custom/img/page-logo-black.webp"> </div>
+                                <a href="/"> <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/custom/img/page-logo-black.webp"></a> </div>
                         </div>
                     </div>
                     <div class="element-item element-item--static" data-element-justify="center" data-am-element-justify="center" data-is="element" data-id="340230565" data-e-id="header_text" data-item-id="4">
@@ -4691,7 +4691,7 @@ global $CONTACTS;
                     <div class="element-item is-first-child element-item--static" style="--zIndex: 1;" data-element-justify="center" data-is="element" data-id="957725929" data-e-id="logo01">
                         <div class="element-content element-957725929  element-content--static">
                             <div class="component-logo" data-component="logo" style="--logoSize: 271px; --logoSizeAdaptive: 271px; --ratio: 3.669724770642201">
-                                <img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/dev_custom/img/page-logo-white.webp">
+                                <a href="/"><img class="component-logo-img" width="400" height="109" draggable="false" alt="Logo" src="/upload/resize_cache/webp/local/templates/dev_custom/img/page-logo-white.webp"></a>
                             </div>
                         </div>
                     </div>
