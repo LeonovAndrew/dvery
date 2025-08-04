@@ -37,10 +37,9 @@ global $CONTACTS;
 
         <?
 
-        if($APPLICATION->GetCurPage() != '/hidden_doors/'){
-            $APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/js/fancybox/jquery.fancybox.css');
-            $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/fancybox/jquery.fancybox.js');
-        }
+
+
+
         //$APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/css/colors.css');
         $APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/fonts/Geometria/stylesheet.css');
         $APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/css/slick-theme.css');
@@ -50,6 +49,10 @@ global $CONTACTS;
         $APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/css/media.css');
 
         $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/jquery.min.js');
+        if($APPLICATION->GetCurPage() != '/hidden_doors/'){
+            $APPLICATION->SetAdditionalCss(SITE_TEMPLATE_PATH . '/js/fancybox/jquery.fancybox.css');
+            $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/fancybox/jquery.fancybox.js');
+        }
         $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/jquery.maskedinput.min.js');
         $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/slick.min.js');
         $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/js/main.js');
