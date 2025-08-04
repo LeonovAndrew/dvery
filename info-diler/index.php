@@ -94,7 +94,7 @@ font-size: 18px;
 
 </style>
 <div id="mcat">
- <details> <summary>Информация по продукту</summary> <a href="/upload/mdocuments/Бланки_шаблоны_методички/Объединенная%20техтетрадь%2004.07.25.pdf" rel="noopener noreferrer" target="_blank">Объединенная техтетрадь 04.07.25.pdf</a>&nbsp;<a href="/upload/mdocuments/Бланки_шаблоны_методички/Тех%20тетрадь%20по%20алюминиевым%20перегородкам%2029.04.25.pdf" target="_blank">Тех тетрадь по алюминиевым перегородкам 29.04.25.pdf</a><details style="margin-left: 20px;"><summary class="mleft">Эмаль</summary> <details style="margin-left: 20px;"> <summary>Фото плинтусов</summary> <br>
+ <details> <summary>Информация по продукту</summary> <a href="/upload/mdocuments/Бланки_шаблоны_методички/Объединенная%20техтетрадь%2004.07.25.pdf" rel="noopener noreferrer" target="_blank">Объединенная техтетрадь 04.07.25.pdf</a>&nbsp;<a href="/upload/mdocuments/Бланки_шаблоны_методички/Тех%20тетрадь%20по%20алюминиевым%20перегородкам%2029.07.25.pdf" target="_blank">Тех тетрадь по алюминиевым перегородкам 29.07.25.pdf</a><details style="margin-left: 20px;"><summary class="mleft">Эмаль</summary> <details style="margin-left: 20px;"> <summary>Фото плинтусов</summary> <br>
 	<div class="container_door">
 		<div class="card_door">
  <a href="/upload/mdocuments/Погонаж/Плинтусы/Фото/1.jpg"> <img alt="01" src="/upload/mdocuments/Погонаж/Плинтусы/Фото/1.jpg"> </a>
