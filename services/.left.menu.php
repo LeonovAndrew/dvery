@@ -42,4 +42,11 @@ $aMenuLinks = Array(
         Array(),
         ""
     ),
+    Array(
+        "Скрытые двери под отделку",
+        "/hidden_doors/",
+        Array(),
+        Array(),
+        ""
+    ),
 );
