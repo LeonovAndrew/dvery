@@ -228,8 +228,6 @@ $this->setFrameMode(true);
                         <?php endif; ?>
                     </div>
 
-                    <a href="#card__warranty_popup" class="open_card_popup card__warranty-mobile">Гарантия до <?php echo $arResult['PROPERTIES']['GARANTY']['VALUE'] ?: 5; ?> лет</a>
-
                     <a href="#card__warranty_popup" class="card__warranty open_card_popup _link desktop">
                         <div class="card__warranty_pic"><?= file_get_contents($_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . '/img/warranty.svg'); ?></div>
                         <div class="card__warranty_text">Гарантия<br>до <?php echo $arResult['PROPERTIES']['GARANTY']['VALUE'] ?: 5; ?> лет</div>
