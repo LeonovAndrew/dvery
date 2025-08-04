@@ -9,7 +9,13 @@ $name = htmlspecialchars($_POST['NAME']);
 $phone = htmlspecialchars($_POST['PHONE']);
 $product = intval($_POST['PRODUCT']);
 $design = intval($_POST['DESIGN']);
+if ($iblockId == 18) {
 
+    // Инициализируем CForm для работы с веб-формами
+    $arFields = array('NAME' => $name, 'PHONE' => $phone, 'PRODUCT_ONE_CL'=>$_POST['PRODUCT_ONE_CL']);
+    CEvent::Send('GET_CALCULATE', array(SITE_ID), $arFields);
+
+}
 if ($iblockId > 0 && $phone) {
 	$el = new CIBlockElement;
 

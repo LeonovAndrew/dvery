@@ -32,7 +32,7 @@ $arUrlRewrite=array (
     'PATH' => '/bitrix/services/ymarket/index.php',
     'SORT' => 100,
   ),
-  85 => 
+  90 => 
   array (
     'CONDITION' => '#^/mezhkomnatnye-dveri/#',
     'RULE' => '',
@@ -56,42 +56,10 @@ $arUrlRewrite=array (
     'PATH' => '/personal/order/index.php',
     'SORT' => 100,
   ),
-  83 => 
-  array (
-    'CONDITION' => '#^/for-designers/#',
-    'RULE' => '',
-    'ID' => 'bitrix:form.result.new',
-    'PATH' => '/for-designers/index.php',
-    'SORT' => 100,
-  ),
   26 => 
   array (
     'CONDITION' => '#^/sitemap.xml#',
     'PATH' => '/sitemap.php',
-    'SORT' => 100,
-  ),
-  87 => 
-  array (
-    'CONDITION' => '#^/services/#',
-    'RULE' => '',
-    'ID' => 'bitrix:news',
-    'PATH' => '/services/index.php',
-    'SORT' => 100,
-  ),
-  6 => 
-  array (
-    'CONDITION' => '#^/personal/#',
-    'RULE' => '',
-    'ID' => 'bitrix:sale.personal.section',
-    'PATH' => '/personal/index.php',
-    'SORT' => 100,
-  ),
-  36 => 
-  array (
-    'CONDITION' => '#^/vakansii/#',
-    'RULE' => '',
-    'ID' => 'bitrix:news',
-    'PATH' => '/vakansii/index.php',
     'SORT' => 100,
   ),
   35 => 
@@ -110,6 +78,30 @@ $arUrlRewrite=array (
     'PATH' => '/articles/index.php',
     'SORT' => 100,
   ),
+  36 => 
+  array (
+    'CONDITION' => '#^/vakansii/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/vakansii/index.php',
+    'SORT' => 100,
+  ),
+  6 => 
+  array (
+    'CONDITION' => '#^/personal/#',
+    'RULE' => '',
+    'ID' => 'bitrix:sale.personal.section',
+    'PATH' => '/personal/index.php',
+    'SORT' => 100,
+  ),
+  87 => 
+  array (
+    'CONDITION' => '#^/services/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/services/index.php',
+    'SORT' => 100,
+  ),
   78 => 
   array (
     'CONDITION' => '#^/catalog/#',
@@ -118,7 +110,7 @@ $arUrlRewrite=array (
     'PATH' => '/catalog/index.php',
     'SORT' => 100,
   ),
-  88 => 
+  91 => 
   array (
     'CONDITION' => '#^/dealers/#',
     'RULE' => '',

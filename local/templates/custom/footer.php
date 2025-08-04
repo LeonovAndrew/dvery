@@ -99,60 +99,60 @@ if ($APPLICATION->GetCurDir() == '/') { ?>
     </div>
     </div>
 <? endif; ?>
-<?//
-//if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
-<!--    --><?// $APPLICATION->IncludeComponent(
-//        "devbx:form",
-//        "footer-signup",
-//        array(
-//            "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
-//            "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
-//            "AJAX_MODE" => "Y",    // Включить режим AJAX
-//            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
-//            "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
-//            "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
-//            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
-//            "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
-//                0 => "",
-//                1 => "",
-//            ),
-//            "FORM_ID" => "2",    // Форма
-//            "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
-//                0 => "",
-//                1 => "",
-//            ),
-//            "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
-//            "FORM_TITLE" => ($curPage == '/portfolio/' ? 'Написать директору' : 'Получите консультацию специалиста'),
-//        ),
-//        false
-//    ); ?>
-<?// else : ?>
-<!--    --><?// $APPLICATION->IncludeComponent(
-//        "devbx:form",
-//        "footer-form",
-//        array(
-//            "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
-//            "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
-//            "AJAX_MODE" => "Y",    // Включить режим AJAX
-//            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
-//            "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
-//            "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
-//            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
-//            "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
-//                0 => "",
-//                1 => "",
-//            ),
-//            "FORM_ID" => "1",    // Форма
-//            "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
-//                0 => "",
-//                1 => "",
-//            ),
-//            "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
-//            "FORM_TITLE" => ($curPage == '/about/' ? 'Написать директору' : 'Обсудить индивидуальный проект дверей'),
-//        ),
-//        false
-//    ); ?>
-<?// endif ?>
+<?
+if ($APPLICATION->GetProperty('FOOTER-FORM') == 'signup') : ?>
+<? $APPLICATION->IncludeComponent(
+       "devbx:form",
+        "footer-signup",
+       array(
+           "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
+           "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
+            "AJAX_MODE" => "Y",    // Включить режим AJAX
+           "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
+           "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
+           "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
+           "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
+           "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
+               0 => "",
+               1 => "",
+          ),
+          "FORM_ID" => "2",    // Форма
+           "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
+               0 => "",
+               1 => "",
+           ),
+           "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
+           "FORM_TITLE" => ($curPage == '/portfolio/' ? 'Написать директору' : 'Получите консультацию специалиста'),
+       ),
+      false
+   ); ?>
+<? else : ?>
+<? $APPLICATION->IncludeComponent(
+      "devbx:form",
+        "footer-form",
+     array(
+           "ACTION_VARIABLE" => "form-action",    // Название переменной, в которой передается действие
+           "AJAX_LOAD_FORM" => "Y",    // Загружать шаблон формы через Ajax
+           "AJAX_MODE" => "Y",    // Включить режим AJAX
+            "AJAX_OPTION_ADDITIONAL" => "",    // Дополнительный идентификатор
+           "AJAX_OPTION_HISTORY" => "N",    // Включить эмуляцию навигации браузера
+           "AJAX_OPTION_JUMP" => "N",    // Включить прокрутку к началу компонента
+            "AJAX_OPTION_STYLE" => "Y",    // Включить подгрузку стилей
+           "DEFAULT_FIELDS" => array(    // Установить значения по умолчанию для полей
+               0 => "",
+               1 => "",
+           ),
+            "FORM_ID" => "1",    // Форма
+           "READ_ONLY_FIELDS" => array(    // Запретить изменения полей
+               0 => "",
+                1 => "",
+            ),
+           "SUBMIT_BUTTON_NAME" => "Отправить",    // Название кнопки отправить
+           "FORM_TITLE" => ($curPage == '/about/' ? 'Написать директору' : 'Обсудить индивидуальный проект дверей'),
+       ),
+        false
+    ); ?>
+<? endif ?>
 
 <? if ($APPLICATION->GetCurPage(false) === '/contacts/') : ?>
     <div class="map">

@@ -39,7 +39,7 @@ if (empty($arParams['SUBMIT_BUTTON_NAME']))
     <?endforeach?>
 	<div class="footer-row">
                 <input type="hidden" name="UF_NAME" class="footer-form__input" placeholder="Имя*" value="<?=$arResult['FIELDS']['UF_NAME']['VALUE']?>">
-                <input type="text" name="UF_PHONE" autocomplete="off" class="footer-form__input tel" placeholder="Телефон*" value="<?=$arResult['FIELDS']['UF_PHONE']['VALUE']?>">
+                <input type="text" id="text-phone-form-individ" name="UF_PHONE" autocomplete="off" class="footer-form__input tel" placeholder="Телефон*" value="<?=$arResult['FIELDS']['UF_PHONE']['VALUE']?>">
                 <input type="hidden" name="UF_EMAIL" autocomplete="off" class="footer-form__input" placeholder="E-mail" value="<?=$arResult['FIELDS']['UF_EMAIL']['VALUE']?>">
                 <input type="hidden" name="UF_COMMENT" autocomplete="off" class="footer-form__input form__comment" placeholder="Ваш вопрос" value="<?=$arResult['FIELDS']['UF_COMMENT']['VALUE']?>">
 	</div>
@@ -50,11 +50,29 @@ if (empty($arParams['SUBMIT_BUTTON_NAME']))
 </form>
 
     <script>
-        document.querySelector('.footer-form__body').addEventListener('submit', function() {
-            var _tmr = window._tmr || (window._tmr = []);
-            _tmr.push({ type: 'reachGoal', id: 3339490, goal: 'send_form' });
-            document.querySelector('#foot-form .footer-form__head').innerHTML = 'Благодарим за заявку! Ожидайте звонка специалиста.';
-            document.querySelector('#foot-form .footer-form__body').style.display = 'none';
+        document.querySelector('.footer-form__body').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const phoneInput = document.getElementById('text-phone-form-individ');
+            const formData = new FormData();
+            formData.append('phone', phoneInput.value); // Отправляем только телефон
+
+            fetch('/ajax/individ-project.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Успешная отправка
+                    var _tmr = window._tmr || (window._tmr = []);
+                    _tmr.push({ type: 'reachGoal', id: 3339490, goal: 'send_form' });
+                    document.querySelector('#foot-form .footer-form__head').innerHTML = 'Благодарим за заявку! Ожидайте звонка специалиста.';
+                    document.querySelector('#foot-form .footer-form__body').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    // Можно добавить уведомление об ошибке
+                });
         });
     </script>
 
