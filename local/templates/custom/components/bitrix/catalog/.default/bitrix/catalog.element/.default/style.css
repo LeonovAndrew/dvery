@@ -1073,14 +1073,6 @@ body {
     display: none;
 }
 
-.card__warranty-mobile {
-    display: none;
-    width: 100%;
-    margin: -25px 0;
-    color: #000000;
-    font-size: 12px;
-}
-
 /*.card__result-pic {*/
 /*    width: 248px !important;*/
 /*}*/
@@ -1098,16 +1090,18 @@ body {
         min-width: 120px !important;
     }
     .card__links.mobile {
-        display: block;
-        margin: -10px 0;
+        display: flex;
+        justify-content: flex-end;
+        width: 40%;
     }
 
-    .card__warranty-mobile {
-        display: block;
-    }
+    /*.card__warranty-mobile {*/
+    /*    display: block;*/
+    /*}*/
 
     .card__warranty.desktop {
-        display: none;
+        display: flex;
+        width: 50%;
     }
 
     .card__links.desktop {
