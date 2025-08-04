@@ -62,28 +62,12 @@ $arUrlRewrite=array (
     'PATH' => '/sitemap.php',
     'SORT' => 100,
   ),
-  35 => 
+  87 => 
   array (
-    'CONDITION' => '#^/partnery/#',
-    'RULE' => '',
-    'ID' => 'bitrix:form.result.new',
-    'PATH' => '/partnery/index.php',
-    'SORT' => 100,
-  ),
-  86 => 
-  array (
-    'CONDITION' => '#^/articles/#',
+    'CONDITION' => '#^/services/#',
     'RULE' => '',
     'ID' => 'bitrix:news',
-    'PATH' => '/articles/index.php',
-    'SORT' => 100,
-  ),
-  36 => 
-  array (
-    'CONDITION' => '#^/vakansii/#',
-    'RULE' => '',
-    'ID' => 'bitrix:news',
-    'PATH' => '/vakansii/index.php',
+    'PATH' => '/services/index.php',
     'SORT' => 100,
   ),
   6 => 
@@ -94,12 +78,28 @@ $arUrlRewrite=array (
     'PATH' => '/personal/index.php',
     'SORT' => 100,
   ),
-  87 => 
+  36 => 
   array (
-    'CONDITION' => '#^/services/#',
+    'CONDITION' => '#^/vakansii/#',
     'RULE' => '',
     'ID' => 'bitrix:news',
-    'PATH' => '/services/index.php',
+    'PATH' => '/vakansii/index.php',
+    'SORT' => 100,
+  ),
+  86 => 
+  array (
+    'CONDITION' => '#^/articles/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/articles/index.php',
+    'SORT' => 100,
+  ),
+  35 => 
+  array (
+    'CONDITION' => '#^/partnery/#',
+    'RULE' => '',
+    'ID' => 'bitrix:form.result.new',
+    'PATH' => '/partnery/index.php',
     'SORT' => 100,
   ),
   78 => 
