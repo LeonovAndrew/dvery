@@ -930,11 +930,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Добавляем кастомные кнопки в слайдер
     sliderEl.insertAdjacentHTML('beforeend', navButtons);
 
+    const slides = sliderEl.querySelectorAll('.swiper-slide');
+    const enableLoop = slides.length > 4;
+
     window.cardSwiper = new Swiper('.card__result-pics', {
-        loop: true,
+        loop: enableLoop,
         speed: 900,
         slidesPerView: 1.6,
         centeredSlides: true,
+        
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
