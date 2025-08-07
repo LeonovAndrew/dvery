@@ -4733,3 +4733,26 @@ h5 {
 .btn-up_hide {
     display: none;
 }
+
+
+@media (max-width: 991px) {
+    .swiper-slider-wrap{
+        width: auto;
+        margin: 0 -15px;
+    }
+    .card__result-pics{
+    }
+    .card__result-pics .swiper-wrapper{
+        display: flex;
+        align-items: center;
+    }
+    .card__result-pic{
+        transition: all .25s linear;
+        transform: scale(.95) !important;
+        filter: blur(3px);
+    }
+    .card__result-pic.swiper-slide-active{
+        transform: scale(1) !important;
+        filter: blur(0);
+    }
+}
