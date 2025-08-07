@@ -27,6 +27,7 @@ global $CONTACTS;
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
         <link rel="stylesheet" href="/bitrix/css/font-awesome.css"/>
+        <script data-skip-moving="true" src="https://dmp.one/sync?stock_key=c6f2136531fd0b27f2eab3bf2d8912cc" async referrerpolicy="no-referrer-when-downgrade" charset="UTF-8"></script>
         <?php
         if ($APPLICATION->GetCurPage() == '/dealer/') {
             echo '<meta name="googlebot" content="noindex">';

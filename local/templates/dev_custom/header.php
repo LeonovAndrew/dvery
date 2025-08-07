@@ -39,7 +39,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="/bitrix/css/font-awesome.css"  />
 
-
+    <script data-skip-moving="true" src="https://dmp.one/sync?stock_key=c6f2136531fd0b27f2eab3bf2d8912cc" async referrerpolicy="no-referrer-when-downgrade" charset="UTF-8"></script>
 	<?$APPLICATION->ShowHead()?>
 
 	<?
