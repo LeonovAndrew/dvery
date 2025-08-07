@@ -7,12 +7,12 @@ $(document).ready(function () {
         $("*").removeClass("menu-select-active");
         $(".header__menu-select-body").slideUp("");
     });
-    
-     $(".mob-base-button").on("click", function (e) {
-         $('.card__tools-mobile').slideToggle();
-     });
-    
-    
+
+    $(".mob-base-button").on("click", function (e) {
+        $('.card__tools-mobile').slideToggle();
+    });
+
+
 // Увеличение картинки в разделе О нас
     $('a.certificate-fancy').fancybox()
 
@@ -27,11 +27,11 @@ $(document).ready(function () {
     // активный пункт каталога
 
     let url = document.location.href;
-	$.each($(".catalog-menu a"), function() {
-	if (this.href == url) {
-	$(this).addClass('current').parent().addClass('current');
-		}
-	});
+    $.each($(".catalog-menu a"), function () {
+        if (this.href == url) {
+            $(this).addClass('current').parent().addClass('current');
+        }
+    });
 
 
     $(".select-block").on("click", function (e) {
@@ -167,7 +167,8 @@ $(document).ready(function () {
         $(this).toggleClass("contacts-list__head-active");
     });
 
-    $(".card__tools-head-active").on("click", function (e) {});
+    $(".card__tools-head-active").on("click", function (e) {
+    });
 
     $(".card__tools-head").on("click", function () {
         if ($(this).hasClass("card__tools-head-active")) {
@@ -247,28 +248,28 @@ $(document).ready(function () {
         ],
     });
 
-   setTimeout(() => {
-       let articleSlide = $(".article__slide").slick({
-           lazyLoad: "ondemand",
-           dots: false,
-           autoplay: true,
-           autoplaySpeed: 5000,
-           infinite: true,
-           speed: 500,
-           variableWidth: false,
-           arrows: false,
-           slidesToShow: 3,
-           draggable: true,
-           centerMode: false,
-           slidesToScroll: 1,
-           responsive: [
-               {
-                   breakpoint: 600,
-                   settings: "unslick",
-               },
-           ],
-       });
-   }, 1000);
+    setTimeout(() => {
+        let articleSlide = $(".article__slide").slick({
+            lazyLoad: "ondemand",
+            dots: false,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            infinite: true,
+            speed: 500,
+            variableWidth: false,
+            arrows: false,
+            slidesToShow: 3,
+            draggable: true,
+            centerMode: false,
+            slidesToScroll: 1,
+            responsive: [
+                {
+                    breakpoint: 600,
+                    settings: "unslick",
+                },
+            ],
+        });
+    }, 1000);
 
     let certificateSlider = $(".certificate__body").slick({
         lazyLoad: "ondemand",
@@ -526,11 +527,11 @@ $(document).ready(function () {
         var link5 = $(".news__img");
         var width5 = link5.width();
         link5.height(width5 / 1.456);
-       /* if ($(window).width() <= 850) {
-            $(".card__content").css("display", "none");
-        } else {
-            $(".card__content").css("display", "block");
-        }*/
+        /* if ($(window).width() <= 850) {
+             $(".card__content").css("display", "none");
+         } else {
+             $(".card__content").css("display", "block");
+         }*/
 
         if ($(window).width() < 600) {
             var link6 = $(".banner-2");
@@ -659,10 +660,10 @@ $(document).ready(function () {
                         formMessage.addClass("error");
                         button.prop("disabled", false);
                     }
-                    
+
                     formMessage.html(result.message);
-					ym(64922065,'reachGoal','callback2');
-       				console.log('заказ звонка с внутренней стр');
+                    ym(64922065, 'reachGoal', 'callback2');
+                    console.log('заказ звонка с внутренней стр');
 
                 },
             });
@@ -729,8 +730,8 @@ $(document).ready(function () {
                     }
 
                     formMessage.html(result.message);
-					ym(64922065,'reachGoal','form_order');
-       				console.log('форма заказа на внутренней стр');					
+                    ym(64922065, 'reachGoal', 'form_order');
+                    console.log('форма заказа на внутренней стр');
                 },
             });
         }
@@ -815,7 +816,7 @@ $(document).ready(function () {
     }
 
     if (!(('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0))) {
-        $(".js-loupe").imagezoomsl({ zoomrange: [3, 3] });
+        $(".js-loupe").imagezoomsl({zoomrange: [3, 3]});
     }
 
     $("[data-devbx-popup-form]").on("click", function (e) {
@@ -825,7 +826,8 @@ $(document).ready(function () {
 
         try {
             params = JSON.parse(this.dataset.popupParams);
-        } catch (e) {}
+        } catch (e) {
+        }
 
         if (typeof params !== "object") params = {};
 
@@ -862,72 +864,136 @@ $(document).ready(function () {
             },
         });
     });
-        // Получаем все теги link с атрибутом rel="canonical"
+    // Получаем все теги link с атрибутом rel="canonical"
     let canonicalLinks = document.querySelectorAll('link[rel="canonical"]');
 
 // Проходим по каждому тегу link и преобразуем буквы в атрибуте href в нижний регистр
-for (let i = 0; i < canonicalLinks.length; i++) {
-    let href = canonicalLinks[i].getAttribute('href');
-    if (href) {
-        canonicalLinks[i].setAttribute('href', href.toLowerCase());
-    }
-};
-
- // кнопка Наверх
- const btnUp = {
-    el: document.querySelector('.btn-up'),
-    show() {
-        this.el.classList.remove('btn-up_hide');
-    },
-    hide() {
-        this.el.classList.add('btn-up_hide');
-    },
-    addEventListener() {
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
-            // если страница прокручена больше чем на 10px, то делаем кнопку видимой, иначе скрываем
-            scrollY > 10 ? this.show() : this.hide();
-        });
-        document.querySelector('.btn-up').onclick = () => {
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
+    for (let i = 0; i < canonicalLinks.length; i++) {
+        let href = canonicalLinks[i].getAttribute('href');
+        if (href) {
+            canonicalLinks[i].setAttribute('href', href.toLowerCase());
         }
     }
-}
+    ;
 
-btnUp.addEventListener();
+    // кнопка Наверх
+    const btnUp = {
+        el: document.querySelector('.btn-up'),
+        show() {
+            this.el.classList.remove('btn-up_hide');
+        },
+        hide() {
+            this.el.classList.add('btn-up_hide');
+        },
+        addEventListener() {
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                // если страница прокручена больше чем на 10px, то делаем кнопку видимой, иначе скрываем
+                scrollY > 10 ? this.show() : this.hide();
+            });
+            document.querySelector('.btn-up').onclick = () => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
 
-    // Слайдер фото в карточке
-    (function(){
+    btnUp.addEventListener();
+});
 
-        let $slider = $('.card__result-pics');
+// Инициализация Swiper
+document.addEventListener('DOMContentLoaded', function() {
+    const sliderEl = document.querySelector('.card__result-pics');
+    if (!sliderEl) return;
 
-        if (!$slider.length) return;
+    // Создаем кастомные кнопки навигации (аналогичные Slick)
+    const navButtons = `
+        <div class="swiper-button-prev">
+            <button type="button" class="slick-prev slick-arrow">
+                <svg width="28" height="9" viewBox="0 0 28 9" fill="none">
+                    <path d="M1.091 4.27609C0.895739 4.47135 0.895739 4.78793 1.091 4.98319L4.27298 8.16517C4.46824 8.36044 4.78482 8.36044 4.98009 8.16517C5.17535 7.96991 5.17535 7.65333 4.98009 7.45807L2.15166 4.62964L4.98009 1.80121C5.17535 1.60595 5.17535 1.28937 4.98009 1.09411C4.78482 0.898845 4.46824 0.898845 4.27298 1.09411L1.091 4.27609ZM27.5557 4.12964L1.44455 4.12964L1.44455 5.12964L27.5557 5.12964L27.5557 4.12964Z"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="swiper-button-next">
+            <button type="button" class="slick-next slick-arrow">
+                <svg width="28" height="9" viewBox="0 0 28 9" fill="none">
+                    <path d="M26.909 4.72391C27.1043 4.52865 27.1043 4.21207 26.909 4.0168L23.727 0.834823C23.5318 0.639561 23.2152 0.639561 23.0199 0.834823C22.8246 1.03009 22.8246 1.34667 23.0199 1.54193L25.8483 4.37036L23.0199 7.19878C22.8247 7.39405 22.8247 7.71063 23.0199 7.90589C23.2152 8.10115 23.5318 8.10115 23.727 7.90589L26.909 4.72391ZM0.444336 4.87036L26.5554 4.87036L26.5554 3.87036L0.444336 3.87036L0.444336 4.87036Z"></path>
+                </svg>
+            </button>
+        </div>
+    `;
 
-        $slider.slick({
-            // lazyLoad: "ondemand",
-            dots: true,
-            autoplay: false,
-            infinite: true,
-            speed: 900,
-            variableWidth: false,
-            arrows: true,
-            slidesToShow: 1,
-            draggable: true,
-            adaptiveHeight: true,
-            centerMode: false,
-            slidesToScroll: 1,
-            prevArrow: '<button type="button" class="slick-prev"><svg width="28" height="9" viewBox="0 0 28 9" fill="none"><path d="M1.091 4.27609C0.895739 4.47135 0.895739 4.78793 1.091 4.98319L4.27298 8.16517C4.46824 8.36044 4.78482 8.36044 4.98009 8.16517C5.17535 7.96991 5.17535 7.65333 4.98009 7.45807L2.15166 4.62964L4.98009 1.80121C5.17535 1.60595 5.17535 1.28937 4.98009 1.09411C4.78482 0.898845 4.46824 0.898845 4.27298 1.09411L1.091 4.27609ZM27.5557 4.12964L1.44455 4.12964L1.44455 5.12964L27.5557 5.12964L27.5557 4.12964Z"></path></svg></button>',
-            nextArrow: '<button type="button" class="slick-next"><svg width="28" height="9" viewBox="0 0 28 9" fill="none"><path d="M26.909 4.72391C27.1043 4.52865 27.1043 4.21207 26.909 4.0168L23.727 0.834823C23.5318 0.639561 23.2152 0.639561 23.0199 0.834823C22.8246 1.03009 22.8246 1.34667 23.0199 1.54193L25.8483 4.37036L23.0199 7.19878C22.8247 7.39405 22.8247 7.71063 23.0199 7.90589C23.2152 8.10115 23.5318 8.10115 23.727 7.90589L26.909 4.72391ZM0.444336 4.87036L26.5554 4.87036L26.5554 3.87036L0.444336 3.87036L0.444336 4.87036Z"></path></svg></button>',
-            /*afterChange: function(){
-                $slider.find(".js-loupe").imagezoomsl({ zoomrange: [3, 3] });
-            }*/
+    // Добавляем кастомные кнопки в слайдер
+    sliderEl.insertAdjacentHTML('beforeend', navButtons);
+
+    const slides = sliderEl.querySelectorAll('.swiper-slide');
+    const enableLoop = slides.length > 4;
+
+    window.cardSwiper = new Swiper('.card__result-pics', {
+        loop: enableLoop,
+        speed: 900,
+        slidesPerView: 1.6,
+        centeredSlides: true,
+        
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            998: {
+  				slidesPerView: 1,
+				centeredSlides: false,
+				loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }
+            },
+            320: {
+                centeredSlides: true,
+            }
+        },
+        on: {
+            init: function() {
+                updateActiveModelItems(this.activeIndex);
+            },
+            slideChange: function() {
+                updateActiveModelItems(this.activeIndex);
+            },
+        }
+    });
+
+    function updateActiveModelItems(activeIndex) {
+        let items = [];
+
+        if (window.innerWidth > 998) {
+            items = document.querySelectorAll('.card__tool-body-active .model-item');
+        } else {
+            items = document.querySelectorAll('.card__tools-mobile-item .model-item');
+        }
+
+        let itemIndex = 0;
+        items.forEach(item => {
+            if (item.parentElement.style.display !== 'none') {
+                if (itemIndex === activeIndex) {
+                    item.classList.add('card__model-active');
+                } else {
+                    item.classList.remove('card__model-active');
+                }
+                itemIndex++;
+            }
         });
+    }
 
-    })();
-
-   
+    window.addEventListener('resize', function() {
+        window.cardSwiper.update();
+    });
 });

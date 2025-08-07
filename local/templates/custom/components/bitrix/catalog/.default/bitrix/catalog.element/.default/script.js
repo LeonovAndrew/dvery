@@ -7,9 +7,15 @@ $(function () {
         var materialId = $('.material-item.card__material-p-active').data('id');
         var designId = $(this).data('id');
 
-        $('.js-loupe')
-            .attr('src', design[materialId][designId].PICTURE)
-            .attr('data-result-id', design[materialId][designId].ID);
+        if (design[materialId][designId].NOT_OFORM === 'Y') {
+            $('.js-loupe')
+                .attr('src', '')
+                .attr('data-result-id', design[materialId][designId].ID);
+        } else {
+            $('.js-loupe')
+                .attr('src', design[materialId][designId].PICTURE)
+                .attr('data-result-id', design[materialId][designId].ID);
+        }
 
         $('.magnifier img:last-child').attr('src', design[materialId][designId].PICTURE);
 
@@ -24,8 +30,30 @@ $(function () {
         var actualModelId = $('.model-item.card__model-active').data('id');
 
         $('.js-loupe')
-            .attr('src', design[materialId][designId].PICTURE)
             .attr('data-result-id', design[materialId][designId].ID);
+
+        // Меняем фото в слайдере
+        if (document.querySelector('.card__result-pic')) {
+            const slides = document.querySelectorAll('.card__result-pic');
+            let arOffers = Object.values(offers[materialId]);
+            let arDesign = Object.values(design[materialId]);
+
+            slides.forEach(slide => {
+                const rama = slide.querySelector('.js-loupe');
+                const dver = slide.querySelector('.js-loupe2');
+
+                arOffers.forEach((offer, i) => {
+                    if (i == slide.dataset.key) {
+                        dver.src = offer.PICTURE;
+                    }
+                });
+
+                arDesign.forEach((design, i) => {
+                    rama.style.display = 'block';
+                    rama.src = design.PICTURE;
+                });
+            });
+        }
 
         $('.js-design-image')
             .css('background-image', 'url(' + design[materialId][designId].PICTURE + ')')
@@ -38,12 +66,7 @@ $(function () {
             $(this).find('.js-material-image').css('background-image', 'url(' + offers[materialId][modelId].PICTURE + ')');
         });
 
-        $('.js-loupe2')
-            .attr('src', offers[materialId][actualModelId].PICTURE)
-            .attr('data-result-id', offers[materialId][actualModelId].ID);
-
         $('.magnifier .loupe2').attr('src', offers[materialId][actualModelId].PICTURE);
-
 
         $('.js-material-image-left')
             .css('background-image', 'url(' + offers[materialId][actualModelId].PICTURE + ')')
@@ -52,7 +75,8 @@ $(function () {
 
         $('.card__price_act span').html(prettify(offers[materialId][actualModelId].PRICE));
         $('.card__price_old span').html(prettify(offers[materialId][actualModelId].PRICE_OLD));
-        $('.card__price_parts span').html(prettify(offers[materialId][modelId].PRICE_PARTS));
+        // TODO разобраться
+        // $('.card__price_parts span').html(prettify(offers[materialId][modelId].PRICE_PARTS));
         $('.card__meta_model span').html(prettify(offers[materialId][actualModelId].TEXT));
     });
 
@@ -60,9 +84,33 @@ $(function () {
         var materialId = $('.material-item.card__material-p-active').data('id');
         var modelId = $(this).data('id');
 
-        $('.js-loupe2')
-            .attr('src', offers[materialId][modelId].PICTURE)
-            .attr('data-result-id', offers[materialId][modelId].ID);
+        if (offers[materialId][modelId].ID) {
+            $('.js-loupe2')
+                .attr('data-result-id', offers[materialId][modelId].ID);
+        }
+
+        if (document.querySelector('.card__result-pic')) {
+            let items = [];
+            if (window.innerWidth > 998) {
+                items = document.querySelectorAll('.card__tool-body-active .model-item')
+            } else {
+                items = document.querySelectorAll('.card__tools-mobile-item .model-item')
+            }
+            let index = 0;
+            let itemIndex = 0
+
+            items.forEach(item => {
+                if (item.parentElement.style.display != 'none') {
+                    if (item.classList.contains('card__model-active')) {
+                        index = itemIndex;
+                    }
+
+                    itemIndex++;
+                }
+            });
+
+            window.cardSwiper.slideTo(index)
+        }
 
         $('.magnifier .loupe2').attr('src', offers[materialId][modelId].PICTURE);
 
@@ -89,7 +137,6 @@ $(function () {
         }
 
         return false;
-
     });
 
     $('.card__popup_close').on('click', function (e) {
@@ -172,6 +219,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 btn.classList.add('active');
                 tabs[i].classList.add('active');
+            });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    try {
+        $('.detail-text-wrap').on('click', 'img', function (e) {
+            e.preventDefault();
+
+            $.fancybox.open({
+                href: $(this).attr('src'),
             });
         });
     } catch (error) {

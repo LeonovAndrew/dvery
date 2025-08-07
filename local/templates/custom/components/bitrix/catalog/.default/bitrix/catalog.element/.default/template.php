@@ -30,7 +30,7 @@ $this->setFrameMode(true);
     ); ?>
 </div>
 
-<div class="card">
+<div class="card <?php if (!empty($arResult['PROPERTIES']['NEW_VIEW']['VALUE'])) echo 'new-view' ?>">
     <div class="cont">
         <div class="card__cont">
             <div class="card__side js-card-side">
@@ -41,50 +41,60 @@ $this->setFrameMode(true);
                     </div>
                 <?php endif; ?>
 
-                <?php // Слайдер ?>
-                <div class="card__result-pics">
-                    <?php if ($arResult['OFFERS']) {
-                        foreach ($arResult['OFFERS'] as $k => $offer) {
 
-                            if (!$offer['ACTUAL']) continue;
-                            $image = $offer['PREVIEW_PICTURE']['SRC'] ?: $offer['DETAIL_PICTURE']['SRC'];
-                            ?>
+                <div class="swiper-slider-wrap">
+                    <div class="swiper card__result-pics">
+                        <div class="swiper-wrapper">
+                            <?php if ($arResult['OFFERS']) {
+                                $i = 0;
+                                foreach ($arResult['OFFERS'] as $k => $offer) {
 
-                            <div class="card__result-pic">
-                                <div class="card__result-pic-int">
-                                    <img class="js-loupe2" src="<?= $image ?>" alt="<?= $arResult['NAME'] ?>"
-                                         data-result-id="<?= $offer['ID'] ?>" data-large='<?= $image ?>'>
-                                </div>
-                                <?php if (!empty($arResult['CURRENT_DESIGN']['PICTURE'])) : ?>
-                                    <div class="card__result-pic-ext">
-                                        <img class="js-loupe" src="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>"
-                                             alt="<?= $arResult['NAME'] ?>" data-result-id="<?= $offer['ID'] ?>"
-                                             data-large="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>">
+                                    if (!$offer['ACTUAL']) continue;
+                                    $image = $offer['PREVIEW_PICTURE']['SRC'] ?: $offer['DETAIL_PICTURE']['SRC'];
+                                    ?>
+                                    <div class="swiper-slide card__result-pic" data-key="<?php echo $i; ?>">
+                                        <div class="card__result-pic-int">
+                                            <img class="js-loupe2" src="<?= $image ?>" alt="<?= $arResult['NAME'] ?>"
+                                                 data-result-id="<?= $offer['ID'] ?>" data-large='<?= $image ?>'>
+                                        </div>
+                                        <?php if (!empty($arResult['CURRENT_DESIGN']['PICTURE'])) : ?>
+                                            <div class="card__result-pic-ext">
+                                                <img class="js-loupe <?php if (!empty($offer['PROPERTIES']['NOT_OFORM']['VALUE'])) echo 'not-oform' ?>"
+                                                     src="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>"
+                                                     alt="<?= $arResult['NAME'] ?>" data-result-id="<?= $offer['ID'] ?>"
+                                                     data-large="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>">
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
 
-                            <?php if ($k == 10) break;
-                        }
-                    } else { ?>
-                        <div class="card__result-pic">
-                            <div class="card__result-pic-int">
-                                <img class="js-loupe2"
-                                     src="<?= empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC'] ?>"
-                                     alt="<?= $arResult['NAME'] ?>"
-                                     data-result-id="<?= $arResult['CURRENT_OFFER']['ID'] ?>"
-                                     data-large='<?= empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC'] ?>'>
-                            </div>
-                            <?php if (!empty($arResult['CURRENT_DESIGN']['PICTURE'])) : ?>
-                                <div class="card__result-pic-ext">
-                                    <img class="js-loupe" src="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>"
-                                         alt="<?= $arResult['NAME'] ?>"
-                                         data-result-id="<?= $arResult['CURRENT_DESIGN']['ID'] ?>"
-                                         data-large="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>">
+                                    <?php if ($k == 10) break;
+                                    $i++;
+                                }
+                            } else { ?>
+                                <div class="swiper-slide card__result-pic">
+                                    <div class="card__result-pic-int">
+                                        <img class="js-loupe2"
+                                             src="<?= empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC'] ?>"
+                                             alt="<?= $arResult['NAME'] ?>"
+                                             data-result-id="<?= $arResult['CURRENT_OFFER']['ID'] ?>"
+                                             data-large='<?= empty($arResult['OFFERS']) ? $arResult['CURRENT_OFFER']['PREVIEW_PICTURE']['SRC'] : $arResult['CURRENT_OFFER']['DETAIL_PICTURE']['SRC'] ?>'>
+                                    </div>
+                                    <?php if (!empty($arResult['CURRENT_DESIGN']['PICTURE'])) : ?>
+                                        <div class="card__result-pic-ext">
+                                            <img class="js-loupe" src="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>"
+                                                 alt="<?= $arResult['NAME'] ?>"
+                                                 data-result-id="<?= $arResult['CURRENT_DESIGN']['ID'] ?>"
+                                                 data-large="<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>">
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
+                            <?php } ?>
                         </div>
-                    <?php } ?>
+
+                    </div>
+
+                    <div class="swiper-pagination slick-dots"></div>
+
                 </div>
 
                 <div class="card__main-text card__main-text-mobile card__text-for-mobile" style="font-size:14px">
@@ -95,6 +105,20 @@ $this->setFrameMode(true);
 
                     <button type="button" class="mob-base-button"><span class="base-button__content">
 						Выбрать модель и материал
+                        </span>
+
+                        <svg width="800px" height="800px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
+                             stroke-width="3" stroke="#000000" fill="none">
+                            <line x1="50.69" y1="32" x2="56.32" y2="32"/>
+                            <line x1="7.68" y1="32" x2="38.69" y2="32"/>
+                            <line x1="26.54" y1="15.97" x2="56.32" y2="15.97"/>
+                            <line x1="7.68" y1="15.97" x2="14.56" y2="15.97"/>
+                            <line x1="35" y1="48.03" x2="56.32" y2="48.03"/>
+                            <line x1="7.68" y1="48.03" x2="23" y2="48.03"/>
+                            <circle cx="20.55" cy="15.66" r="6"/>
+                            <circle cx="44.69" cy="32" r="6"/>
+                            <circle cx="29" cy="48.03" r="6"/>
+                        </svg>
                     </button>
 
                     <?php if (!empty($arResult['OFFERS'])) : ?>
@@ -112,7 +136,7 @@ $this->setFrameMode(true);
                                                     <div class="card__model js-material-image"
                                                          style="background-image: url('<?= $offer['DETAIL_PICTURE']['SRC'] ?>');"></div>
                                                     <div class="card__model js-design-image"
-                                                         style="background-image: url('<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>');"></div>
+                                                         style="background-image: url('<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>'); <?php if (!empty($offer['PROPERTIES']['NOT_OFORM']['VALUE'])) echo 'display: none !important;' ?>"></div>
                                                 </div>
                                             </div>
                                         <?php endforeach; ?>
@@ -228,7 +252,9 @@ $this->setFrameMode(true);
 
                     <a href="#card__warranty_popup" class="card__warranty open_card_popup _link desktop">
                         <div class="card__warranty_pic"><?= file_get_contents($_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . '/img/warranty.svg'); ?></div>
-                        <div class="card__warranty_text">Гарантия<br>до <?php echo $arResult['PROPERTIES']['GARANTY']['VALUE'] ?: 5; ?> лет</div>
+                        <div class="card__warranty_text">
+                            Гарантия<br>до <?php echo $arResult['PROPERTIES']['GARANTY']['VALUE'] ?: 5; ?> лет
+                        </div>
                     </a>
                     <div class="card__popup" id="card__warranty_popup">
                         <div class="card__popup_window">
@@ -341,9 +367,9 @@ $this->setFrameMode(true);
                                         <div class="card__model-border model-item <?= $offer['ID'] == $arResult['CURRENT_OFFER']['ID'] ? 'card__model-active' : '' ?>"
                                              data-id="<?= $offer['PROPERTIES']['MODEL']['VALUE'] ?>">
                                             <div class="card__model js-material-image"
-                                                 style="background-image: url(<?= $offer['DETAIL_PICTURE']['SRC'] ?>)"></div>
+                                                 style="background-image: url(<?= $offer['DETAIL_PICTURE']['SRC'] ?>);"></div>
                                             <div class="card__model js-design-image"
-                                                 style="background-image: url(<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>)"></div>
+                                                 style="background-image: url(<?= $arResult['CURRENT_DESIGN']['PICTURE'] ?>); <?php if (!empty($offer['PROPERTIES']['NOT_OFORM']['VALUE'])) echo 'display: none !important;' ?>"></div>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -404,21 +430,32 @@ $this->setFrameMode(true);
 <div class="card-text">
     <div class="cont">
         <div class="card-tabs-btns">
-            <?php if ($arResult['DETAIL_TEXT']) : ?>
+            <?php if ($arResult['DETAIL_TEXT']) { ?>
                 <div class="card-tabs-btn">Описание</div>
-            <?php endif; ?>
+            <?php } ?>
+            <?php if (!empty($arResult['PROPERTIES']['CHARACTER']['VALUE'])) { ?>
+                <div class="card-tabs-btn">Характеристики</div>
+            <?php } ?>
             <div class="card-tabs-btn">Сервис и доставка</div>
             <div class="card-tabs-btn">Мой дизайн</div>
         </div>
 
         <div class="cart-tabs">
-            <?php if ($arResult['DETAIL_TEXT']) : ?>
-                <div class="card-tabs-tab card-text__cont">
+            <?php if ($arResult['DETAIL_TEXT']) { ?>
+                <div class="card-tabs-tab card-text__cont detail-text-wrap">
                     <div class="card-text__body">
                         <p><?= $arResult['DETAIL_TEXT'] ?></p>
                     </div>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
+
+            <?php if (!empty($arResult['PROPERTIES']['CHARACTER']['VALUE'])) { ?>
+                <div class="card-tabs-tab card-text__cont">
+                    <div class="card-text__body">
+                        <p><?= htmlspecialchars_decode($arResult['PROPERTIES']['CHARACTER']['VALUE']['TEXT']) ?></p>
+                    </div>
+                </div>
+            <?php } ?>
 
             <div class="card-tabs-tab card-text__cont">
                 <div class="card-text__body">

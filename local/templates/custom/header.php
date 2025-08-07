@@ -63,6 +63,8 @@ global $CONTACTS;
 
         //if(!$USER->IsAdmin())$APPLICATION->GetCSS();
         ?>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <style>
             .contact span,
             .contact a {

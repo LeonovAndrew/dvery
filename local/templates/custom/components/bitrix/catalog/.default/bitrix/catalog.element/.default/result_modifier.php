@@ -28,7 +28,7 @@ if (!empty($materials)) {
         }
     }
 
-    $rsDesign = CIBlockElement::GetList(['SORT' => 'ASC', 'ID' => 'DESC'], ['IBLOCK_ID' => 17, 'ACTIVE' => 'Y', 'SECTION_CODE' => $arResult['CODE'], 'PROPERTY_MATERIAL' => array_keys($materials)], false, false, ['ID', 'NAME', 'DETAIL_PICTURE', 'PROPERTY_DESIGN', 'PROPERTY_MATERIAL']);
+    $rsDesign = CIBlockElement::GetList(['SORT' => 'ASC', 'ID' => 'DESC'], ['IBLOCK_ID' => 17, 'ACTIVE' => 'Y', 'SECTION_CODE' => $arResult['CODE'], 'PROPERTY_MATERIAL' => array_keys($materials)], false, false, ['ID', 'NAME', 'DETAIL_PICTURE', 'PROPERTY_DESIGN', 'PROPERTY_MATERIAL', 'PROPERTY_NOT_OFORM']);
 
     $design = [];
     while ($arDesign = $rsDesign->fetch()) {
@@ -38,19 +38,21 @@ if (!empty($materials)) {
             'ID' => $arDesign['ID'],
             'MATERIAL' => $arDesign['PROPERTY_MATERIAL_VALUE'],
             'DESIGN' => $arDesign['PROPERTY_DESIGN_VALUE'],
+            'NOT_OFORM' => $arDesign['PROPERTY_NOT_OFORM_VALUE'],
         ];
 
         $design[$arDesign['PROPERTY_DESIGN_VALUE']] = $arDesign['PROPERTY_DESIGN_VALUE'];
     }
 
     if (!empty($design)) {
-        $rsDesign = CIBlockElement::GetList(['SORT' => 'ASC', 'ID' => 'DESC'], ['IBLOCK_ID' => 16, 'ACTIVE' => 'Y', 'ID' => $design], false, false, ['ID', 'NAME', 'DETAIL_PICTURE']);
+        $rsDesign = CIBlockElement::GetList(['SORT' => 'ASC', 'ID' => 'DESC'], ['IBLOCK_ID' => 16, 'ACTIVE' => 'Y', 'ID' => $design], false, false, ['ID', 'NAME', 'DETAIL_PICTURE', 'PROPERTY_NOT_OFORM']);
 
         while ($arDesign = $rsDesign->fetch()) {
             $arResult['DESIGN'][] = [
                 'NAME' => $arDesign['NAME'],
                 'PICTURE' => CFile::GetPath($arDesign['DETAIL_PICTURE']),
                 'ID' => $arDesign['ID'],
+                'NOT_OFORM' => $arDesign['PROPERTY_NOT_OFORM_VALUE'],
             ];
         }
     }
@@ -59,7 +61,7 @@ if (!empty($materials)) {
 }
 
 if (!empty($arResult['MATERIALS']) && !empty($arResult['DESIGN'])) {
-    $arResult['ACTUAL_MATERIAL'] = current(current($arResult['MATERIALS'])['CHILDS'])['ID'];
+    $arResult['ACTUAL_MATERIAL'] = $arResult['PROPERTIES']['COLOR']['VALUE'] ?: current(current($arResult['MATERIALS'])['CHILDS'])['ID'];
     $arResult['ACTUAL_DESIGN'] = current($arResult['DESIGN'])['ID'];
     $arResult['CURRENT_DESIGN'] = $arResult['DESIGN_PHOTOS'][$arResult['ACTUAL_MATERIAL']][$arResult['ACTUAL_DESIGN']];
 
@@ -95,6 +97,7 @@ if (!empty($arResult['MATERIALS']) && !empty($arResult['DESIGN'])) {
             'ID' => $offer['ID'],
             'COVER' => $offer['PROPERTIES']['COVER']['VALUE'],
             'COMPLECT' => '',
+            'NOT_OFORM' => $offer['PROPERTIES']['NOT_OFORM']['VALUE'],
         ];
     }
 }
