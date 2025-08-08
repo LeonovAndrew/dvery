@@ -1039,7 +1039,7 @@ body {
 
 .card-tabs-btns {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 15px;
     max-width: 800px;
     margin-bottom: 30px;
@@ -1131,6 +1131,12 @@ body {
 }
 
 @media (max-width: 998px) {
+    .catalog__item-help {
+        white-space: initial !important;
+    }
+    .catalog__title {
+        min-height: 52px !important;
+    }
     .swiper-button-prev {
         display: none !important;
     }
