@@ -308,6 +308,10 @@ header.clone .header__bottom, header.clone .header__bottom__address {
 }
 
 @media (max-width: 767px) {
+    .footer__list-link{
+        display: block;
+        padding: 10px;
+    }
     .coop-form__content,
     .coop-form__item,
     .coop-form__field {
@@ -333,7 +337,15 @@ header.clone .header__bottom, header.clone .header__bottom__address {
         margin-top: 10px;
     }
 }
-
+@media (max-width: 600px) {
+    .footer__list-link{
+        display: block;
+        padding: 10px;
+    }
+    .footer__list-item{
+        padding: 0;
+    }
+}
 .card__order {
     cursor: pointer
 }

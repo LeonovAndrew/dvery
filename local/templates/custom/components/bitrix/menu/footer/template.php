@@ -11,6 +11,7 @@
 		    <div class="footer__block-body">
 		    	<? foreach ($arItem['ADDITIONAL_LINKS'] as $child): ?>
 		    		<? if ($child["CODE"] == '/') continue; ?>
+                    <?php $child['NAME'] = str_replace('Межкомнатная дверь ', '',$child['NAME']);?>
 		        	<a href="<?=$arItem['LINK']?><?=$child["CODE"]?>/" class="footer__block-item"><?=$child['NAME']?></a>
 		        <? endforeach; ?>
 		    </div>
